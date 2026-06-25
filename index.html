@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Lokaler Social-Media-Ideengenerator für EINS Energie"
+    />
+    <title>EINS Ideenwerk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=12" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="EINS Ideenwerk Startseite">
+        <span class="brand-mark" aria-hidden="true">e<span>i</span>ns</span>
+        <span>
+          <strong>energie in sachsen</strong>
+          <small>Social Content Studio</small>
+        </span>
+      </a>
+      <div class="top-actions">
+        <button class="quiet-button" id="favoritesButton" type="button">
+          <span>♡</span> Favoriten <b id="favoriteCount">0</b>
+        </button>
+        <button class="quiet-button" id="exportButton" type="button">
+          <span>↗</span> Exportieren
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span></span> Social Content Studio</div>
+        <h1>Mit guten Ideen<br /><em>#einsvoraus.</em></h1>
+        <p>
+          Wähle Themen, Ziel und Stimmung – und erhalte konkrete Social-Media-Ideen
+          mit Hook, Format, CTA und passenden Hashtags.
+        </p>
+        <div class="hero-stats" aria-label="Vorteile">
+          <div><strong>15+</strong><span>Energiethemen</span></div>
+          <div><strong>6</strong><span>Plattformen</span></div>
+          <div><strong>∞</strong><span>Kombinationen</span></div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="config-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="step">01</span>
+              <h2>Themen wählen</h2>
+            </div>
+            <button class="text-button" id="selectAllTopics" type="button">Alle wählen</button>
+          </div>
+          <p class="helper">Mehrfachauswahl möglich. Mindestens ein Thema auswählen.</p>
+          <div class="topic-tools">
+            <input id="topicSearchInput" type="search" placeholder="Thema suchen …" aria-label="Thema suchen" />
+            <button id="surpriseTopics" type="button">✦ Themenmix</button>
+          </div>
+          <div class="chip-grid" id="topicChips"></div>
+
+          <form class="custom-topic" id="customTopicForm">
+            <input
+              id="customTopicInput"
+              type="text"
+              maxlength="32"
+              placeholder="Eigenes Thema ergänzen …"
+              aria-label="Eigenes Thema"
+            />
+            <button type="submit" aria-label="Thema hinzufügen">+</button>
+          </form>
+
+          <div class="divider"></div>
+
+          <div class="panel-heading">
+            <div>
+              <span class="step">02</span>
+              <h2>Rahmen setzen</h2>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="platform">Plattform</label>
+            <select id="platform">
+              <option>Instagram</option>
+              <option>LinkedIn</option>
+              <option>Facebook</option>
+              <option>TikTok</option>
+              <option>YouTube Shorts</option>
+              <option>Plattformübergreifend</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="goal">Ziel</label>
+              <select id="goal">
+                <option>Reichweite</option>
+                <option>Wissen vermitteln</option>
+                <option>Vertrauen stärken</option>
+                <option>Interaktion</option>
+                <option>Service & Hilfe</option>
+                <option>Recruiting</option>
+                <option>Produkt erklären</option>
+                <option>Image & Marke</option>
+                <option>Transparenz schaffen</option>
+                <option>Verhalten ändern</option>
+                <option>Projekt begleiten</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="audience">Zielgruppe</label>
+              <select id="audience">
+                <option>Alle in der Region</option>
+                <option>Junge Erwachsene</option>
+                <option>Familien</option>
+                <option>Hausbesitzende</option>
+                <option>Unternehmen</option>
+                <option>Kommunen</option>
+                <option>Bewerber:innen</option>
+                <option>Mieter:innen</option>
+                <option>Senior:innen</option>
+                <option>Eigentümergemeinschaften</option>
+                <option>Schüler:innen</option>
+                <option>Medien & Öffentlichkeit</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="ideaMode">Ideenmodus</label>
+              <select id="ideaMode">
+                <option value="balanced">Ausgewogen</option>
+                <option value="surprising">Überraschend & mutig</option>
+                <option value="editorial">Redaktionell & nahbar</option>
+                <option value="campaign">Kampagnenfähig</option>
+                <option value="service">Serviceorientiert</option>
+                <option value="community">Community-first</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="occasion">Anlass</label>
+              <select id="occasion">
+                <option value="auto">Automatisch mischen</option>
+                <option value="evergreen">Zeitlos</option>
+                <option value="season">Saison & Wetter</option>
+                <option value="local">Regionale Ereignisse</option>
+                <option value="project">Projekt & Meilenstein</option>
+                <option value="question">Kundenfrage</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Bevorzugte Formate</label>
+            <div class="format-options" id="formatOptions">
+              <button class="format-option active" type="button" data-format="Reel">
+                <span>▶</span> Reel
+              </button>
+              <button class="format-option active" type="button" data-format="Carousel">
+                <span>▤</span> Carousel
+              </button>
+              <button class="format-option" type="button" data-format="Story">
+                <span>◫</span> Story
+              </button>
+              <button class="format-option" type="button" data-format="Post">
+                <span>◇</span> Post
+              </button>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="panel-heading">
+            <div>
+              <span class="step">03</span>
+              <h2>Ideen-DNA</h2>
+            </div>
+          </div>
+
+          <div class="slider-field">
+            <div class="slider-label">
+              <label for="virality">Viralität</label>
+              <output id="viralityValue">7</output>
+            </div>
+            <input id="virality" type="range" min="1" max="10" value="7" />
+            <div class="slider-scale"><span>sachlich</span><span>scroll-stoppend</span></div>
+          </div>
+
+          <div class="slider-field">
+            <div class="slider-label">
+              <label for="regionality">Regionalität</label>
+              <output id="regionalityValue">8</output>
+            </div>
+            <input id="regionality" type="range" min="1" max="10" value="8" />
+            <div class="slider-scale"><span>allgemein</span><span>tief verwurzelt</span></div>
+          </div>
+
+          <div class="slider-field">
+            <div class="slider-label">
+              <label for="expertise">Fachtiefe</label>
+              <output id="expertiseValue">5</output>
+            </div>
+            <input id="expertise" type="range" min="1" max="10" value="5" />
+            <div class="slider-scale"><span>leicht</span><span>detailreich</span></div>
+          </div>
+
+          <div class="slider-field">
+            <div class="slider-label">
+              <label for="emotion">Emotion</label>
+              <output id="emotionValue">6</output>
+            </div>
+            <input id="emotion" type="range" min="1" max="10" value="6" />
+            <div class="slider-scale"><span>nüchtern</span><span>menschlich</span></div>
+          </div>
+
+          <div class="generation-footer">
+            <label for="ideaCount">Anzahl</label>
+            <select id="ideaCount">
+              <option value="3">3 Ideen</option>
+              <option value="5">5 Ideen</option>
+              <option value="8" selected>8 Ideen</option>
+              <option value="12">12 Ideen</option>
+            </select>
+            <button class="generate-button" id="generateButton" type="button">
+              <span>✦</span> Ideen generieren
+            </button>
+          </div>
+        </aside>
+
+        <section class="results-panel">
+          <div class="results-top">
+            <div>
+              <span class="step">ERGEBNIS</span>
+              <h2>Deine Content-Ideen</h2>
+            </div>
+            <button class="icon-button" id="refreshButton" type="button" title="Neu mischen">↻</button>
+          </div>
+
+          <div class="results-summary" id="resultsSummary">
+            <span class="pulse"></span>
+            Bereit für neue Ideen
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-orbit">
+              <span class="orbit-dot"></span>
+              <div>✦</div>
+            </div>
+            <h3>Dein nächster guter Post beginnt hier.</h3>
+            <p>
+              Stelle links deinen Ideen-Mix zusammen und starte den Generator.
+              Die Vorschläge werden genau auf deine Auswahl zugeschnitten.
+            </p>
+            <button type="button" id="demoButton">Beispiel generieren</button>
+          </div>
+
+          <div class="idea-list" id="ideaList"></div>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog id="favoritesDialog">
+      <div class="dialog-header">
+        <div>
+          <span class="step">SAMMLUNG</span>
+          <h2>Favorisierte Ideen</h2>
+        </div>
+        <button class="icon-button" id="closeFavorites" type="button">×</button>
+      </div>
+      <div id="favoritesList" class="favorites-list"></div>
+    </dialog>
+
+    <dialog id="postStudioDialog" class="post-studio-dialog">
+      <div class="dialog-header studio-header">
+        <div>
+          <span class="step">CONTENT-STUDIO</span>
+          <h2>Post gestalten</h2>
+        </div>
+        <div class="studio-status">
+          <span><i></i> Änderungen werden live übernommen</span>
+        </div>
+        <button class="icon-button" id="closePostStudio" type="button" aria-label="Studio schließen">×</button>
+      </div>
+
+      <div class="studio-layout">
+        <section class="visual-workbench">
+          <div class="visual-toolbar">
+            <div>
+              <span id="studioFormatBadge" class="meta-tag primary">POST</span>
+              <span id="studioSlideLabel">Motiv 1 von 1</span>
+            </div>
+            <div class="visual-toolbar-actions">
+              <span class="tool-hint">↖ Element wählen · ziehen zum Verschieben</span>
+              <button id="regenerateVisual" class="small-studio-button" type="button">↻ Neue Variante</button>
+            </div>
+          </div>
+          <div class="canvas-stage" id="canvasStage">
+            <button class="canvas-media-nav previous" id="canvasPreviousMedia" type="button" aria-label="Vorheriges Fotomotiv">‹</button>
+            <canvas id="postCanvas" width="1080" height="1350"></canvas>
+            <button class="canvas-media-nav next" id="canvasNextMedia" type="button" aria-label="Nächstes Fotomotiv">›</button>
+            <div class="video-indicator" id="videoIndicator" hidden>
+              <span></span> Video-Vorschau
+            </div>
+          </div>
+          <p class="canvas-help">Element im Motiv anklicken und mit der Maus verschieben.</p>
+          <div class="slide-strip" id="slideStrip"></div>
+          <p class="studio-note" id="studioNote">
+            Das Motiv wird lokal erstellt und kann direkt als PNG heruntergeladen werden.
+          </p>
+        </section>
+
+        <section class="caption-workbench">
+          <div class="editor-heading">
+            <div>
+              <span class="step">AUSGEWÄHLTE EBENE</span>
+              <h3 id="selectedLayerName">Titel</h3>
+            </div>
+            <div class="history-actions">
+              <button id="undoDesign" type="button" title="Rückgängig">↶</button>
+              <button id="redoDesign" type="button" title="Wiederholen">↷</button>
+              <button id="resetDesign" type="button" title="Design zurücksetzen">Reset</button>
+            </div>
+          </div>
+
+          <div class="layer-list" id="layerList">
+            <button type="button" data-layer="image">▧ Foto</button>
+            <button type="button" data-layer="logo">eins</button>
+            <button type="button" data-layer="kicker">Thema</button>
+            <button type="button" data-layer="title" class="active">Titel</button>
+            <button type="button" data-layer="body">Unterzeile</button>
+            <button type="button" data-layer="footer">Fußzeile</button>
+          </div>
+
+          <div class="element-controls" id="textElementControls">
+            <div class="edit-callout"><strong>Live-Editor</strong> – jede Änderung erscheint sofort links im Motiv.</div>
+            <label for="elementText">Textinhalt</label>
+            <textarea id="elementText" rows="3"></textarea>
+            <label class="color-label" for="elementColor">Textfarbe</label>
+            <div class="color-control">
+              <input id="elementColor" type="color" value="#ffffff" />
+              <div class="color-swatches" id="colorSwatches" aria-label="Markenfarben">
+                <button type="button" data-color="#ffffff" style="--swatch:#ffffff" aria-label="Weiß"></button>
+                <button type="button" data-color="#101010" style="--swatch:#101010" aria-label="Schwarz"></button>
+                <button type="button" data-color="#e95e0f" style="--swatch:#e95e0f" aria-label="Orange"></button>
+                <button type="button" data-color="#be3b4a" style="--swatch:#be3b4a" aria-label="Rot"></button>
+                <button type="button" data-color="#0090d4" style="--swatch:#0090d4" aria-label="Blau"></button>
+                <button type="button" data-color="#fde9db" style="--swatch:#fde9db" aria-label="Creme"></button>
+              </div>
+              <span id="elementColorHex">#FFFFFF</span>
+            </div>
+            <div class="background-color-control" id="backgroundColorControl" hidden>
+              <label for="elementBackground">Flächenfarbe</label>
+              <div class="compact-color-control">
+                <input id="elementBackground" type="color" value="#0090d4" />
+                <span id="elementBackgroundHex">#0090D4</span>
+              </div>
+            </div>
+            <div class="control-grid">
+              <div class="wide-control">
+                <label for="elementFont">Schriftart</label>
+                <select id="elementFont">
+                  <option value="Urbanist">Urbanist · EINS-Stil</option>
+                  <option value="Arial">Arial · Neutral</option>
+                  <option value="Georgia">Georgia · Editorial</option>
+                  <option value="Impact">Impact · Plakativ</option>
+                  <option value="Courier New">Courier New · Technisch</option>
+                  <option value="Trebuchet MS">Trebuchet · Modern</option>
+                </select>
+              </div>
+              <div>
+                <label for="elementAlign">Ausrichtung</label>
+                <select id="elementAlign">
+                  <option value="left">Links</option>
+                  <option value="center">Mittig</option>
+                  <option value="right">Rechts</option>
+                </select>
+              </div>
+              <div>
+                <label for="elementWeight">Schriftstärke</label>
+                <select id="elementWeight">
+                  <option value="500">Normal</option>
+                  <option value="700">Fett</option>
+                  <option value="900">Extra fett</option>
+                </select>
+              </div>
+              <div class="wide-control">
+                <div class="control-label"><label for="elementSize">Größe</label><output id="elementSizeValue">70</output></div>
+                <input id="elementSize" type="range" min="16" max="130" value="70" />
+              </div>
+              <div class="wide-control">
+                <div class="control-label"><label for="elementOpacity">Deckkraft</label><output id="elementOpacityValue">100%</output></div>
+                <input id="elementOpacity" type="range" min="0" max="100" value="100" />
+              </div>
+              <div class="wide-control">
+                <div class="control-label"><label for="elementSpacing">Zeichenabstand</label><output id="elementSpacingValue">0</output></div>
+                <input id="elementSpacing" type="range" min="-3" max="12" value="0" />
+              </div>
+            </div>
+            <button class="visibility-button" id="toggleLayerVisibility" type="button">◉ Ebene ausblenden</button>
+          </div>
+
+          <div class="element-controls image-controls" id="imageElementControls" hidden>
+            <div class="media-browser">
+              <div class="media-browser-heading">
+                <div>
+                  <strong>Ähnliche Motive</strong>
+                  <span id="mediaCounter">1 von 6</span>
+                </div>
+                <div>
+                  <button id="previousMedia" type="button" aria-label="Vorheriges Bild">‹</button>
+                  <button id="nextMedia" type="button" aria-label="Nächstes Bild">›</button>
+                </div>
+              </div>
+              <div class="media-thumbnails" id="mediaThumbnails"></div>
+            </div>
+            <div class="control-grid">
+              <div class="wide-control">
+                <div class="control-label"><label for="imageZoom">Bild-Zoom</label><output id="imageZoomValue">100%</output></div>
+                <input id="imageZoom" type="range" min="100" max="190" value="100" />
+              </div>
+              <div class="wide-control">
+                <div class="control-label"><label for="imageBrightness">Helligkeit</label><output id="imageBrightnessValue">100%</output></div>
+                <input id="imageBrightness" type="range" min="55" max="145" value="100" />
+              </div>
+            </div>
+            <label class="upload-image-button" for="customImageInput">＋ Eigenes Foto einsetzen</label>
+            <input id="customImageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+          </div>
+
+          <div class="editor-divider"></div>
+          <label for="captionText">Fertige Caption</label>
+          <textarea id="captionText" spellcheck="true"></textarea>
+          <div class="caption-stats">
+            <span id="captionLength">0 Zeichen</span>
+            <span id="captionPlatform">für Instagram</span>
+          </div>
+
+          <div class="studio-settings">
+            <div class="field">
+              <label for="visualStyle">Bildstil</label>
+              <select id="visualStyle">
+                <option value="editorial">Editorial & klar</option>
+                <option value="bold">Mutig & plakativ</option>
+                <option value="natural">Natürlich & regional</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="captionTone">Caption-Ton</label>
+              <select id="captionTone">
+                <option value="nahbar">Nahbar</option>
+                <option value="sachlich">Sachlich</option>
+                <option value="aktivierend">Aktivierend</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="production-info">
+            <strong id="productionTitle">Bereit zur Veröffentlichung</strong>
+            <p id="productionDescription">
+              Motiv, Caption, CTA und Hashtags sind aufeinander abgestimmt.
+            </p>
+          </div>
+
+          <div class="shotlist-panel" id="shotlistPanel" hidden>
+            <span class="detail-label">Videoansatz · Drehplan</span>
+            <ol id="shotlist"></ol>
+          </div>
+
+          <div class="studio-actions">
+            <button class="secondary-studio-button" id="copyCaptionButton" type="button">
+              □ Caption kopieren
+            </button>
+            <button class="primary-studio-button" id="downloadAssetButton" type="button">
+              ↓ Bild herunterladen
+            </button>
+          </div>
+        </section>
+      </div>
+    </dialog>
+
+    <script src="app.js?v=12"></script>
+  </body>
+</html>
