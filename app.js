@@ -1273,7 +1273,7 @@ function syncAiImagePrompt() {
 
 function aiGeneratorUrl() {
   const prompt = document.querySelector("#aiImagePrompt")?.value || "";
-  return `https://www.bing.com/images/create?q=${encodeURIComponent(prompt)}`;
+  return `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
 }
 
 function studioSlideCount(idea) {
