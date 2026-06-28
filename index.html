@@ -47,7 +47,7 @@
           mit Hook, Format, CTA und passenden Hashtags.
         </p>
         <div class="hero-stats" aria-label="Vorteile">
-          <div><strong>15+</strong><span>Energiethemen</span></div>
+          <div><strong>30</strong><span>Kern-Themen</span></div>
           <div><strong>6</strong><span>Plattformen</span></div>
           <div><strong>∞</strong><span>Kombinationen</span></div>
         </div>
@@ -62,7 +62,7 @@
             </div>
             <button class="text-button" id="selectAllTopics" type="button">Alle wählen</button>
           </div>
-          <p class="helper">Mehrfachauswahl möglich. Mindestens ein Thema auswählen.</p>
+          <p class="helper">Fokussierte Auswahl der wichtigsten Themen. Weitere Spezialthemen kannst du unten ergänzen.</p>
           <div class="topic-tools">
             <input id="topicSearchInput" type="search" placeholder="Thema suchen …" aria-label="Thema suchen" />
             <button id="surpriseTopics" type="button">✦ Themenmix</button>
@@ -439,6 +439,24 @@
             </div>
             <label class="upload-image-button" for="customImageInput">＋ Eigenes Foto einsetzen</label>
             <input id="customImageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+            <div class="ai-image-generator">
+              <div class="ai-image-heading">
+                <div>
+                  <strong>KI-Bildgenerator</strong>
+                  <span>Motiv-Briefing passend zur Idee</span>
+                </div>
+                <button id="refreshAiPrompt" type="button">Neu</button>
+              </div>
+              <label for="aiImagePrompt">Prompt</label>
+              <textarea id="aiImagePrompt" rows="5"></textarea>
+              <div class="ai-generator-actions">
+                <button id="copyAiPrompt" type="button">Prompt kopieren</button>
+                <button id="openAiGenerator" type="button">Bildgenerator öffnen</button>
+              </div>
+              <p>
+                Für finale Veröffentlichungen bitte Bildrechte, echte EINS-Anlagen und Freigaben prüfen.
+              </p>
+            </div>
           </div>
 
           <div class="editor-divider"></div>

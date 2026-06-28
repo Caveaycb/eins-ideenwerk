@@ -9,46 +9,26 @@ const topicCatalog = [
   { name: "Fernwärme", icon: "♨", keywords: ["Fernwärme", "Heizen", "Wärmewende"] },
   { name: "Netze & Infrastruktur", icon: "⌁", keywords: ["Netze", "Infrastruktur", "Versorgungssicherheit"] },
   { name: "Energiesparen", icon: "↓", keywords: ["Energiesparen", "Tipps", "Nachhaltigkeit"] },
-  { name: "Smart Home", icon: "⌂", keywords: ["SmartHome", "Digitalisierung", "Energie"] },
   { name: "Nachhaltigkeit", icon: "♧", keywords: ["Nachhaltigkeit", "Klimaschutz", "Zukunft"] },
   { name: "Region & Engagement", icon: "♡", keywords: ["Chemnitz", "Sachsen", "UnsereRegion"] },
   { name: "Berufe & Ausbildung", icon: "✦", keywords: ["Karriere", "Ausbildung", "TeamEINS"] },
   { name: "Service & Sicherheit", icon: "✓", keywords: ["Service", "Sicherheit", "GutZuWissen"] },
   { name: "Wärmepumpen", icon: "♨", keywords: ["Wärmepumpe", "Heizen", "Wärmewende"] },
   { name: "Batteriespeicher", icon: "▣", keywords: ["Speicher", "Batterie", "Energiewende"] },
-  { name: "Wasserstoff", icon: "H₂", keywords: ["Wasserstoff", "Innovation", "Energiewende"] },
-  { name: "Glasfaser", icon: "◎", keywords: ["Glasfaser", "Internet", "Digitalisierung"] },
   { name: "Baustellen & Projekte", icon: "▲", keywords: ["Baustelle", "Projekt", "Infrastruktur"] },
   { name: "Zähler & Messwesen", icon: "◴", keywords: ["Zähler", "SmartMeter", "Verbrauch"] },
   { name: "Energiepreise & Markt", icon: "€", keywords: ["Energiepreis", "Energiemarkt", "Erklärt"] },
-  { name: "Klimaanpassung", icon: "☂", keywords: ["Klima", "Resilienz", "UnsereRegion"] },
   { name: "Kommunale Wärmeplanung", icon: "⌘", keywords: ["Wärmeplanung", "Kommune", "Wärmewende"] },
-  { name: "Großkunden & Gewerbe", icon: "▥", keywords: ["Gewerbe", "Industrie", "Energieeffizienz"] },
-  { name: "Events & Führungen", icon: "◉", keywords: ["Events", "Führung", "Chemnitz"] },
-  { name: "Sport & Sponsoring", icon: "★", keywords: ["Sport", "Sponsoring", "UnsereRegion"] },
-  { name: "Kultur & Bildung", icon: "◇", keywords: ["Kultur", "Bildung", "Engagement"] },
   { name: "Kundenservice", icon: "☎", keywords: ["Kundenservice", "Hilfe", "EINSEnergie"] },
   { name: "Digitalisierung", icon: "⌘", keywords: ["Digitalisierung", "Innovation", "SmartCity"] },
   { name: "Netzleitstelle", icon: "⌁", keywords: ["Leitstelle", "Stromnetz", "Versorgung"] },
   { name: "Straßenbeleuchtung", icon: "◐", keywords: ["Licht", "SmartCity", "Kommune"] },
   { name: "Ladeinfrastruktur", icon: "⚡", keywords: ["Ladepark", "Ladesäule", "EMobilität"] },
-  { name: "Solarthermie", icon: "☼", keywords: ["Solarthermie", "Wärme", "Erneuerbare"] },
   { name: "Kraft-Wärme-Kopplung", icon: "⚙", keywords: ["KWK", "Wärme", "Effizienz"] },
-  { name: "Biogas & Biomasse", icon: "♻", keywords: ["Biogas", "Biomasse", "Erneuerbare"] },
-  { name: "Gewässerschutz", icon: "≈", keywords: ["Gewässerschutz", "Wasser", "Umwelt"] },
   { name: "Starkregen & Hochwasser", icon: "☔", keywords: ["Starkregen", "Hochwasser", "Vorsorge"] },
   { name: "Versorgungssicherheit", icon: "⬡", keywords: ["Versorgungssicherheit", "Krisenvorsorge", "Netze"] },
   { name: "Entstörung & Bereitschaft", icon: "!", keywords: ["Entstörung", "Bereitschaft", "Service"] },
   { name: "Rechnung verstehen", icon: "▤", keywords: ["Rechnung", "Energiepreis", "Service"] },
-  { name: "Umzug & Anmeldung", icon: "⌂", keywords: ["Umzug", "Anmeldung", "Kundenservice"] },
-  { name: "Tarife & Produkte", icon: "✓", keywords: ["Tarif", "Produkt", "Energie"] },
-  { name: "Betrugsprävention", icon: "⌾", keywords: ["Sicherheit", "Betrug", "Kundenservice"] },
-  { name: "Forschung & Innovation", icon: "✧", keywords: ["Forschung", "Innovation", "Zukunft"] },
-  { name: "Frauen in Technik", icon: "♀", keywords: ["FrauenInTechnik", "Karriere", "TeamEINS"] },
-  { name: "Quereinstieg & Karriere", icon: "↗", keywords: ["Quereinstieg", "Karriere", "Jobs"] },
-  { name: "Ehrenamt", icon: "♡", keywords: ["Ehrenamt", "Engagement", "Region"] },
-  { name: "Schulen & Nachwuchs", icon: "◫", keywords: ["Schule", "Nachwuchs", "EnergieWissen"] },
-  { name: "Industriekultur", icon: "▦", keywords: ["Industriekultur", "Chemnitz", "Geschichte"] },
 ];
 
 const topicMedia = {
@@ -477,6 +457,81 @@ const researchedTemplates = [
 
 templates.push(...researchedTemplates);
 
+templates.push(
+  {
+    format: "Reel",
+    mechanic: "Mini-Experiment",
+    title: "{topic}: Wir testen eine Behauptung live",
+    hook: "„Wir behaupten nichts – wir probieren es aus.“",
+    concept: "Ein kontrolliertes, sicheres Mini-Experiment zu „{angle}“ mit Aufbau, Messung, Überraschungsmoment und fachlicher Einordnung.",
+    cta: "Welche Behauptung sollen wir als Nächstes testen?",
+    strength: "Live-Tests wirken glaubwürdig, weil sie Beobachtung vor Behauptung stellen.",
+  },
+  {
+    format: "Carousel",
+    mechanic: "Entscheidungsfehler",
+    title: "Der Denkfehler bei {topic}, der teuer werden kann",
+    hook: "Folie 1: „Klingt logisch – ist aber oft falsch.“",
+    concept: "Ein häufiger Denkfehler zu „{angle}“ wird zerlegt: Annahme, Realität, bessere Frage, konkreter nächster Schritt.",
+    cta: "Speichern, bevor du die nächste Entscheidung triffst.",
+    strength: "Denkfehler-Formate liefern Nutzwert ohne belehrend zu wirken.",
+  },
+  {
+    format: "Post",
+    mechanic: "Objektgeschichte",
+    title: "Dieses eine Bauteil erklärt {topic}",
+    hook: "„Sieht unscheinbar aus – ist aber entscheidend.“",
+    concept: "Ein echtes Bauteil oder Werkzeug wird fotografisch stark inszeniert und erklärt „{angle}“ über Funktion, Risiko und Nutzen.",
+    cta: "Welches Bauteil sollen wir als Nächstes erklären?",
+    strength: "Ein konkretes Objekt macht abstrakte Energie-Infrastruktur sofort greifbar.",
+  },
+  {
+    format: "Reel",
+    mechanic: "Drei Rollen",
+    title: "{topic} aus drei Blickwinkeln",
+    hook: "„Kund:in, Fachteam, Region – alle sehen etwas anderes.“",
+    concept: "Drei sehr kurze Perspektivwechsel zu „{angle}“: Alltagssorge, technische Lösung und regionaler Nutzen.",
+    cta: "Welche Perspektive fehlt dir?",
+    strength: "Perspektivwechsel erhöhen Relevanz für verschiedene Zielgruppen in einem Beitrag.",
+  },
+  {
+    format: "Carousel",
+    mechanic: "Fehlersuche",
+    title: "Findest du den Fehler bei {topic}?",
+    hook: "Folie 1: „Auf diesem Bild stimmt etwas nicht.“",
+    concept: "Ein reales Szenario zu „{angle}“ wird als visuelle Fehlersuche aufgebaut, danach folgen Auflösung, Risiko und richtige Handlung.",
+    cta: "Schreib in die Kommentare, was du zuerst entdeckt hast.",
+    strength: "Fehlersuche bindet Aufmerksamkeit, ohne auf reinen Clickbait zu setzen.",
+  },
+  {
+    format: "Story",
+    mechanic: "Team-Abstimmung",
+    title: "Das würde unser {topic}-Team wählen",
+    hook: "„Option A oder B? Erst du, dann unser Fachteam.“",
+    concept: "Die Community stimmt über eine Alltagssituation zu „{angle}“ ab; danach zeigt das Fachteam seine Wahl und begründet sie kurz.",
+    cta: "Stimme ab – wir lösen morgen mit dem Team auf.",
+    strength: "Abstimmungen schaffen Wiederkehr und machen Expertise zugänglich.",
+  },
+  {
+    format: "Post",
+    mechanic: "Unbequeme Wahrheit",
+    title: "Die unbequeme Wahrheit über {topic}",
+    hook: "„Die ehrliche Antwort ist: Es kommt darauf an.“",
+    concept: "Ein Zielkonflikt zu „{angle}“ wird transparent erklärt: Was dafür spricht, was dagegen spricht und was EINS konkret tut.",
+    cta: "Welche Seite des Themas sollen wir ausführlicher erklären?",
+    strength: "Ehrliche Zielkonflikte stärken Vertrauen stärker als glatte Werbeaussagen.",
+  },
+  {
+    format: "Reel",
+    mechanic: "Zeitreise",
+    title: "{topic}: früher, heute, gleich morgen",
+    hook: "„Drei Zeiten, ein Thema – und ein riesiger Unterschied.“",
+    concept: "Eine schnelle Zeitreise zu „{angle}“ mit historischem Detail, heutigem Arbeitsmoment und nächstem Entwicklungsschritt.",
+    cta: "Soll daraus eine kleine Serie werden?",
+    strength: "Zeitreisen verbinden Nostalgie, Orientierung und Zukunftsbild.",
+  },
+);
+
 const modeMechanics = {
   surprising: ["ASMR", "Challenge", "Experiment", "Vorher/Nachher", "Perspektivwechsel", "Mythos/Fakt", "Schätzspiel", "Gedankenexperiment"],
   editorial: ["Mini-Doku", "Mitarbeitendenporträt", "Fotoessay", "Zeitleiste", "Projektupdate", "Day in the Life", "Ortsgeschichte"],
@@ -610,6 +665,57 @@ const visualApproaches = [
   "Zeitraffer mit eingeblendeten Meilensteinen",
   "vier Jahreszeiten am selben Ort",
 ];
+
+const topicPlaybooks = {
+  Strom: {
+    tensions: ["Blackout-Angst vs. reale Netzroutine", "unsichtbare Schaltarbeit vs. sichtbarer Alltag", "Spitzenlast am Abend vs. ruhige Leitstelle"],
+    proof: ["Live-Anzeige aus der Netzleitstelle", "Thermografie an einer Anlage", "Vor-Ort-O-Ton Netzmeister:in"],
+    visuals: ["Schalthand im Umspannwerk, Close-up auf Schutzkleidung", "Nachtaufnahme einer Leitstelle mit echten Monitoren", "Kabelmuffe im Anschnitt neben einem Alltagsgerät"],
+    hooks: ["„Diese Sekunde entscheidet, ob alles stabil bleibt.“", "„Deine Steckdose hat mehr Backstage als ein Konzert.“", "„Warum das Netz abends nicht einfach Feierabend macht.“"],
+  },
+  Gas: {
+    tensions: ["Sicherheit vs. Gewohnheit", "Gasgeruch als Warnsignal vs. unsichtbares Gas", "Winterbedarf vs. vorausschauende Planung"],
+    proof: ["Geruchsstoff-Test als Demonstration", "Druckprüfung im Serviceeinsatz", "Checkliste mit echten Sicherheitsregeln"],
+    visuals: ["Monteuer:in prüft Gasleitung im Keller", "warme Wohnung als Nutzenszene plus technische Nahaufnahme", "gelbe Leitungsmarkierung im Straßenraum"],
+    hooks: ["„Wenn Gas riecht, ist das Absicht – und wichtig.“", "„Drei Minuten, die im Ernstfall zählen.“", "„So wird Wärme sicher, bevor sie gemütlich wird.“"],
+  },
+  Elektromobilität: {
+    tensions: ["Ladefrust vs. Lade-Routine", "Reichweitenangst vs. echte Alltagsstrecke", "Schnellladen vs. batterieschonendes Laden"],
+    proof: ["Ladevorgang mit Timer und Kilowatt-Anzeige", "Streckencheck durch Chemnitz und Umland", "Erklärung der Steckertypen an echter Säule"],
+    visuals: ["regennasse Ladesäule mit Lichtreflexen", "Hand am Ladekabel plus Display", "E-Auto vor PV-Dach und Ladepunkt"],
+    hooks: ["„Diese Anzeige an der Ladesäule verstehen viele falsch.“", "„Wir testen eine ganz normale Strecke – ohne Schönrechnen.“", "„Laden ist nicht gleich Laden.“"],
+  },
+  Abwasser: {
+    tensions: ["Ekelmoment vs. Umweltleistung", "Toilette als Mülleimer vs. Kläranlage als Schutzsystem", "unsichtbares Kanalnetz vs. saubere Gewässer"],
+    proof: ["Rechenanlage mit Fundstücken", "Laborprobe vor und nach der Reinigung", "Mikroskopbild aus der biologischen Stufe"],
+    visuals: ["Klärbecken aus Drohnenperspektive", "Laborhandschuhe mit Wasserprobe", "Fundstücke aus dem Rechen sachlich inszeniert"],
+    hooks: ["„Das landet wirklich jeden Tag bei uns.“", "„Eine Kläranlage ist kein Zaubertrick – sondern Biologie.“", "„Was dein Waschbecken mit dem Fluss zu tun hat.“"],
+  },
+  Photovoltaik: {
+    tensions: ["Sommer-Erwartung vs. Winter-Realität", "Dachgefühl vs. echter Dachcheck", "Eigenverbrauch vs. Einspeisung"],
+    proof: ["Wechselrichterdaten eines Beispieltags", "Verschattungscheck mit Sonnenlauf", "Vorher-Nachher einer Montage"],
+    visuals: ["Techniker:in auf sicherem PV-Dach", "Close-up auf Modulstruktur mit Sonnenreflex", "Hausbesitzer:in schaut auf App-Verbrauchskurve"],
+    hooks: ["„PV scheitert selten an der Sonne – eher an diesem Detail.“", "„Was dein Dach kann, sieht man nicht vom Gehweg.“", "„Der spannendste Moment kommt nach Sonnenuntergang.“"],
+  },
+  Windkraft: {
+    tensions: ["Landschaftsbild vs. Stromertrag", "Geräuschdebatte vs. Messwert", "Artenschutz vs. Energiewende"],
+    proof: ["Geräuschmessung am Anlagenstandort", "Wartungscheck im Maschinenhaus", "Ertragsvergleich mit verständlicher Alltagsgröße"],
+    visuals: ["Serviceteam vor Windanlage im Morgenlicht", "Blick aus der Gondel auf die Region", "Rotorblatt-Detail mit Person als Größenvergleich"],
+    hooks: ["„So groß ist ein Rotorblatt erst, wenn man danebensteht.“", "„Wir messen nach: Wie laut ist Windkraft wirklich?“", "„Ein guter Windtag erzählt mehr als jede Grafik.“"],
+  },
+  Trinkwasser: {
+    tensions: ["selbstverständlich aus dem Hahn vs. kontrolliertes Lebensmittel", "Sommerdurst vs. Netzdruck", "Hausinstallation vs. Wasserwerk"],
+    proof: ["Laboranalyse mit drei Messwerten", "Wegkarte Wasserwerk bis Haushalt", "Geschmackstest mit Faktenauflösung"],
+    visuals: ["klares Glas Wasser vor Wasserwerk", "Laborpipette und Wasserprobe", "Rohrnetz-Plan neben realem Schieber"],
+    hooks: ["„Dieses Lebensmittel kommt direkt aus deiner Wand.“", "„Warum Trinkwasser mehr Kontrollen hat als viele denken.“", "„Der Weg bis zum Wasserhahn ist länger als du glaubst.“"],
+  },
+  Fernwärme: {
+    tensions: ["warme Wohnung vs. unterirdisches Netz", "Baustelle heute vs. Wärmewende morgen", "Zentralität vs. individuelle Fragen"],
+    proof: ["Temperaturvergleich Vorlauf/Rücklauf", "Hausstation im echten Keller", "Baustellenfortschritt mit Nutzenkarte"],
+    visuals: ["geöffnete Fernwärmetrasse mit gedämmten Rohren", "Leitwarte Wärme mit Team", "Hausstation mit beschrifteten Komponenten"],
+    hooks: ["„Unter dieser Straße liegt ein Stück Wärmewende.“", "„Warum Rücklauf-Temperatur plötzlich spannend wird.“", "„Fernwärme ist unsichtbar – bis gebaut wird.“"],
+  },
+};
 
 const topicSubthemes = {
   Strom: ["Netzfrequenz", "Umspannwerke", "Strommix", "Spitzenlast", "Hausanschluss", "Netzausbau", "Stromausfall", "Erneuerbare Einspeisung"],
@@ -834,9 +940,25 @@ function buildIdea(topic, index, settings) {
   const proof = proofPoints[
     (generationRound * 13 + generationSalt + index * 5 + hash(settings.goal)) % proofPoints.length
   ];
-  const visualApproach = visualApproaches[
+  const playbook = topicPlaybooks[topic.name];
+  const topicTension = playbook
+    ? pick(playbook.tensions, seed + generationRound + index)
+    : `${subtheme} aus Sicht von Alltag, Technik und Region`;
+  const topicProof = playbook
+    ? pick(playbook.proof, seed + generationSalt + index * 3)
+    : proof;
+  const topicVisual = playbook
+    ? pick(playbook.visuals, seed + generationRound * 5 + index)
+    : null;
+  const topicHook = playbook
+    ? pick(playbook.hooks, seed + generationRound * 7 + index)
+    : template.hook;
+  const visualApproachBase = visualApproaches[
     (generationRound * 17 + generationSalt + index * 7) % visualApproaches.length
   ];
+  const visualApproach = topicVisual
+    ? `${visualApproachBase}; Motiv: ${topicVisual}`
+    : visualApproachBase;
   const angle = topicAngles[
     (generationRound * 5 + generationSalt + index * 3 + hash(`${settings.audience}-${topic.name}`)) %
     topicAngles.length
@@ -886,6 +1008,8 @@ function buildIdea(topic, index, settings) {
     .replaceAll("{topic}", topic.name)
     .replaceAll("{angle}", `${angle}; Schwerpunkt: ${subtheme}`);
   const keywords = topic.keywords || [topic.name.replaceAll(" ", "")];
+  const depthSentence =
+    ` Fachlicher Kern: ${topicTension}. Beleg im Beitrag: ${topicProof}.`;
 
   return {
     id: `${Date.now()}-${index}-${seed}`,
@@ -902,10 +1026,10 @@ function buildIdea(topic, index, settings) {
     mediaIndex: (seed + generationRound + index * 3) % getMediaOptions(topic.name).length,
     platform: settings.platform,
     title,
-    hook: template.hook,
-    concept: `${concept}${regionalCue}${expertiseCue}${emotionCue}${viralCue}`,
+    hook: topicHook,
+    concept: `${concept}${depthSentence}${regionalCue}${expertiseCue}${emotionCue}${viralCue}`,
     cta: template.cta,
-    strength: `${template.strength} ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
+    strength: `${template.strength} Der Beitrag geht nicht allgemein über ${topic.name}, sondern spitzt auf „${subtheme}“ und den Konflikt „${topicTension}“ zu. ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
     hashtags: [
       "#EINSEnergie",
       ...keywords.slice(0, 2).map((keyword) => `#${keyword.replaceAll(" ", "")}`),
@@ -1108,6 +1232,48 @@ ${idea.concept}
 ${idea.cta}
 
 ${idea.hashtags.join(" ")}`;
+}
+
+function createAiImagePrompt(idea) {
+  if (!idea) return "";
+  const palette = "EINS Energie Look: warmes Orange, klares Blau, natürliche helle Bildsprache, regional, seriös, modern";
+  const style = document.querySelector("#visualStyle")?.selectedOptions?.[0]?.text || "Editorial & klar";
+  const cameraVariant = pick([
+    "weite Reportageaufnahme mit Mensch und Anlage im Verhältnis",
+    "intime Nahaufnahme eines echten Handgriffs mit technischem Kontext im Hintergrund",
+    "dynamische Halbtotalen-Perspektive mit regionalem Ort erkennbar",
+    "ruhige Hero-Aufnahme bei Morgen- oder Abendlicht, ohne Werbeübertreibung",
+  ], hash(idea.id || idea.title) + studioVariant);
+  const subject = {
+    Photovoltaik: "reale Photovoltaik-Anlage auf einem Dach, Techniker:in in Arbeitsschutz, keine Fantasie-Architektur",
+    Windkraft: "Windenergieanlage in sächsischer Landschaft, Serviceteam, natürliche Größenverhältnisse",
+    Elektromobilität: "öffentliche Ladesäule, E-Auto, echte Hand am Ladekabel, urban-regionaler Kontext",
+    Abwasser: "moderne Kläranlage, Laborprobe, Wassertechnik, sauber und dokumentarisch",
+    Trinkwasser: "Wasserwerk, Laboranalyse, klares Glas Wasser, hochwertige Nahaufnahme",
+    Fernwärme: "Fernwärmetrasse, Hausstation oder Leitwarte, technisches Team im Einsatz",
+    Gas: "sichere Gas-Servicekontrolle, Heizanlage, warme Wohnsituation plus technisches Detail",
+    Strom: "Umspannwerk, Netzleitstelle oder Kabeltechnik, Fachkraft bei sicherer Arbeit",
+    "Berufe & Ausbildung": "authentische Auszubildende im technischen Arbeitsmoment, Team, Werkstatt",
+  }[idea.topic] || `authentische Szene rund um ${idea.topic}, Menschen, Technik und regionaler Nutzen`;
+  return [
+    `Erstelle ein realistisches Social-Media-Foto für EINS Energie zum Thema „${idea.topic}“.`,
+    `Motiv: ${subject}.`,
+    `Fachlicher Fokus: ${idea.subtheme}. Story-Konflikt: ${idea.concept.match(/Fachlicher Kern: ([^.]+)/)?.[1] || idea.title}.`,
+    `Bildstil: ${style}, dokumentarisch, echte Anlage, echte Menschen, kein Text im Bild, keine Logos außer wenn dezent als Platzhalter, keine Illustration, keine Stockfoto-Klischees.`,
+    `Komposition: ${cameraVariant}, Platz für kurze Headline im oberen oder unteren Drittel, 4:5 Instagram-Format, hochwertige Tiefenschärfe, natürliches Licht.`,
+    palette,
+  ].join(" ");
+}
+
+function syncAiImagePrompt() {
+  const field = document.querySelector("#aiImagePrompt");
+  if (!field || !activeStudioIdea) return;
+  field.value = createAiImagePrompt(activeStudioIdea);
+}
+
+function aiGeneratorUrl() {
+  const prompt = document.querySelector("#aiImagePrompt")?.value || "";
+  return `https://www.bing.com/images/create?q=${encodeURIComponent(prompt)}`;
 }
 
 function studioSlideCount(idea) {
@@ -1650,6 +1816,7 @@ function openPostStudio(idea) {
   selectedStudioLayer = "title";
   document.querySelector("#captionPlatform").textContent = `für ${idea.platform}`;
   updateCaptionLength();
+  syncAiImagePrompt();
   renderStudioVisual();
   dialog.showModal();
 }
@@ -1918,6 +2085,7 @@ document.querySelector("#captionTone").addEventListener("change", () => {
   updateCaptionLength();
 });
 document.querySelector("#visualStyle").addEventListener("change", renderStudioVisual);
+document.querySelector("#visualStyle").addEventListener("change", syncAiImagePrompt);
 document.querySelector("#regenerateVisual").addEventListener("click", () => {
   studioVariant += 1;
   document.querySelector("#captionText").value = createCaption(
@@ -1925,6 +2093,7 @@ document.querySelector("#regenerateVisual").addEventListener("click", () => {
     document.querySelector("#captionTone").value,
   );
   updateCaptionLength();
+  syncAiImagePrompt();
   renderStudioVisual();
 });
 document.querySelector("#copyCaptionButton").addEventListener("click", async () => {
@@ -2042,6 +2211,27 @@ document.querySelector("#previousMedia").addEventListener("click", () => stepMed
 document.querySelector("#nextMedia").addEventListener("click", () => stepMedia(1));
 document.querySelector("#canvasPreviousMedia").addEventListener("click", () => stepMedia(-1));
 document.querySelector("#canvasNextMedia").addEventListener("click", () => stepMedia(1));
+
+document.querySelector("#refreshAiPrompt").addEventListener("click", () => {
+  if (!activeStudioIdea) return;
+  studioVariant += 1;
+  syncAiImagePrompt();
+  showToast("KI-Bildprompt wurde neu formuliert.");
+});
+
+document.querySelector("#copyAiPrompt").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(document.querySelector("#aiImagePrompt").value);
+    showToast("KI-Bildprompt wurde kopiert.");
+  } catch {
+    showToast("Kopieren war im Browser nicht möglich.");
+  }
+});
+
+document.querySelector("#openAiGenerator").addEventListener("click", () => {
+  if (!activeStudioIdea) return;
+  window.open(aiGeneratorUrl(), "_blank", "noopener,noreferrer");
+});
 
 document.querySelector("#customImageInput").addEventListener("change", (event) => {
   const file = event.target.files?.[0];

@@ -1659,6 +1659,85 @@ dialog::backdrop {
   color: #007bb5;
 }
 
+.ai-image-generator {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid rgba(0, 144, 212, 0.22);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(0, 144, 212, 0.08), rgba(233, 94, 15, 0.08)),
+    #fffdf9;
+}
+
+.ai-image-heading,
+.ai-generator-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ai-image-heading strong {
+  display: block;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.ai-image-heading span,
+.ai-image-generator p {
+  display: block;
+  margin-top: 2px;
+  color: #7a837f;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.ai-image-generator textarea {
+  width: 100%;
+  min-height: 118px;
+  margin-top: 7px;
+  padding: 11px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+  color: var(--ink);
+  font: 10px/1.55 "Urbanist", sans-serif;
+}
+
+.ai-image-generator textarea:focus {
+  outline: none;
+  border-color: #0090d4;
+  box-shadow: 0 0 0 3px rgba(0, 144, 212, 0.1);
+}
+
+.ai-image-heading button,
+.ai-generator-actions button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: white;
+  color: #36504d;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.ai-image-heading button {
+  padding: 7px 10px;
+}
+
+.ai-generator-actions button {
+  flex: 1;
+  margin-top: 10px;
+  padding: 9px 10px;
+}
+
+.ai-generator-actions button:last-child {
+  border-color: #0090d4;
+  background: #0090d4;
+  color: white;
+}
+
 .editor-divider {
   height: 1px;
   margin: 20px 0;
