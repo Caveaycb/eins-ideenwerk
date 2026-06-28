@@ -886,6 +886,47 @@ const audienceTweaks = {
   "Medien & Öffentlichkeit": "Liefere überprüfbare Fakten, regionale Relevanz und eine zitierfähige Kernaussage.",
 };
 
+const campaignArcs = {
+  trust: {
+    name: "Vertrauen aufbauen",
+    roles: ["Aufmerksamkeit", "Problem erklären", "Blick hinter die Kulissen", "Fachbeleg", "Menschen zeigen", "Community-Frage", "Service-Nutzen", "Abschluss mit Haltung"],
+    promise: "Von Neugier über Beleg zu Vertrauen.",
+  },
+  education: {
+    name: "Wissen vertiefen",
+    roles: ["Einstiegsfrage", "Grundlage", "Mythos klären", "Detail vertiefen", "Beispielrechnung", "FAQ", "Praxisfall", "Merksatz"],
+    promise: "Vom einfachen Einstieg zur fachlich soliden Erklärung.",
+  },
+  activation: {
+    name: "Community aktivieren",
+    roles: ["Provokante Frage", "Abstimmung", "Straßen-/Kommentarreaktion", "Auflösung", "Mitmachformat", "Teamantwort", "User Need", "Nächster Dreh"],
+    promise: "Von Beteiligung zu sichtbarer Community-Regie.",
+  },
+  project: {
+    name: "Projekt begleiten",
+    roles: ["Warum jetzt?", "Status", "Baustellenblick", "Nutzen", "Einschränkung ehrlich erklären", "Fachstimme", "Nächster Meilenstein", "Danke/Abschluss"],
+    promise: "Vom Anlass über Fortschritt zu transparenter Einordnung.",
+  },
+};
+
+const criticalTopicSignals = {
+  "Energiepreise & Markt": ["Preisbestandteile prüfen", "keine Preisversprechen formulieren", "Zeitbezug und Quelle ergänzen"],
+  Tarife: ["Produktdetails gegen aktuelle Tarifseite prüfen", "keine individuelle Ersparnis versprechen"],
+  Gas: ["Sicherheits- und Störfallhinweise fachlich freigeben", "keine Verharmlosung von Risiken"],
+  Strom: ["Versorgungssicherheit differenziert formulieren", "keine absolute Ausfallsicherheit versprechen"],
+  Windkraft: ["Bürgerfragen, Artenschutz und Geräusche ausgewogen behandeln", "Messwerte statt Behauptungen nutzen"],
+  Photovoltaik: ["Ertrag, Förderung und Wirtschaftlichkeit nur beispielhaft erklären", "keine pauschale Rendite behaupten"],
+  Wärmepumpen: ["Gebäudeeignung und Förderung nicht pauschalisieren", "Altbau-Fälle differenzieren"],
+  Abwasser: ["Gesundheits- und Umweltbezug sachlich halten", "keine schockierende Ekel-Kommunikation ohne Nutzen"],
+  Trinkwasser: ["Qualitätsaussagen mit aktueller Analyse oder offizieller Quelle belegen", "keine medizinischen Aussagen"],
+  Fernwärme: ["Baustellen, Anschlussfragen und Kosten transparent einordnen", "keine universelle Lösung versprechen"],
+  "Baustellen & Projekte": ["Zeitpläne als geplant kennzeichnen", "Belastungen ehrlich benennen"],
+  "Starkregen & Hochwasser": ["keine Panik erzeugen", "offizielle Warn- und Verhaltenshinweise nutzen"],
+  Versorgungssicherheit: ["Krisenkommunikation ruhig und präzise halten", "keine Garantien formulieren"],
+  "Entstörung & Bereitschaft": ["Notfallwege und Zuständigkeiten exakt prüfen", "keine Reaktionszeiten versprechen"],
+  "Rechnung verstehen": ["rechtliche und abrechnungsrelevante Angaben prüfen", "keine Einzelfallberatung simulieren"],
+};
+
 let topics = [...topicCatalog];
 let selectedTopics = new Set(["Strom", "Photovoltaik", "Elektromobilität"]);
 let currentIdeas = [];
@@ -912,6 +953,7 @@ const topicChips = document.querySelector("#topicChips");
 const ideaList = document.querySelector("#ideaList");
 const emptyState = document.querySelector("#emptyState");
 const resultsSummary = document.querySelector("#resultsSummary");
+const campaignBoard = document.querySelector("#campaignBoard");
 const toast = document.querySelector("#toast");
 
 function renderTopics() {
@@ -989,6 +1031,23 @@ function getSettings() {
     expertise: Number(document.querySelector("#expertise").value),
     emotion: Number(document.querySelector("#emotion").value),
     count: Number(document.querySelector("#ideaCount").value),
+    campaign: getCampaignSettings(),
+  };
+}
+
+function getCampaignSettings() {
+  const startInput = document.querySelector("#campaignStart");
+  if (startInput && !startInput.value) {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+    startInput.value = date.toISOString().slice(0, 10);
+  }
+  return {
+    theme: document.querySelector("#campaignTheme").value.trim(),
+    duration: Number(document.querySelector("#campaignDuration").value),
+    frequency: Number(document.querySelector("#campaignFrequency").value),
+    start: document.querySelector("#campaignStart").value,
+    arc: document.querySelector("#campaignArc").value,
   };
 }
 
@@ -1123,6 +1182,16 @@ function buildIdea(topic, index, settings) {
   const keywords = topic.keywords || [topic.name.replaceAll(" ", "")];
   const depthSentence =
     ` Fachlicher Kern: ${topicTension}. Beleg im Beitrag: ${topicProof}.`;
+  const criticalReview = runCriticalReview({
+    topic: topic.name,
+    subtheme,
+    goal: settings.goal,
+    audience: settings.audience,
+    template,
+    concept,
+    topicProof,
+    topicTension,
+  });
 
   return {
     id: `${Date.now()}-${index}-${seed}`,
@@ -1143,6 +1212,7 @@ function buildIdea(topic, index, settings) {
     concept: `${concept}${depthSentence}${regionalCue}${expertiseCue}${emotionCue}${viralCue}`,
     cta: template.cta,
     strength: `${template.strength} Der Beitrag geht nicht allgemein über ${topic.name}, sondern spitzt auf „${subtheme}“ und den Konflikt „${topicTension}“ zu. ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
+    criticalReview,
     hashtags: [
       "#EINSEnergie",
       ...keywords.slice(0, 2).map((keyword) => `#${keyword.replaceAll(" ", "")}`),
@@ -1150,6 +1220,43 @@ function buildIdea(topic, index, settings) {
     ],
     score,
   };
+}
+
+function runCriticalReview({ topic, subtheme, goal, audience, template, concept, topicProof, topicTension }) {
+  const text = `${topic} ${subtheme} ${goal} ${audience} ${template.mechanic} ${template.title} ${concept} ${topicProof} ${topicTension}`;
+  const checks = [];
+  const matchedRules = Object.entries(criticalTopicSignals)
+    .filter(([signal]) => text.toLowerCase().includes(signal.toLowerCase()))
+    .flatMap(([, rules]) => rules);
+
+  checks.push("Fakten, Zahlen und konkrete Aussagen vor Veröffentlichung mit Fachbereich oder offizieller Quelle abgleichen.");
+  checks.push("Keine absoluten Versprechen wie garantiert, immer, nie oder sicher ohne belegbaren Kontext verwenden.");
+
+  if (matchedRules.length) checks.push(...matchedRules);
+  if (settingsLikeNeedsSource(goal, template.mechanic)) {
+    checks.push("Mindestens einen klar benannten Beleg einplanen: Messwert, Fachstimme, Projektstatus oder offizielle Seite.");
+  }
+  if (["Reichweite", "Interaktion"].includes(goal)) {
+    checks.push("Hook darf aufmerksamkeitsstark sein, aber nicht dramatisieren oder Angst erzeugen.");
+  }
+  if (["Medien & Öffentlichkeit", "Kommunen", "Unternehmen"].includes(audience)) {
+    checks.push("Formulierung zitierfähig halten: präzise, nüchtern, ohne übertriebene Marketing-Sprache.");
+  }
+
+  const uniqueChecks = [...new Set(checks)].slice(0, 5);
+  const riskScore = Math.min(100, 28 + matchedRules.length * 12 + (goal === "Reichweite" ? 8 : 0) + (template.format === "Reel" ? 4 : 0));
+  const label = riskScore >= 64 ? "Fachfreigabe empfohlen" : riskScore >= 44 ? "Beleg prüfen" : "Standardprüfung";
+  return {
+    riskScore,
+    label,
+    checks: uniqueChecks,
+    guidance: ` Kritischer Qualitätscheck: ${label}. ${uniqueChecks[0]}`,
+  };
+}
+
+function settingsLikeNeedsSource(goal, mechanic) {
+  return ["Wissen vermitteln", "Transparenz schaffen", "Service & Hilfe", "Projekt begleiten"].includes(goal) ||
+    /Fakt|Zahl|Kosten|FAQ|Guide|Check|Regulatorik|These|Mythos|Rechnung|Vergleich/i.test(mechanic);
 }
 
 function generateIdeas() {
@@ -1211,6 +1318,7 @@ function generateIdeas() {
   recentIdeaSignatures = [...currentSignatures, ...recentIdeaSignatures].slice(0, 144);
   recentIdeaTitles = [...currentIdeas.map((idea) => idea.title), ...recentIdeaTitles].slice(0, 120);
   renderIdeas();
+  renderCampaignBoard(settings, activeTopics);
   resultsSummary.innerHTML = `
     <span class="pulse"></span>
     ${settings.count} Ideen für ${escapeHtml(settings.platform)} · ${escapeHtml(settings.goal)} ·
@@ -1220,6 +1328,84 @@ function generateIdeas() {
 
   if (window.innerWidth < 1050) {
     document.querySelector(".results-panel").scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+function renderCampaignBoard(settings, activeTopics) {
+  if (!currentIdeas.length) {
+    campaignBoard.hidden = true;
+    campaignBoard.innerHTML = "";
+    return;
+  }
+  const campaign = settings.campaign;
+  const arc = campaignArcs[campaign.arc] || campaignArcs.trust;
+  const totalSlots = Math.max(1, campaign.duration * campaign.frequency);
+  const theme = campaign.theme || `${activeTopics.slice(0, 2).map((topic) => topic.name).join(" & ")} Kampagne`;
+  const startDate = campaign.start ? new Date(`${campaign.start}T12:00:00`) : new Date();
+  const planned = Array.from({ length: totalSlots }, (_, index) => {
+    const idea = currentIdeas[index % currentIdeas.length];
+    const date = new Date(startDate);
+    const week = Math.floor(index / campaign.frequency);
+    const dayOffsets = campaign.frequency === 2 ? [0, 3] : campaign.frequency === 3 ? [0, 2, 4] : [0, 1, 3, 5];
+    date.setDate(startDate.getDate() + week * 7 + dayOffsets[index % dayOffsets.length]);
+    return {
+      idea,
+      date,
+      week: week + 1,
+      role: arc.roles[index % arc.roles.length],
+    };
+  });
+  campaignBoard.hidden = false;
+  campaignBoard.innerHTML = `
+    <div class="campaign-board-header">
+      <div>
+        <span class="step">KAMPAGNENPLAN</span>
+        <h3>${escapeHtml(theme)}</h3>
+        <p>${escapeHtml(arc.promise)} ${campaign.duration} ${campaign.duration === 1 ? "Woche" : "Wochen"} · ${campaign.frequency} Posts/Woche</p>
+      </div>
+      <button id="copyCampaignPlan" type="button">Plan kopieren</button>
+    </div>
+    <div class="campaign-timeline">
+      ${planned.map((slot, index) => `
+        <article class="campaign-slot">
+          <div class="campaign-date">
+            <strong>${formatCampaignDate(slot.date)}</strong>
+            <span>Woche ${slot.week}</span>
+          </div>
+          <div>
+            <span class="campaign-role">${escapeHtml(slot.role)}</span>
+            <h4>${escapeHtml(slot.idea.title)}</h4>
+            <p>${escapeHtml(slot.idea.format)} · ${escapeHtml(slot.idea.topic)} · ${escapeHtml(slot.idea.mechanic)}</p>
+          </div>
+          <button class="campaign-create-post" data-index="${currentIdeas.indexOf(slot.idea)}" type="button">Post erstellen</button>
+        </article>
+      `).join("")}
+    </div>
+  `;
+  document.querySelector("#copyCampaignPlan").addEventListener("click", () => copyCampaignPlan(planned, theme, arc));
+  document.querySelectorAll(".campaign-create-post").forEach((button) => {
+    button.addEventListener("click", () => openPostStudio(currentIdeas[Number(button.dataset.index)]));
+  });
+}
+
+function formatCampaignDate(date) {
+  return date.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" });
+}
+
+async function copyCampaignPlan(planned, theme, arc) {
+  const text = [
+    `Kampagnenplan: ${theme}`,
+    `Dramaturgie: ${arc.name} – ${arc.promise}`,
+    "",
+    ...planned.map((slot, index) =>
+      `${index + 1}. ${formatCampaignDate(slot.date)} · Woche ${slot.week} · ${slot.role}\n${slot.idea.format} · ${slot.idea.topic} · ${slot.idea.mechanic}\n${slot.idea.title}\nHook: ${slot.idea.hook}\nPrüfung: ${slot.idea.criticalReview?.label || "Standardprüfung"}`,
+    ),
+  ].join("\n\n");
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast("Kampagnenplan wurde kopiert.");
+  } catch {
+    showToast("Kopieren war im Browser nicht möglich.");
   }
 }
 
@@ -1311,6 +1497,9 @@ Bildidee: ${idea.visualApproach}
 Format: ${idea.format} für ${idea.platform}
 CTA: ${idea.cta}
 Warum es funktioniert: ${idea.strength}
+Interne Prüfung: ${idea.criticalReview?.label || "Standardprüfung"}
+Prüfpunkte:
+${(idea.criticalReview?.checks || ["Fakten vor Veröffentlichung gegenprüfen."]).map((check) => `- ${check}`).join("\n")}
 
 ${idea.hashtags.join(" ")}`;
 }
@@ -2085,7 +2274,7 @@ function exportIdeas() {
   const headers = [
     "Thema", "Unterthema", "Content-Säule", "Mechanik", "Anlass", "Perspektive",
     "Schauplatz", "Beleg", "Bildidee", "Format", "Plattform", "Titel", "Hook",
-    "Konzept", "CTA", "Hashtags",
+    "Konzept", "CTA", "Interne Prüfung", "Prüfpunkte", "Hashtags",
   ];
   const rows = exportData.map((idea) => [
     idea.topic,
@@ -2103,6 +2292,8 @@ function exportIdeas() {
     idea.hook,
     idea.concept,
     idea.cta,
+    idea.criticalReview?.label || "Standardprüfung",
+    (idea.criticalReview?.checks || []).join(" | "),
     idea.hashtags.join(" "),
   ]);
   const csv = [headers, ...rows]
@@ -2157,6 +2348,16 @@ document.querySelector("#surpriseTopics").addEventListener("click", () => {
 
 document.querySelectorAll(".format-option").forEach((button) => {
   button.addEventListener("click", () => button.classList.toggle("active"));
+});
+
+document.querySelectorAll("#campaignTheme, #campaignDuration, #campaignFrequency, #campaignStart, #campaignArc").forEach((field) => {
+  const updateCampaignPreview = () => {
+    if (!currentIdeas.length) return;
+    const activeTopics = topics.filter((topic) => selectedTopics.has(topic.name));
+    renderCampaignBoard(getSettings(), activeTopics);
+  };
+  field.addEventListener("input", updateCampaignPreview);
+  field.addEventListener("change", updateCampaignPreview);
 });
 
 ["virality", "regionality", "expertise", "emotion"].forEach((id) => {

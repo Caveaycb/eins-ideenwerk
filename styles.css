@@ -305,6 +305,123 @@ h3 {
     radial-gradient(circle at 80% 70%, rgba(223, 29, 103, 0.2), transparent 32%);
 }
 
+.campaign-planner input {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  outline: none;
+  background: #fbfaf7;
+  color: var(--ink);
+  font: 12px "Urbanist", sans-serif;
+}
+
+.campaign-planner input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(25, 123, 108, 0.08);
+}
+
+.campaign-board {
+  margin: 18px 0 20px;
+  padding: 18px;
+  border: 1px solid rgba(25, 123, 108, 0.14);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(25, 123, 108, 0.08), rgba(233, 94, 15, 0.08)),
+    rgba(255, 255, 255, 0.78);
+  box-shadow: 0 12px 34px rgba(30, 49, 43, 0.07);
+}
+
+.campaign-board-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.campaign-board-header h3 {
+  margin: 4px 0 4px;
+  font-size: 19px;
+  letter-spacing: -0.025em;
+}
+
+.campaign-board-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.campaign-board-header button,
+.campaign-create-post {
+  border: 1px solid rgba(25, 123, 108, 0.22);
+  border-radius: 999px;
+  background: white;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.campaign-board-header button {
+  padding: 9px 12px;
+}
+
+.campaign-timeline {
+  display: grid;
+  gap: 9px;
+}
+
+.campaign-slot {
+  display: grid;
+  grid-template-columns: 82px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(18, 32, 29, 0.08);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.campaign-date strong,
+.campaign-role {
+  display: block;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.campaign-date span {
+  display: block;
+  margin-top: 3px;
+  color: #909995;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.campaign-role {
+  color: var(--pink);
+  letter-spacing: 0.05em;
+}
+
+.campaign-slot h4 {
+  margin: 4px 0 3px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.campaign-slot p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.campaign-create-post {
+  padding: 8px 10px;
+}
+
 .panel-heading,
 .results-top,
 .dialog-header {
@@ -1859,6 +1976,15 @@ dialog::backdrop {
   .config-panel {
     border-right: 0;
     border-bottom: 1px solid var(--line);
+  }
+
+  .campaign-slot {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .campaign-create-post {
+    width: 100%;
   }
 
   .studio-layout {
