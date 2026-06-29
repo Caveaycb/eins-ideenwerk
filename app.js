@@ -645,12 +645,35 @@ templates.push(...expertMechanicRows.map(([format, mechanic, title, hook, concep
   strength: `${mechanic} gibt dem Beitrag eine eigene Dramaturgie und verhindert austauschbare Standardposts.`,
 })));
 
+const youtubeLongTemplates = [
+  ["Deep Dive Doku", "{topic}: Die ganze Geschichte hinter {angle}", "„In diesem Video gehen wir einmal wirklich in die Tiefe.“", "12–18 Minuten Longform-Doku mit Kapitelstruktur: Problemaufriss, Ortstermin, Fachinterview, Daten-/Belegteil, kritische Fragen, Ausblick und klares Fazit.", "Abonniere den Kanal, wenn du mehr Einblicke hinter die Energieversorgung sehen willst."],
+  ["Erklärfilm mit Kapiteln", "{topic} komplett erklärt – ohne Fachchinesisch", "„Nach diesem Video verstehst du das Thema wirklich.“", "8–12 Minuten Erklärvideo mit Intro-Hook, animierten Begriffen, realer B-Roll, Beispielrechnung, FAQ-Block und Zusammenfassung in drei Merksätzen.", "Welche Frage sollen wir im nächsten Erklärvideo beantworten?"],
+  ["Vor-Ort-Reportage", "Wir waren vor Ort: So funktioniert {topic}", "„Wir nehmen dich dorthin mit, wo man sonst selten hinkommt.“", "10–16 Minuten Reportage mit Rundgang, mehreren Schauplätzen, O-Tönen, Nahaufnahmen und ehrlicher Einordnung von Nutzen, Grenzen und Aufwand.", "Schreib uns, welchen Ort wir als Nächstes besuchen sollen."],
+  ["Expert:innen-Talk", "Fachgespräch: Was bei {topic} wirklich zählt", "„Wir stellen die Fragen, die sonst oft zu kurz kommen.“", "15–25 Minuten Gespräch mit zwei Perspektiven: Moderation, Fachperson, kritische Publikumsfragen, Mythenblock und konkrete Handlungsempfehlungen.", "Welche Frage würdest du der Fachperson stellen?"],
+  ["Projektbegleitung", "{topic}: Vom Plan bis zur Umsetzung", "„So sieht ein Projekt aus, bevor es fertig wirkt.“", "Mehrteilig denkbares 12–20 Minuten Video: Ausgangslage, Planung, Bau/Umsetzung, Schwierigkeiten, aktueller Stand, nächster Meilenstein.", "Soll daraus eine Projektserie werden?"],
+  ["Mythen-Spezial", "{topic}: Die größten Mythen im Faktencheck", "„Wir prüfen die Aussagen, die am häufigsten auftauchen.“", "10–15 Minuten Faktencheck mit 5–7 Mythen, jeweils Behauptung, Faktenlage, Mess-/Belegidee, Fazit und Quellenhinweis.", "Welchen Mythos nehmen wir in Teil 2?"],
+  ["Service-Sprechstunde", "{topic}: Die große Fragestunde", "„Wir beantworten die Fragen, die wirklich im Alltag auftauchen.“", "12–18 Minuten Q&A mit thematischen Blöcken, Kapitelmarken, Einblendungen, Kontaktwegen und speicherbarer Schluss-Checkliste.", "Schreib deine Frage für die nächste Sprechstunde in die Kommentare."],
+  ["Behind-the-System", "{topic}: Das System hinter dem Alltag", "„Was selbstverständlich wirkt, ist ein ganzes System.“", "Longform-Erzählung über die unsichtbare Infrastruktur: Einstieg mit Alltagsszene, Systemkarte, Team-Rollen, Technikdetails, Störungsszenario und Präventionslogik.", "Welche Infrastruktur sollen wir als Nächstes sichtbar machen?"],
+  ["Kontroverse fair erklärt", "{topic}: Was dafür spricht – und was dagegen", "„Wir machen es uns heute nicht zu einfach.“", "15–22 Minuten ausgewogene Einordnung mit Pro, Contra, Zielkonflikten, regionalem Bezug, Fachstimme, Community-Fragen und transparentem Fazit.", "Welche Perspektive fehlt dir in der Debatte?"],
+  ["Experiment Langformat", "{topic}: Wir testen es einen Tag lang", "„Statt nur zu erklären, probieren wir es aus.“", "10–18 Minuten Testformat mit Ausgangsfrage, Versuchsaufbau, Tagesverlauf, Messpunkten, Überraschungen, Auswertung und Learnings.", "Welches Experiment sollen wir als Nächstes machen?"],
+].map(([mechanic, title, hook, concept, cta]) => ({
+  format: "YouTube Long",
+  mechanic,
+  title,
+  hook,
+  concept,
+  cta,
+  strength: `${mechanic} nutzt längere Watchtime für Tiefe, Vertrauen und klare Kapitel statt schneller Social-Hooks.`,
+}));
+
+templates.push(...youtubeLongTemplates);
+
 const modeMechanics = {
-  surprising: ["ASMR", "Challenge", "Experiment", "Vorher/Nachher", "Perspektivwechsel", "Mythos/Fakt", "Schätzspiel", "Gedankenexperiment", "Cold Open", "Blind Ranking", "Expectation vs Reality", "Sound Quiz", "Data Reveal", "Debunk Lab", "Fehlersuche", "Real or Render", "Micro-Drama", "Red Flag Green Flag"],
-  editorial: ["Mini-Doku", "Mitarbeitendenporträt", "Fotoessay", "Zeitleiste", "Projektupdate", "Day in the Life", "Ortsgeschichte", "One-Take-Erklärung", "Micro Documentary", "Slow TV", "Hero Quote", "Foto mit Fußnote", "Mitarbeitenden-Moment", "Historischer Vergleich", "Projekt-Retrospektive", "Lessons Learned"],
-  campaign: ["Wochenchallenge", "Datenstory", "Testimonials", "Awareness", "Community-Regie", "Vorher/Nachher", "Haltungsbeitrag", "Mini-Serie Teil 1", "Mini-Manifest", "Local Proof", "Wertschöpfung", "Partner-Spotlight", "Strategie ohne Floskel", "Choose the Shoot", "Content-Experiment"],
-  service: ["FAQ", "Serviceablauf", "Entscheidungsbaum", "Rechenbeispiel", "Sicherheitsszenario", "Fehleranalyse", "Glossar", "Vergleich", "Mini-Tutorial", "Before the Call", "Swipe-Checkliste", "Kostenklarheit", "Ampel-Guide", "Wenn-Dann-Karten", "Servicekarte", "Regulatorik verständlich", "Entscheider:innen-Guide"],
-  community: ["Community-Faktencheck", "Kommentar-Reaktion", "Sprechstunde", "Quiz", "Schätzspiel", "Community-Regie", "Challenge", "Street-Test", "Comment Rescue", "Community-Auswertung", "This or That", "Fragensticker Spezial", "Team Takeover", "Schnellumfrage", "Kommentar als Aufhänger", "Du bist Einsatzleitung"],
+  surprising: ["ASMR", "Challenge", "Experiment", "Vorher/Nachher", "Perspektivwechsel", "Mythos/Fakt", "Schätzspiel", "Gedankenexperiment", "Cold Open", "Blind Ranking", "Expectation vs Reality", "Sound Quiz", "Data Reveal", "Debunk Lab", "Fehlersuche", "Real or Render", "Micro-Drama", "Red Flag Green Flag", "Experiment Langformat", "Mythen-Spezial"],
+  editorial: ["Mini-Doku", "Mitarbeitendenporträt", "Fotoessay", "Zeitleiste", "Projektupdate", "Day in the Life", "Ortsgeschichte", "One-Take-Erklärung", "Micro Documentary", "Slow TV", "Hero Quote", "Foto mit Fußnote", "Mitarbeitenden-Moment", "Historischer Vergleich", "Projekt-Retrospektive", "Lessons Learned", "Deep Dive Doku", "Vor-Ort-Reportage", "Behind-the-System"],
+  campaign: ["Wochenchallenge", "Datenstory", "Testimonials", "Awareness", "Community-Regie", "Vorher/Nachher", "Haltungsbeitrag", "Mini-Serie Teil 1", "Mini-Manifest", "Local Proof", "Wertschöpfung", "Partner-Spotlight", "Strategie ohne Floskel", "Choose the Shoot", "Content-Experiment", "Projektbegleitung", "Kontroverse fair erklärt"],
+  service: ["FAQ", "Serviceablauf", "Entscheidungsbaum", "Rechenbeispiel", "Sicherheitsszenario", "Fehleranalyse", "Glossar", "Vergleich", "Mini-Tutorial", "Before the Call", "Swipe-Checkliste", "Kostenklarheit", "Ampel-Guide", "Wenn-Dann-Karten", "Servicekarte", "Regulatorik verständlich", "Entscheider:innen-Guide", "Erklärfilm mit Kapiteln", "Service-Sprechstunde"],
+  community: ["Community-Faktencheck", "Kommentar-Reaktion", "Sprechstunde", "Quiz", "Schätzspiel", "Community-Regie", "Challenge", "Street-Test", "Comment Rescue", "Community-Auswertung", "This or That", "Fragensticker Spezial", "Team Takeover", "Schnellumfrage", "Kommentar als Aufhänger", "Du bist Einsatzleitung", "Expert:innen-Talk", "Service-Sprechstunde"],
 };
 
 const universalAngles = [
@@ -1015,7 +1038,7 @@ function selectedFormats() {
   const values = [...document.querySelectorAll(".format-option.active")].map(
     (button) => button.dataset.format,
   );
-  return values.length ? values : ["Reel", "Carousel", "Story", "Post"];
+  return values.length ? values : ["Reel", "Carousel", "Story", "Post", "YouTube Long"];
 }
 
 function getSettings() {
@@ -1166,6 +1189,7 @@ function buildIdea(topic, index, settings) {
       settings.virality * 2 +
       Math.round((settings.regionality + settings.emotion) / 2) +
       (template.format === "Reel" ? 4 : 0) +
+      (template.format === "YouTube Long" && settings.goal !== "Reichweite" ? 3 : 0) +
       (seed % 6),
   );
   const baseTitle = template.title.replaceAll("{topic}", topic.name);
@@ -1505,6 +1529,7 @@ ${idea.hashtags.join(" ")}`;
 }
 
 function createCaption(idea, tone = "nahbar") {
+  if (idea.format === "YouTube Long") return createYoutubeLongDescription(idea, tone);
   const intros = {
     nahbar: [
       "Manches nutzen wir jeden Tag – ohne zu sehen, wie viel dahintersteckt.",
@@ -1536,10 +1561,42 @@ ${idea.cta}
 ${idea.hashtags.join(" ")}`;
 }
 
+function createYoutubeLongDescription(idea, tone = "nahbar") {
+  const intro = tone === "sachlich"
+    ? "In diesem Video ordnen wir das Thema ausführlich, verständlich und mit Blick auf die Region ein."
+    : tone === "aktivierend"
+      ? "Nimm dir ein paar Minuten: Dieses Thema wirkt alltäglich, hat aber mehr Tiefe, als man auf den ersten Blick sieht."
+      : "Manche Energiethemen versteht man erst richtig, wenn man sich Zeit nimmt und hinter die Kulissen schaut.";
+  return `${intro}
+
+${idea.hook.replace(/^„|“$/g, "")}
+
+Inhalt:
+00:00 Einstieg und zentrale Frage
+00:30 Warum das Thema relevant ist
+02:00 Blick hinter die Kulissen
+05:00 Fachliche Einordnung und Belege
+08:00 Kritische Fragen, Grenzen und Missverständnisse
+11:00 Fazit und nächste Schritte
+
+Worum es geht:
+${idea.concept}
+
+Interne Prüfung vor Veröffentlichung:
+${(idea.criticalReview?.checks || ["Fakten, Zahlen und konkrete Aussagen vor Veröffentlichung prüfen."]).map((check) => `- ${check}`).join("\n")}
+
+${idea.cta}
+
+${idea.hashtags.join(" ")}`;
+}
+
 function createAiImagePrompt(idea) {
   if (!idea) return "";
   const palette = "Energie-Ideenwerk Look: warmes Orange, klares Blau, natürliche helle Bildsprache, regional, seriös, modern";
   const style = document.querySelector("#visualStyle")?.selectedOptions?.[0]?.text || "Editorial & klar";
+  const formatInstruction = idea.format === "YouTube Long"
+    ? "Erstelle ein realistisches YouTube-Thumbnail und Keyvisual für ein längeres Erklär- oder Reportagevideo, 16:9-kompatible Bildkomposition mit starkem Hauptmotiv, aber ohne Text im Bild."
+    : `Erstelle ein realistisches Social-Media-Foto für Energie-Ideenwerk zum Thema „${idea.topic}“.`;
   const cameraVariant = pick([
     "weite Reportageaufnahme mit Mensch und Anlage im Verhältnis",
     "intime Nahaufnahme eines echten Handgriffs mit technischem Kontext im Hintergrund",
@@ -1558,7 +1615,7 @@ function createAiImagePrompt(idea) {
     "Berufe & Ausbildung": "authentische Auszubildende im technischen Arbeitsmoment, Team, Werkstatt",
   }[idea.topic] || `authentische Szene rund um ${idea.topic}, Menschen, Technik und regionaler Nutzen`;
   return [
-    `Erstelle ein realistisches Social-Media-Foto für Energie-Ideenwerk zum Thema „${idea.topic}“.`,
+    formatInstruction,
     `Motiv: ${subject}.`,
     `Fachlicher Fokus: ${idea.subtheme}. Story-Konflikt: ${idea.concept.match(/Fachlicher Kern: ([^.]+)/)?.[1] || idea.title}.`,
     `Bildstil: ${style}, dokumentarisch, echte Anlage, echte Menschen, kein Text im Bild, keine Logos außer wenn dezent als Platzhalter, keine Illustration, keine Stockfoto-Klischees.`,
@@ -1580,12 +1637,13 @@ function aiGeneratorUrl() {
 
 function studioSlideCount(idea) {
   if (idea.format === "Carousel") return 4;
+  if (idea.format === "YouTube Long") return 6;
   if (idea.format === "Reel" || idea.format === "Story") return 3;
   return 1;
 }
 
 function visualDimensions(idea) {
-  return idea.format === "Reel" || idea.format === "Story"
+  return idea.format === "Reel" || idea.format === "Story" || idea.format === "YouTube Long"
     ? { width: 1080, height: 1920 }
     : { width: 1080, height: 1350 };
 }
@@ -2042,12 +2100,14 @@ function startStudioAnimation() {
   const canvas = document.querySelector("#postCanvas");
   const frame = (now) => {
     if (!activeStudioIdea || !document.querySelector("#postStudioDialog").open) return;
-    const elapsed = (now - studioAnimationStarted) % 7500;
-    const slide = Math.floor(elapsed / 2500);
+    const count = studioSlideCount(activeStudioIdea);
+    const sceneDuration = activeStudioIdea.format === "YouTube Long" ? 3200 : 2500;
+    const elapsed = (now - studioAnimationStarted) % (count * sceneDuration);
+    const slide = Math.floor(elapsed / sceneDuration);
     const localProgress = Math.min(1, (elapsed % 2500) / 650);
     activeStudioSlide = slide;
     drawStudioSlide(canvas, activeStudioIdea, slide, localProgress);
-    document.querySelector("#studioSlideLabel").textContent = `Szene ${slide + 1} von 3`;
+    document.querySelector("#studioSlideLabel").textContent = `${activeStudioIdea.format === "YouTube Long" ? "Kapitel" : "Szene"} ${slide + 1} von ${count}`;
     studioAnimationId = requestAnimationFrame(frame);
   };
   studioAnimationId = requestAnimationFrame(frame);
@@ -2055,25 +2115,28 @@ function startStudioAnimation() {
 
 function renderStudioVisual(animate = true) {
   if (!activeStudioIdea) return;
-  const isVideo = activeStudioIdea.format === "Reel" || activeStudioIdea.format === "Story";
+  const isVideo = activeStudioIdea.format === "Reel" || activeStudioIdea.format === "Story" || activeStudioIdea.format === "YouTube Long";
+  const isLongVideo = activeStudioIdea.format === "YouTube Long";
   const count = studioSlideCount(activeStudioIdea);
   const canvas = document.querySelector("#postCanvas");
   document.querySelector("#studioFormatBadge").textContent = activeStudioIdea.format;
   document.querySelector("#videoIndicator").hidden = !isVideo;
   document.querySelector("#studioSlideLabel").textContent =
-    `${isVideo ? "Szene" : "Motiv"} ${activeStudioSlide + 1} von ${count}`;
+    `${isLongVideo ? "Kapitel" : isVideo ? "Szene" : "Motiv"} ${activeStudioSlide + 1} von ${count}`;
   document.querySelector("#studioNote").textContent = isVideo
-    ? "Die Vorschau nutzt ein echtes Themenmotiv. Der Drehplan darunter beschreibt drei reale Aufnahmen für das finale Reel."
+    ? isLongVideo
+      ? "Die Vorschau zeigt Kapitelbilder. Der Produktionsplan darunter beschreibt Aufbau, Kapitel und Retention-Punkte für ein längeres YouTube-Video."
+      : "Die Vorschau nutzt ein echtes Themenmotiv. Der Drehplan darunter beschreibt drei reale Aufnahmen für das finale Reel."
     : count > 1
       ? "Alle Carousel-Slides können einzeln oder gemeinsam als PNG-Dateien heruntergeladen werden."
       : "Das Motiv wird lokal erstellt und kann direkt als PNG heruntergeladen werden.";
   document.querySelector("#downloadAssetButton").textContent = isVideo
-    ? "↓ Video herunterladen"
+    ? isLongVideo ? "↓ Kapitelbilder herunterladen" : "↓ Video herunterladen"
     : count > 1
       ? "↓ Alle Bilder herunterladen"
       : "↓ Bild herunterladen";
   document.querySelector("#productionTitle").textContent = isVideo
-    ? "Videoansatz mit 3 realen Szenen"
+    ? isLongVideo ? "YouTube-Long-Konzept mit 6 Kapiteln" : "Videoansatz mit 3 realen Szenen"
     : count > 1
       ? `${count} fertige Carousel-Slides`
       : "Veröffentlichungsfertiges Motiv";
@@ -2091,11 +2154,20 @@ function renderStudioVisual(animate = true) {
       Strom: "Netzanlage, Schalthandlung und Techniker:in",
       "Berufe & Ausbildung": "Auszubildende, Anleitung und echter Arbeitsschritt",
     }[activeStudioIdea.topic] || "Menschen, Technik und regionaler Alltagsnutzen";
-    document.querySelector("#shotlist").innerHTML = `
-      <li><strong>0–2,5 s:</strong> Starker Establishing Shot – ${subject}.</li>
-      <li><strong>2,5–5 s:</strong> Nahaufnahme eines echten Handgriffs oder technischen Details.</li>
-      <li><strong>5–7,5 s:</strong> Menschlicher Nutzen und Abschlussfrage: „${escapeHtml(activeStudioIdea.cta)}“</li>
-    `;
+    document.querySelector("#shotlist").innerHTML = isLongVideo
+      ? `
+        <li><strong>0:00–0:30 · Hook:</strong> Starke Alltagsfrage, klares Versprechen und visuelles Thema – ${subject}.</li>
+        <li><strong>0:30–2:00 · Ausgangslage:</strong> Problem, Missverständnis oder regionale Relevanz verständlich aufbauen.</li>
+        <li><strong>2:00–5:00 · Vor Ort:</strong> echte Anlage, Team, Handgriffe, B-Roll und konkrete Beobachtungen.</li>
+        <li><strong>5:00–8:00 · Fachteil:</strong> Kennzahl, Beispielrechnung, Mythos oder technische Erklärung mit Beleg.</li>
+        <li><strong>8:00–11:00 · Kritische Fragen:</strong> Grenzen, Kosten, Aufwand, Sicherheit oder Zielkonflikt fair einordnen.</li>
+        <li><strong>11:00–Ende · Fazit:</strong> drei Merksätze, nächster Schritt und Community-Frage: „${escapeHtml(activeStudioIdea.cta)}“</li>
+      `
+      : `
+        <li><strong>0–2,5 s:</strong> Starker Establishing Shot – ${subject}.</li>
+        <li><strong>2,5–5 s:</strong> Nahaufnahme eines echten Handgriffs oder technischen Details.</li>
+        <li><strong>5–7,5 s:</strong> Menschlicher Nutzen und Abschlussfrage: „${escapeHtml(activeStudioIdea.cta)}“</li>
+      `;
   }
   drawStudioSlide(canvas, activeStudioIdea, activeStudioSlide);
   renderSlideStrip();
@@ -2137,16 +2209,17 @@ async function downloadStudioAssets() {
   if (!activeStudioIdea) return;
   const button = document.querySelector("#downloadAssetButton");
   const isVideo = activeStudioIdea.format === "Reel" || activeStudioIdea.format === "Story";
+  const isLongVideo = activeStudioIdea.format === "YouTube Long";
   const slug = activeStudioIdea.topic.toLowerCase().replace(/[^a-z0-9äöüß]+/gi, "-");
   const mediaPath = selectedMediaPath();
   await loadMedia(mediaPath);
-  if (!isVideo) {
+  if (!isVideo || isLongVideo) {
     stopStudioAnimation();
     const count = studioSlideCount(activeStudioIdea);
     for (let index = 0; index < count; index += 1) {
       const canvas = document.createElement("canvas");
       drawStudioSlide(canvas, activeStudioIdea, index);
-      downloadCanvas(canvas, `energie-ideenwerk-${slug}-${index + 1}.png`);
+      downloadCanvas(canvas, `energie-ideenwerk-${slug}-${isLongVideo ? "kapitel" : "slide"}-${index + 1}.png`);
       if (count > 1) await new Promise((resolve) => setTimeout(resolve, 180));
     }
     showToast(count > 1 ? `${count} Bilder wurden erstellt.` : "Bild wurde erstellt.");
