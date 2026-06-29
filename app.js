@@ -1759,6 +1759,14 @@ function createBriefingText(idea) {
   ].join("\n");
 }
 
+function briefingFileName(idea) {
+  const slug = `${idea.topic}-${idea.subtheme}-${idea.format}`
+    .toLowerCase()
+    .replace(/[^a-z0-9äöüß]+/gi, "-")
+    .replace(/^-|-$/g, "");
+  return `energie-ideenwerk-briefing-${slug || "produktion"}.pdf`;
+}
+
 function createBriefingHtml(idea) {
   const playbook = getBriefingPlaybook(idea);
   const shotlist = getBriefingShotlist(idea);
@@ -1807,6 +1815,105 @@ function openBriefing(idea) {
   activeBriefingIdea = idea;
   document.querySelector("#briefingContent").innerHTML = createBriefingHtml(idea);
   document.querySelector("#briefingDialog").showModal();
+}
+
+async function downloadBriefingPdf() {
+  if (!activeBriefingIdea) return;
+  const button = document.querySelector("#downloadBriefingPdfButton");
+  const content = document.querySelector("#briefingContent");
+  if (!window.html2canvas || !window.jspdf?.jsPDF) {
+    printBriefingFallback();
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "PDF wird erstellt …";
+  const exportNode = document.createElement("div");
+  exportNode.className = "briefing-pdf-export";
+  exportNode.innerHTML = `
+    <div class="briefing-pdf-page">
+      <div class="briefing-pdf-brand">
+        <strong>Energie-Ideenwerk</strong>
+        <span>Produktionsbriefing</span>
+      </div>
+      ${content.innerHTML}
+    </div>
+  `;
+  document.body.appendChild(exportNode);
+
+  try {
+    const canvas = await window.html2canvas(exportNode, {
+      scale: 2,
+      backgroundColor: "#fffefa",
+      useCORS: true,
+      logging: false,
+      windowWidth: exportNode.scrollWidth,
+      windowHeight: exportNode.scrollHeight,
+    });
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pageWidth = 210;
+    const pageHeight = 297;
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const imgData = canvas.toDataURL("image/jpeg", 0.96);
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+    while (heightLeft > 0) {
+      position -= pageHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+    pdf.save(briefingFileName(activeBriefingIdea));
+    showToast("Briefing-PDF wurde erstellt.");
+  } catch {
+    printBriefingFallback();
+  } finally {
+    exportNode.remove();
+    button.disabled = false;
+    button.textContent = "↓ PDF herunterladen";
+  }
+}
+
+function printBriefingFallback() {
+  const printWindow = window.open("", "_blank", "noopener,noreferrer");
+  if (!printWindow || !activeBriefingIdea) {
+    showToast("PDF-Export war im Browser nicht möglich.");
+    return;
+  }
+  printWindow.document.write(`
+    <!doctype html>
+    <html lang="de">
+      <head>
+        <meta charset="utf-8" />
+        <title>${escapeHtml(activeBriefingIdea.title)} · Briefing</title>
+        <link rel="stylesheet" href="styles.css?v=12" />
+      </head>
+      <body class="briefing-print-body">
+        <div class="briefing-pdf-export print-visible">
+          <div class="briefing-pdf-page">
+            <div class="briefing-pdf-brand">
+              <strong>Energie-Ideenwerk</strong>
+              <span>Produktionsbriefing</span>
+            </div>
+            ${document.querySelector("#briefingContent").innerHTML}
+          </div>
+        </div>
+        <script>
+          window.addEventListener("load", () => {
+            window.focus();
+            window.print();
+          });
+        <\/script>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+  showToast("Druckdialog zum Speichern als PDF wurde geöffnet.");
 }
 
 function createAiImagePrompt(idea) {
@@ -2687,6 +2794,7 @@ document.querySelector("#copyBriefingButton").addEventListener("click", async ()
     showToast("Kopieren war im Browser nicht möglich.");
   }
 });
+document.querySelector("#downloadBriefingPdfButton").addEventListener("click", downloadBriefingPdf);
 document.querySelector("#briefingToStudioButton").addEventListener("click", () => {
   if (!activeBriefingIdea) return;
   briefingDialog.close();

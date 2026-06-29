@@ -1220,9 +1220,105 @@ dialog::backdrop {
 
 .briefing-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
   margin-top: 18px;
+}
+
+.briefing-pdf-export {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 920px;
+  padding: 0;
+  overflow: visible;
+  background: #fffefa;
+  color: var(--ink);
+  transform: translateX(-120vw);
+  pointer-events: none;
+}
+
+.briefing-pdf-page {
+  width: 920px;
+  padding: 42px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(201, 237, 117, 0.18), transparent 28%),
+    radial-gradient(circle at 95% 18%, rgba(223, 29, 103, 0.12), transparent 30%),
+    #fffefa;
+}
+
+.briefing-pdf-brand {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(233, 94, 15, 0.24);
+}
+
+.briefing-pdf-brand strong {
+  color: var(--teal);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.briefing-pdf-brand span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.briefing-pdf-export .briefing-content,
+.briefing-pdf-export .briefing-hero,
+.briefing-pdf-export .briefing-grid,
+.briefing-pdf-export .briefing-section {
+  max-height: none;
+  overflow: visible;
+}
+
+.briefing-pdf-export .briefing-hero,
+.briefing-pdf-export .briefing-grid div,
+.briefing-pdf-export .briefing-section {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.briefing-pdf-export .briefing-section textarea {
+  min-height: 260px;
+}
+
+.briefing-print-body {
+  margin: 0;
+  background: #fffefa;
+}
+
+.briefing-print-body .briefing-pdf-export.print-visible {
+  position: static;
+  z-index: auto;
+  transform: none;
+  pointer-events: auto;
+}
+
+@media print {
+  body:not(.briefing-print-body) > *:not(.briefing-pdf-export) {
+    display: none !important;
+  }
+
+  .briefing-pdf-export {
+    position: static;
+    z-index: auto;
+    width: 100%;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .briefing-pdf-page {
+    width: 100%;
+    padding: 24px;
+  }
 }
 
 .favorites-list {

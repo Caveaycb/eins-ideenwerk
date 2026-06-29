@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=12" />
+    <link rel="stylesheet" href="styles.css?v=13" />
   </head>
   <body>
     <div class="ambient ambient-one"></div>
@@ -352,6 +352,7 @@
       <div id="briefingContent" class="briefing-content"></div>
       <div class="briefing-actions">
         <button id="copyBriefingButton" class="secondary-studio-button" type="button">□ Briefing kopieren</button>
+        <button id="downloadBriefingPdfButton" class="secondary-studio-button" type="button">↓ PDF herunterladen</button>
         <button id="briefingToStudioButton" class="primary-studio-button" type="button">✦ Post im Studio öffnen</button>
       </div>
     </dialog>
@@ -582,6 +583,8 @@
       </div>
     </dialog>
 
-    <script src="app.js?v=12"></script>
+    <script src="assets/vendor/html2canvas.min.js"></script>
+    <script src="assets/vendor/jspdf.umd.min.js"></script>
+    <script src="app.js?v=13"></script>
   </body>
 </html>
