@@ -292,6 +292,46 @@
               </div>
             </div>
           </div>
+
+          <div class="divider"></div>
+
+          <div class="panel-heading">
+            <div>
+              <span class="step">05</span>
+              <h2>Postgenerator nach Plan</h2>
+            </div>
+          </div>
+          <p class="helper">Trage deinen konkreten Dreh- oder Postingplan ein. Das Tool erstellt daraus Briefing, Drehplan und Caption.</p>
+
+          <div class="plan-generator">
+            <div class="field">
+              <label for="customPlanInput">Dein konkreter Plan</label>
+              <textarea id="customPlanInput" rows="6" placeholder="z. B. Wir wollen nächste Woche ein Reel zur neuen PV-Anlage drehen: Techniker erklärt Wechselrichter, Hausbesitzer erzählt vom Eigenverbrauch, Ziel ist Vertrauen und Beratungstermin …"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="customPlanFormat">Format</label>
+                <select id="customPlanFormat">
+                  <option>Reel</option>
+                  <option>Carousel</option>
+                  <option>Story</option>
+                  <option>Post</option>
+                  <option>YouTube Long</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="customPlanTone">Ton</label>
+                <select id="customPlanTone">
+                  <option value="nahbar">Nahbar</option>
+                  <option value="sachlich">Sachlich</option>
+                  <option value="aktivierend">Aktivierend</option>
+                </select>
+              </div>
+            </div>
+            <button class="generate-button plan-generate-button" id="generateFromPlanButton" type="button">
+              <span>▤</span> Drehplan & Caption erstellen
+            </button>
+          </div>
         </aside>
 
         <section class="results-panel">

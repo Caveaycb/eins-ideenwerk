@@ -293,7 +293,8 @@ h3 {
     radial-gradient(circle at 80% 70%, rgba(223, 29, 103, 0.2), transparent 32%);
 }
 
-.campaign-planner input {
+.campaign-planner input,
+.plan-generator textarea {
   width: 100%;
   padding: 12px 13px;
   border: 1px solid var(--line);
@@ -301,12 +302,23 @@ h3 {
   outline: none;
   background: #fbfaf7;
   color: var(--ink);
-  font: 12px "Urbanist", sans-serif;
+  font: 12px/1.55 "Urbanist", sans-serif;
 }
 
-.campaign-planner input:focus {
+.plan-generator textarea {
+  resize: vertical;
+  min-height: 132px;
+}
+
+.campaign-planner input:focus,
+.plan-generator textarea:focus {
   border-color: var(--teal);
   box-shadow: 0 0 0 3px rgba(25, 123, 108, 0.08);
+}
+
+.plan-generate-button {
+  width: 100%;
+  margin-top: 10px;
 }
 
 .campaign-board {

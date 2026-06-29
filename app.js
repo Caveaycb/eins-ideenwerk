@@ -1058,6 +1058,128 @@ function getSettings() {
   };
 }
 
+function detectTopicFromPlan(planText) {
+  const normalized = planText.toLowerCase();
+  const scored = topics.map((topic) => {
+    const terms = [topic.name, ...(topic.keywords || [])].map((term) => term.toLowerCase());
+    const score = terms.reduce((sum, term) => sum + (normalized.includes(term) ? 3 : 0), 0) +
+      (topicSubthemes[topic.name] || []).reduce((sum, term) => sum + (normalized.includes(term.toLowerCase()) ? 2 : 0), 0);
+    return { topic, score };
+  }).sort((a, b) => b.score - a.score);
+  return scored[0]?.score > 0 ? scored[0].topic : topics.find((topic) => selectedTopics.has(topic.name)) || topics[0];
+}
+
+function extractPlanTitle(planText, topicName, format) {
+  const firstSentence = planText
+    .replace(/\s+/g, " ")
+    .split(/[.!?]/)
+    .map((sentence) => sentence.trim())
+    .find(Boolean);
+  if (!firstSentence) return `${topicName}: konkreter ${format}-Plan`;
+  const clean = firstSentence.length > 78 ? `${firstSentence.slice(0, 75).trim()}…` : firstSentence;
+  return clean.match(new RegExp(topicName, "i")) ? clean : `${topicName}: ${clean}`;
+}
+
+function inferPlanMechanic(planText, format) {
+  const text = planText.toLowerCase();
+  if (format === "YouTube Long") return text.includes("interview") || text.includes("gespräch") ? "Expert:innen-Talk" : "Vor-Ort-Reportage";
+  if (text.includes("myth") || text.includes("fakt")) return "Mythos/Fakt";
+  if (text.includes("baustelle") || text.includes("projekt")) return "Projektupdate";
+  if (text.includes("frage") || text.includes("kommentar")) return "Kommentar als Aufhänger";
+  if (text.includes("azubi") || text.includes("team") || text.includes("mitarbeiter")) return "Mitarbeitenden-Moment";
+  if (text.includes("erklär") || text.includes("wissen")) return "Erklärstück";
+  if (format === "Carousel") return "Swipe-Checkliste";
+  if (format === "Story") return "Mini-Sprechstunde";
+  if (format === "Post") return "Foto mit Fußnote";
+  return "Vor-Ort-Dreh";
+}
+
+function createIdeaFromPlan() {
+  const planText = document.querySelector("#customPlanInput").value.trim();
+  if (!planText) {
+    showToast("Bitte trage zuerst deinen konkreten Plan ein.");
+    return null;
+  }
+  const format = document.querySelector("#customPlanFormat").value;
+  const tone = document.querySelector("#customPlanTone").value;
+  const settings = getSettings();
+  const topic = detectTopicFromPlan(planText);
+  const subthemes = topicSubthemes[topic.name] || genericSubthemes;
+  const subtheme = subthemes.find((item) => planText.toLowerCase().includes(item.toLowerCase())) || subthemes[hash(planText) % subthemes.length];
+  const mechanic = inferPlanMechanic(planText, format);
+  const planHook = planText.length > 110
+    ? `„${planText.slice(0, 104).trim()} …“`
+    : `„${planText}“`;
+  const planConcept = `Ausgehend vom konkreten Plan: ${planText} Daraus wird ein ${format} mit klarer Dramaturgie, realen Motiven, fachlicher Einordnung und einer produktionstauglichen Shotlist.`;
+  const proof = pick(proofPoints, hash(`${planText}-${topic.name}`));
+  const visualApproach = `konkreter Produktionsdreh nach Plan; Motiv: ${pick(visualApproaches, hash(planText))}`;
+  const template = { format, mechanic, title: "{topic}", concept: planConcept, hook: planHook };
+  const criticalReview = runCriticalReview({
+    topic: topic.name,
+    subtheme,
+    goal: settings.goal,
+    audience: settings.audience,
+    template,
+    concept: planConcept,
+    topicProof: proof,
+    topicTension: "konkreter Plan vs. fachlich sichere Veröffentlichung",
+  });
+  const keywords = topic.keywords || [topic.name.replaceAll(" ", "")];
+  return {
+    id: `plan-${Date.now()}-${hash(planText)}`,
+    topic: topic.name,
+    format,
+    mechanic,
+    pillar: "Produktion",
+    subtheme,
+    occasion: "konkreter Redaktionsplan",
+    protagonist: inferPlanProtagonist(planText),
+    setting: inferPlanSetting(planText, topic.name),
+    proof,
+    visualApproach,
+    mediaIndex: hash(planText) % getMediaOptions(topic.name).length,
+    platform: document.querySelector("#platform").value,
+    title: extractPlanTitle(planText, topic.name, format),
+    hook: planHook,
+    concept: planConcept,
+    cta: inferPlanCta(planText, format),
+    strength: `Der Beitrag basiert auf einem konkreten Produktionsplan und wird direkt in Drehlogik, O-Töne, Requisiten und Caption übersetzt. ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
+    criticalReview,
+    preferredTone: tone,
+    originalPlan: planText,
+    hashtags: [
+      "#EnergieIdeenwerk",
+      ...keywords.slice(0, 2).map((keyword) => `#${keyword.replaceAll(" ", "")}`),
+      "#EnergieWissen",
+    ],
+    score: 88,
+  };
+}
+
+function inferPlanProtagonist(planText) {
+  const text = planText.toLowerCase();
+  if (text.includes("azubi")) return "eine Auszubildende oder ein Auszubildender im echten Arbeitsmoment";
+  if (text.includes("hausbesitzer") || text.includes("kund")) return "eine Kundin oder ein Kunde mit konkreter Alltagsperspektive";
+  if (text.includes("techniker") || text.includes("monteur")) return "eine Fachperson, die den Arbeitsschritt direkt vor Ort erklärt";
+  if (text.includes("team")) return "ein Team aus Fachbereich und Kommunikation im gemeinsamen Dreh";
+  return "eine Fachperson mit sichtbarem Praxisbezug";
+}
+
+function inferPlanSetting(planText, topicName) {
+  const text = planText.toLowerCase();
+  if (text.includes("baustelle")) return "auf einer realen Baustelle mit sicher freigegebenem Drehbereich";
+  if (text.includes("anlage") || text.includes("pv") || text.includes("wind")) return "direkt an der Anlage mit ergänzenden Detailaufnahmen";
+  if (text.includes("büro") || text.includes("beratung")) return "in einer Beratungssituation mit ergänzenden Schnittbildern";
+  return getBriefingPlaybook({ topic: topicName }).locations[0];
+}
+
+function inferPlanCta(planText, format) {
+  if (format === "YouTube Long") return "Welche Frage sollen wir im nächsten ausführlichen Video beantworten?";
+  if (format === "Story") return "Stimme ab oder schick uns deine Frage zum Thema.";
+  if (format === "Carousel") return "Speichere den Beitrag für später und teile ihn mit jemandem, der das wissen sollte.";
+  return "Welche Perspektive sollen wir als Nächstes zeigen?";
+}
+
 function getCampaignSettings() {
   const startInput = document.querySelector("#campaignStart");
   if (startInput && !startInput.value) {
@@ -1350,6 +1472,23 @@ function generateIdeas() {
     ${escapeHtml(document.querySelector("#ideaMode").selectedOptions[0].text)}
   `;
 
+  if (window.innerWidth < 1050) {
+    document.querySelector(".results-panel").scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+function generateFromConcretePlan() {
+  const idea = createIdeaFromPlan();
+  if (!idea) return;
+  currentIdeas = [idea, ...currentIdeas.filter((existing) => !existing.id?.startsWith("plan-"))].slice(0, Math.max(1, Number(document.querySelector("#ideaCount").value)));
+  emptyState.hidden = true;
+  renderIdeas();
+  renderCampaignBoard(getSettings(), [topics.find((topic) => topic.name === idea.topic) || { name: idea.topic }]);
+  resultsSummary.innerHTML = `
+    <span class="pulse"></span>
+    Konkreter Plan wurde in Drehplan, Briefing und Caption übersetzt · ${escapeHtml(idea.format)}
+  `;
+  openBriefing(idea);
   if (window.innerWidth < 1050) {
     document.querySelector(".results-panel").scrollIntoView({ behavior: "smooth" });
   }
@@ -1724,7 +1863,7 @@ function getBriefingImages(idea) {
 function createBriefingText(idea) {
   const playbook = getBriefingPlaybook(idea);
   const shotlist = getBriefingShotlist(idea);
-  const caption = createCaption(idea, "nahbar");
+  const caption = createCaption(idea, idea.preferredTone || "nahbar");
   return [
     `PRODUKTIONSBRIEFING · ${idea.title}`,
     "",
@@ -1733,6 +1872,7 @@ function createBriefingText(idea) {
     `Ziel des Posts: ${getBriefingGoal(idea)}`,
     `Kernaussage: ${getCoreMessage(idea)}`,
     `Zielgruppe/Perspektive: ${idea.protagonist}`,
+    idea.originalPlan ? `Ausgangsplan: ${idea.originalPlan}` : "",
     "",
     "Benötigte Bilder / Shotlist:",
     ...shotlist.map((item, index) => `${index + 1}. ${item}`),
@@ -1771,7 +1911,7 @@ function createBriefingHtml(idea) {
   const playbook = getBriefingPlaybook(idea);
   const shotlist = getBriefingShotlist(idea);
   const images = getBriefingImages(idea);
-  const caption = createCaption(idea, "nahbar");
+  const caption = createCaption(idea, idea.preferredTone || "nahbar");
   const section = (title, items) => `
     <section class="briefing-section">
       <h3>${escapeHtml(title)}</h3>
@@ -1792,6 +1932,7 @@ function createBriefingHtml(idea) {
       <div><span>Zielgruppe/Perspektive</span><strong>${escapeHtml(idea.protagonist)}</strong></div>
       <div><span>Freigabe-Level</span><strong>${escapeHtml(idea.criticalReview?.label || "Standardprüfung")}</strong></div>
     </div>
+    ${idea.originalPlan ? `<section class="briefing-section"><h3>Ausgangsplan</h3><p>${escapeHtml(idea.originalPlan)}</p></section>` : ""}
     ${section("Benötigte Bilder / Shotlist", shotlist)}
     ${section("Drehorte", playbook.locations)}
     ${section("Vordefinierte O-Töne / Interviewfragen", playbook.otones)}
@@ -2766,6 +2907,7 @@ document.querySelectorAll("#campaignTheme, #campaignDuration, #campaignFrequency
 });
 
 document.querySelector("#generateButton").addEventListener("click", generateIdeas);
+document.querySelector("#generateFromPlanButton").addEventListener("click", generateFromConcretePlan);
 document.querySelector("#refreshButton").addEventListener("click", generateIdeas);
 document.querySelector("#demoButton").addEventListener("click", generateIdeas);
 document.querySelector("#exportButton").addEventListener("click", exportIdeas);
