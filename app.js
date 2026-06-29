@@ -11,7 +11,7 @@ const topicCatalog = [
   { name: "Energiesparen", icon: "↓", keywords: ["Energiesparen", "Tipps", "Nachhaltigkeit"] },
   { name: "Nachhaltigkeit", icon: "♧", keywords: ["Nachhaltigkeit", "Klimaschutz", "Zukunft"] },
   { name: "Region & Engagement", icon: "♡", keywords: ["Chemnitz", "Sachsen", "UnsereRegion"] },
-  { name: "Berufe & Ausbildung", icon: "✦", keywords: ["Karriere", "Ausbildung", "TeamEINS"] },
+  { name: "Berufe & Ausbildung", icon: "✦", keywords: ["Karriere", "Ausbildung", "TeamEnergie"] },
   { name: "Service & Sicherheit", icon: "✓", keywords: ["Service", "Sicherheit", "GutZuWissen"] },
   { name: "Wärmepumpen", icon: "♨", keywords: ["Wärmepumpe", "Heizen", "Wärmewende"] },
   { name: "Batteriespeicher", icon: "▣", keywords: ["Speicher", "Batterie", "Energiewende"] },
@@ -19,7 +19,7 @@ const topicCatalog = [
   { name: "Zähler & Messwesen", icon: "◴", keywords: ["Zähler", "SmartMeter", "Verbrauch"] },
   { name: "Energiepreise & Markt", icon: "€", keywords: ["Energiepreis", "Energiemarkt", "Erklärt"] },
   { name: "Kommunale Wärmeplanung", icon: "⌘", keywords: ["Wärmeplanung", "Kommune", "Wärmewende"] },
-  { name: "Kundenservice", icon: "☎", keywords: ["Kundenservice", "Hilfe", "EINSEnergie"] },
+  { name: "Kundenservice", icon: "☎", keywords: ["Kundenservice", "Hilfe", "EnergieIdeenwerk"] },
   { name: "Digitalisierung", icon: "⌘", keywords: ["Digitalisierung", "Innovation", "SmartCity"] },
   { name: "Netzleitstelle", icon: "⌁", keywords: ["Leitstelle", "Stromnetz", "Versorgung"] },
   { name: "Straßenbeleuchtung", icon: "◐", keywords: ["Licht", "SmartCity", "Kommune"] },
@@ -253,7 +253,7 @@ const angles = {
   ],
   "Berufe & Ausbildung": [
     "Ein Beruf, den fast niemand kennt – aber alle täglich brauchen",
-    "Schichtbeginn: 60 Sekunden im Arbeitsalltag eines EINS-Teams",
+    "Schichtbeginn: 60 Sekunden im Arbeitsalltag eines Energie-Teams",
     "Drei überraschende Fähigkeiten, die in der Energiebranche zählen",
   ],
   "Service & Sicherheit": [
@@ -517,7 +517,7 @@ templates.push(
     mechanic: "Unbequeme Wahrheit",
     title: "Die unbequeme Wahrheit über {topic}",
     hook: "„Die ehrliche Antwort ist: Es kommt darauf an.“",
-    concept: "Ein Zielkonflikt zu „{angle}“ wird transparent erklärt: Was dafür spricht, was dagegen spricht und was EINS konkret tut.",
+    concept: "Ein Zielkonflikt zu „{angle}“ wird transparent erklärt: Was dafür spricht, was dagegen spricht und was das Energie-Ideenwerk konkret tut.",
     cta: "Welche Seite des Themas sollen wir ausführlicher erklären?",
     strength: "Ehrliche Zielkonflikte stärken Vertrauen stärker als glatte Werbeaussagen.",
   },
@@ -546,7 +546,7 @@ const expertMechanicRows = [
   ["Reel", "Speedrun", "{topic} im Speedrun erklärt", "„Alles Wichtige in 20 Sekunden.“", "Schnelle, aber klare Erklärung zu „{angle}“ mit Timer, drei Kernpunkten und einem Merksatz.", "War das zu schnell oder genau richtig?"],
   ["Reel", "Slow TV", "{topic} ohne Hektik", "„Manchmal ist das Spannende genau das Ruhige.“", "Ein ruhiger, atmosphärischer Arbeitsmoment zu „{angle}“ mit Originalton und sehr wenig Text.", "Mehr ruhige Einblicke oder lieber schnelle Reels?"],
   ["Reel", "Comment Rescue", "Wir retten einen Kommentar zu {topic}", "„Gute Frage – falsche Annahme.“", "Ein kritischer Kommentar zu „{angle}“ wird wertschätzend aufgegriffen, korrigiert und praktisch beantwortet.", "Welche Aussage sollen wir prüfen?"],
-  ["Reel", "Kid Explains", "Ein Kind fragt, EINS erklärt {topic}", "„Warum ist das eigentlich so?“", "Eine Kinderfrage zu „{angle}“ wird ernst genommen und mit einfachem Bildvergleich beantwortet.", "Welche Kinderfrage nehmen wir als Nächstes?"],
+  ["Reel", "Kid Explains", "Ein Kind fragt, Energie-Ideenwerk erklärt {topic}", "„Warum ist das eigentlich so?“", "Eine Kinderfrage zu „{angle}“ wird ernst genommen und mit einfachem Bildvergleich beantwortet.", "Welche Kinderfrage nehmen wir als Nächstes?"],
   ["Reel", "Senior Friendly", "{topic} ohne Fachwörter", "„So würde ich es meiner Oma erklären.“", "Eine komplexe Frage zu „{angle}“ wird bewusst langsam, klar und serviceorientiert erklärt.", "War die Erklärung verständlich?"],
   ["Reel", "Data Reveal", "Die Zahl hinter {topic}", "„Rate mal, wie viel dahintersteckt.“", "Eine Zahl zu „{angle}“ wird erst als Schätzfrage gezeigt und danach mit realem Bildmaterial erklärt.", "Wie nah lagst du?"],
   ["Reel", "Before the Call", "Bevor du wegen {topic} anrufst", "„Diese drei Infos helfen sofort.“", "Service-Reel mit Vorbereitungsschritten zu „{angle}“, damit Kund:innen schneller Hilfe bekommen.", "Speichern für den richtigen Moment."],
@@ -930,7 +930,7 @@ const criticalTopicSignals = {
 let topics = [...topicCatalog];
 let selectedTopics = new Set(["Strom", "Photovoltaik", "Elektromobilität"]);
 let currentIdeas = [];
-let favorites = JSON.parse(localStorage.getItem("eins-ideen-favorites") || "[]");
+let favorites = JSON.parse(localStorage.getItem("energie-ideenwerk-favorites") || "[]");
 let generationRound = 0;
 let generationSalt = 0;
 let recentIdeaSignatures = [];
@@ -1214,7 +1214,7 @@ function buildIdea(topic, index, settings) {
     strength: `${template.strength} Der Beitrag geht nicht allgemein über ${topic.name}, sondern spitzt auf „${subtheme}“ und den Konflikt „${topicTension}“ zu. ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
     criticalReview,
     hashtags: [
-      "#EINSEnergie",
+      "#EnergieIdeenwerk",
       ...keywords.slice(0, 2).map((keyword) => `#${keyword.replaceAll(" ", "")}`),
       settings.regionality >= 6 ? "#Südsachsen" : "#EnergieWissen",
     ],
@@ -1538,7 +1538,7 @@ ${idea.hashtags.join(" ")}`;
 
 function createAiImagePrompt(idea) {
   if (!idea) return "";
-  const palette = "EINS Energie Look: warmes Orange, klares Blau, natürliche helle Bildsprache, regional, seriös, modern";
+  const palette = "Energie-Ideenwerk Look: warmes Orange, klares Blau, natürliche helle Bildsprache, regional, seriös, modern";
   const style = document.querySelector("#visualStyle")?.selectedOptions?.[0]?.text || "Editorial & klar";
   const cameraVariant = pick([
     "weite Reportageaufnahme mit Mensch und Anlage im Verhältnis",
@@ -1558,7 +1558,7 @@ function createAiImagePrompt(idea) {
     "Berufe & Ausbildung": "authentische Auszubildende im technischen Arbeitsmoment, Team, Werkstatt",
   }[idea.topic] || `authentische Szene rund um ${idea.topic}, Menschen, Technik und regionaler Nutzen`;
   return [
-    `Erstelle ein realistisches Social-Media-Foto für EINS Energie zum Thema „${idea.topic}“.`,
+    `Erstelle ein realistisches Social-Media-Foto für Energie-Ideenwerk zum Thema „${idea.topic}“.`,
     `Motiv: ${subject}.`,
     `Fachlicher Fokus: ${idea.subtheme}. Story-Konflikt: ${idea.concept.match(/Fachlicher Kern: ([^.]+)/)?.[1] || idea.title}.`,
     `Bildstil: ${style}, dokumentarisch, echte Anlage, echte Menschen, kein Text im Bild, keine Logos außer wenn dezent als Platzhalter, keine Illustration, keine Stockfoto-Klischees.`,
@@ -1674,7 +1674,7 @@ function createDefaultDesign(idea, slideIndex) {
       mediaIndex: ((idea.mediaIndex || 0) + slideIndex) % getMediaOptions(idea.topic).length,
     },
     logo: {
-      x: 76, y: 104, text: "eins", size: 58, color: "#ffffff",
+      x: 76, y: 104, text: "Energie", size: 48, color: "#ffffff",
       font: "Urbanist", spacing: 0, weight: 900, opacity: 1, visible: true, align: "left", maxWidth: 300,
     },
     kicker: {
@@ -1694,7 +1694,7 @@ function createDefaultDesign(idea, slideIndex) {
     },
     footer: {
       x: 76, y: height - 72,
-      text: "#einsvoraus  ·  Energie für Chemnitz und Südsachsen",
+      text: "#energieideen  ·  Energie für Chemnitz und Südsachsen",
       size: 24, color: "#ffffff", font: "Urbanist", spacing: 0, weight: 700, opacity: 1, visible: true,
       align: "left", maxWidth: width - 152,
     },
@@ -1918,12 +1918,10 @@ function drawStudioSlide(canvas, idea, slideIndex, progress = 1) {
     ctx.letterSpacing = `${layer.spacing || 0}px`;
     ctx.fillText(layer.text, layer.x, layer.y);
     ctx.fillStyle = "#e95e0f";
-    ctx.beginPath();
-    ctx.arc(layer.x + layer.size * 0.69, layer.y - layer.size * 0.91, layer.size * 0.14, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.fillRect(layer.x, layer.y + layer.size * 0.16, layer.size * 2.05, Math.max(5, layer.size * 0.08));
     ctx.font = `600 ${Math.max(14, layer.size * 0.38)}px Urbanist, Arial`;
     ctx.fillStyle = layer.color;
-    ctx.fillText("energie in sachsen", layer.x + 2, layer.y + layer.size * 0.55);
+    ctx.fillText("Energie-Ideenwerk", layer.x + 2, layer.y + layer.size * 0.55);
     ctx.restore();
     if (isMainCanvas) studioHitboxes.push({ layer: "logo", x: layer.x - 8, y: layer.y - layer.size, width: 270, height: layer.size * 1.8 });
   }
@@ -2148,7 +2146,7 @@ async function downloadStudioAssets() {
     for (let index = 0; index < count; index += 1) {
       const canvas = document.createElement("canvas");
       drawStudioSlide(canvas, activeStudioIdea, index);
-      downloadCanvas(canvas, `eins-${slug}-${index + 1}.png`);
+      downloadCanvas(canvas, `energie-ideenwerk-${slug}-${index + 1}.png`);
       if (count > 1) await new Promise((resolve) => setTimeout(resolve, 180));
     }
     showToast(count > 1 ? `${count} Bilder wurden erstellt.` : "Bild wurde erstellt.");
@@ -2195,7 +2193,7 @@ async function downloadStudioAssets() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `eins-${slug}-video.webm`;
+  link.download = `energie-ideenwerk-${slug}-video.webm`;
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
   button.disabled = false;
@@ -2227,7 +2225,7 @@ function toggleFavorite(idea) {
 }
 
 function persistFavorites() {
-  localStorage.setItem("eins-ideen-favorites", JSON.stringify(favorites));
+  localStorage.setItem("energie-ideenwerk-favorites", JSON.stringify(favorites));
   document.querySelector("#favoriteCount").textContent = favorites.length;
 }
 
@@ -2303,7 +2301,7 @@ function exportIdeas() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `eins-content-ideen-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.download = `energie-ideenwerk-content-ideen-${new Date().toISOString().slice(0, 10)}.csv`;
   link.click();
   URL.revokeObjectURL(url);
   showToast("CSV-Export wurde erstellt.");
@@ -2318,7 +2316,7 @@ document.querySelector("#customTopicForm").addEventListener("submit", (event) =>
     showToast("Dieses Thema gibt es bereits.");
     return;
   }
-  topics.push({ name, icon: "＋", keywords: [name.replaceAll(" ", ""), "EINSEnergie"] });
+  topics.push({ name, icon: "＋", keywords: [name.replaceAll(" ", ""), "EnergieIdeenwerk"] });
   selectedTopics.add(name);
   input.value = "";
   renderTopics();

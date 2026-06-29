@@ -83,29 +83,17 @@ button {
   position: relative;
   width: auto;
   height: auto;
-  color: #000;
+  color: var(--teal);
   font-family: "Urbanist", sans-serif;
-  font-size: 38px;
+  font-size: 30px;
   font-weight: 900;
-  letter-spacing: -0.09em;
-  line-height: 0.8;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
 }
 
 .brand-mark span {
   position: relative;
   color: #0090d4;
-}
-
-.brand-mark span::before {
-  content: "";
-  position: absolute;
-  top: -7px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #e95e0f;
-  transform: translateX(-50%);
 }
 
 .brand > span:last-child {
