@@ -1479,6 +1479,7 @@ function renderIdeas() {
           <p class="hashtags">${idea.hashtags.map(escapeHtml).join(" ")}</p>
           <div class="card-actions">
             <button class="card-action create-post-action" data-index="${index}" type="button">✦ Fertigen Post erstellen</button>
+            <button class="card-action briefing-action" data-index="${index}" type="button">▤ Briefing erstellen</button>
             <button class="card-action copy-action" data-index="${index}" type="button">□ Idee kopieren</button>
             <button class="card-action favorite-action ${isFavorite ? "active" : ""}" data-index="${index}" type="button">
               ${isFavorite ? "♥ Gespeichert" : "♡ Favorisieren"}
@@ -1495,6 +1496,11 @@ function renderIdeas() {
   document.querySelectorAll(".create-post-action").forEach((button) => {
     button.addEventListener("click", () =>
       openPostStudio(currentIdeas[Number(button.dataset.index)]),
+    );
+  });
+  document.querySelectorAll(".briefing-action").forEach((button) => {
+    button.addEventListener("click", () =>
+      openBriefing(currentIdeas[Number(button.dataset.index)]),
     );
   });
   document.querySelectorAll(".favorite-action").forEach((button) => {
@@ -1588,6 +1594,219 @@ ${(idea.criticalReview?.checks || ["Fakten, Zahlen und konkrete Aussagen vor Ver
 ${idea.cta}
 
 ${idea.hashtags.join(" ")}`;
+}
+
+let activeBriefingIdea = null;
+
+const briefingPlaybooks = {
+  Strom: {
+    locations: ["Umspannwerk oder Netzstation", "Netzleitstelle", "Straßenraum mit sichtbarer Infrastruktur", "Werkstatt oder Einsatzfahrzeug"],
+    otones: ["Was passiert, bevor Strom zuverlässig ankommt?", "Welche Schalthandlung oder Kontrolle wird häufig unterschätzt?", "Woran erkennt man, dass das Netz stabil arbeitet?", "Was sollen Kund:innen bei einer Störung zuerst tun?"],
+    props: ["PSA/Helm", "Schaltplan oder Netzskizze", "Messgerät", "Einsatzfahrzeug", "Detailaufnahme Kabel/Schalter"],
+  },
+  Gas: {
+    locations: ["Heizungsraum", "Hausanschlussraum", "Serviceeinsatz vor Ort", "Leitungsabschnitt oder Netzpunkt"],
+    otones: ["Warum ist Sicherheit bei Gas immer der erste Punkt?", "Was bedeutet der typische Gasgeruch?", "Welche Prüfung zeigt man am besten vor der Kamera?", "Welche Handlung ist im Verdachtsfall richtig?"],
+    props: ["Gaswarngerät", "Prüfprotokoll", "Werkzeugkoffer", "Warnhinweis", "Heizungsdetail"],
+  },
+  Photovoltaik: {
+    locations: ["PV-Dach mit sicherem Zugang", "Wechselrichterraum", "Beratungssituation am Haus", "Blick auf Dachfläche und Verschattung"],
+    otones: ["Was entscheidet, ob ein Dach wirklich passt?", "Welche Erwartung an PV stimmt oft nicht?", "Warum ist Eigenverbrauch so wichtig?", "Welche Frage sollte man vor der Planung immer stellen?"],
+    props: ["PV-Moduldetail", "Wechselrichter", "Tablet mit Ertragskurve", "Sonnenstands-/Verschattungsskizze", "Sicherheitsausrüstung"],
+  },
+  Windkraft: {
+    locations: ["Windpark", "Servicebereich am Turm", "Landschaftsperspektive mit Anlage", "Wartungssituation"],
+    otones: ["Was wird bei einer Wartung tatsächlich geprüft?", "Welche Bürgerfrage kommt am häufigsten?", "Wie ordnet man Geräusche oder Schatten sachlich ein?", "Was sagt der Ertrag über einen guten Windtag?"],
+    props: ["Helm und Kletterausrüstung", "Wartungscheckliste", "Messgerät", "Rotorblatt-Detail", "Karte des Standortes"],
+  },
+  Abwasser: {
+    locations: ["Kläranlage", "Rechenanlage", "Labor", "Becken oder Kanalbetrieb", "Gewässer-Auslaufpunkt"],
+    otones: ["Was landet täglich hier, obwohl es nicht in die Toilette gehört?", "Welche Stufe der Reinigung wird am häufigsten unterschätzt?", "Wie schützt Abwasserarbeit die Umwelt?", "Was sollte jede:r im Alltag vermeiden?"],
+    props: ["Wasserprobe", "Laborflasche", "Schutzhandschuhe", "Rechen-Fundstücke sachlich arrangiert", "Ablaufskizze der Reinigung"],
+  },
+  Trinkwasser: {
+    locations: ["Wasserwerk", "Labor", "Rohrnetzpunkt", "Haushaltsszene mit Wasserhahn"],
+    otones: ["Warum ist Trinkwasser so streng kontrolliert?", "Welche Messwerte erklären Qualität verständlich?", "Wie kommt Wasser vom Werk bis zum Glas?", "Was können Haushalte selbst beachten?"],
+    props: ["Wasserprobe", "Laborpipette", "Glas Wasser", "Rohrnetzplan", "Messgerät"],
+  },
+  Fernwärme: {
+    locations: ["Fernwärmetrasse", "Hausstation", "Leitwarte", "Baustelle im Straßenraum"],
+    otones: ["Was passiert unter der Straße?", "Warum ist eine Hausstation so wichtig?", "Welche Rolle spielt Fernwärme in der Wärmewende?", "Welche Einschränkungen müssen ehrlich erklärt werden?"],
+    props: ["Rohrleitungsdetail", "Temperaturanzeige", "Baustellenschild", "Wärmeplan-Skizze", "PSA"],
+  },
+  Elektromobilität: {
+    locations: ["öffentliche Ladesäule", "Ladepark", "Parkplatz mit E-Auto", "Beratungssituation zu Ladeinfrastruktur"],
+    otones: ["Was bedeuten die Anzeigen an der Ladesäule?", "Welche Ladefrage kommt am häufigsten?", "Was unterscheidet öffentliches Laden von Laden zu Hause?", "Welche Alltagssorge lässt sich einfach erklären?"],
+    props: ["Ladekabel", "Ladesäulen-Display", "E-Auto", "App-Screenshot als Platzhalter", "Steckertypen"],
+  },
+};
+
+function getBriefingPlaybook(idea) {
+  return briefingPlaybooks[idea.topic] || {
+    locations: [idea.setting, "realer Ort mit Bezug zum Thema", "Arbeitsplatz einer Fachperson", "Alltagsszene der Zielgruppe"],
+    otones: [`Warum ist ${idea.subtheme} für die Zielgruppe relevant?`, "Was wird häufig falsch verstanden?", "Welche konkrete Handlung oder Erkenntnis soll hängen bleiben?", "Was ist die ehrliche Grenze des Themas?"],
+    props: ["Smartphone für Behind-the-Scenes", "Notizkarte mit Kernaussage", "thematisches Detailmotiv", "Mikrofon", "Freigabe-/Checkliste"],
+  };
+}
+
+function getBriefingGoal(idea) {
+  const goals = {
+    Reel: "Aufmerksamkeit erzeugen, schnell erklären und zur Interaktion führen.",
+    Story: "Community aktivieren, Rückfragen sammeln und Nähe erzeugen.",
+    Carousel: "Speicherbaren Nutzwert liefern und ein komplexes Thema Schritt für Schritt erklären.",
+    Post: "Eine klare Aussage oder Haltung mit starkem Bild und präziser Caption platzieren.",
+    "YouTube Long": "Vertrauen und Verständnis durch Tiefe, Kapitelstruktur, echte Stimmen und kritische Einordnung aufbauen.",
+  };
+  return goals[idea.format] || "Relevanz, Verständnis und Vertrauen für das Thema aufbauen.";
+}
+
+function getCoreMessage(idea) {
+  return `Das Thema „${idea.topic}“ wird nicht abstrakt erklärt, sondern über „${idea.subtheme}“ konkret gemacht: ${idea.hook.replace(/^„|“$/g, "")}`;
+}
+
+function getBriefingShotlist(idea) {
+  if (idea.format === "YouTube Long") {
+    return [
+      "Hook/Cold Open: starke Alltagsszene oder kritische Frage, die das Thema sofort relevant macht.",
+      "Establishing: Drehort zeigen, Thema einordnen, Versprechen des Videos formulieren.",
+      "Fachperson on camera: kurze Einordnung, warum dieses Thema wichtig ist.",
+      "B-Roll-Block: Anlage, Handgriffe, Detailaufnahmen, Displays, Pläne, Wege, Sicherheitsmomente.",
+      "Erklärkapitel: Beispielrechnung, Messwert, Prozessgrafik oder Vorher-Nachher-Logik filmen.",
+      "Kritische Fragen: Grenzen, Kosten, Aufwand, Sicherheit oder Missverständnisse transparent beantworten.",
+      "Fazit: drei Merksätze, nächster Schritt, CTA und offene Community-Frage.",
+    ];
+  }
+  if (idea.format === "Carousel") {
+    return [
+      "Titelbild: starkes reales Motiv mit klarer Headline-Fläche.",
+      "Slide 2: Problem oder häufiges Missverständnis visuell zeigen.",
+      "Slide 3: fachliche Auflösung mit Detailaufnahme oder Skizze.",
+      "Slide 4: konkreter Tipp, Merksatz oder Entscheidungshilfe.",
+      "Optional: Porträt/O-Ton als Vertrauensanker für letzte Karte.",
+    ];
+  }
+  if (idea.format === "Story") {
+    return [
+      "Frame 1: Frage, Poll oder Slider mit starkem Motiv.",
+      "Frame 2: kurze Auflösung mit Fachdetail.",
+      "Frame 3: O-Ton oder Blick hinter die Kulissen.",
+      "Frame 4: CTA, Fragensticker oder Abstimmung für Folgeinhalt.",
+    ];
+  }
+  if (idea.format === "Reel") {
+    return [
+      "0–2 Sekunden: visueller Stopper oder überraschender Satz.",
+      "2–5 Sekunden: echter Arbeitsmoment, Detail oder Problem zeigen.",
+      "5–10 Sekunden: Fachperson erklärt die Kernaussage in einem Satz.",
+      "10–18 Sekunden: Beleg, Messwert, Vorher/Nachher oder Alltagstransfer.",
+      "18–25 Sekunden: Nutzen und CTA mit klarer Abschlussfrage.",
+    ];
+  }
+  return [
+    "Hero-Foto: reales Motiv mit Mensch, Technik oder regionalem Ort.",
+    "Detailfoto: Beleg, Bauteil, Werkzeug oder Prozessschritt.",
+    "Optionales Porträt: Fachperson mit kurzem Zitat.",
+    "Abschlussmotiv: Nutzen für Alltag, Region oder Zielgruppe.",
+  ];
+}
+
+function getBriefingImages(idea) {
+  const playbook = getBriefingPlaybook(idea);
+  return [
+    `Hauptmotiv: ${idea.visualApproach}`,
+    `Menschenmotiv: ${idea.protagonist}`,
+    `Belegmotiv: ${idea.proof}`,
+    `Drehort-/Kontextmotiv: ${playbook.locations[0]}`,
+    "Sicherheits-/Arbeitsdetail, falls sichtbar und freigegeben",
+  ];
+}
+
+function createBriefingText(idea) {
+  const playbook = getBriefingPlaybook(idea);
+  const shotlist = getBriefingShotlist(idea);
+  const caption = createCaption(idea, "nahbar");
+  return [
+    `PRODUKTIONSBRIEFING · ${idea.title}`,
+    "",
+    `Format: ${idea.format} · Plattform: ${idea.platform}`,
+    `Thema: ${idea.topic} · Fokus: ${idea.subtheme}`,
+    `Ziel des Posts: ${getBriefingGoal(idea)}`,
+    `Kernaussage: ${getCoreMessage(idea)}`,
+    `Zielgruppe/Perspektive: ${idea.protagonist}`,
+    "",
+    "Benötigte Bilder / Shotlist:",
+    ...shotlist.map((item, index) => `${index + 1}. ${item}`),
+    "",
+    "Drehorte:",
+    ...playbook.locations.map((item) => `- ${item}`),
+    "",
+    "Vordefinierte O-Töne / Interviewfragen:",
+    ...playbook.otones.map((item) => `- ${item}`),
+    "",
+    "Requisiten / Produktionscheckliste:",
+    ...playbook.props.map((item) => `- ${item}`),
+    "- Einverständnis/Freigabe für sichtbare Personen einholen",
+    "- Sicherheitsvorgaben am Drehort prüfen",
+    "- Fachliche Aussage und Zahlen vor Veröffentlichung gegenprüfen",
+    "",
+    "Caption / Beschreibung:",
+    caption,
+    "",
+    `Hashtags: ${idea.hashtags.join(" ")}`,
+    "",
+    "Interne Prüfcheckliste:",
+    ...(idea.criticalReview?.checks || ["Fakten vor Veröffentlichung prüfen."]).map((item) => `- ${item}`),
+  ].join("\n");
+}
+
+function createBriefingHtml(idea) {
+  const playbook = getBriefingPlaybook(idea);
+  const shotlist = getBriefingShotlist(idea);
+  const images = getBriefingImages(idea);
+  const caption = createCaption(idea, "nahbar");
+  const section = (title, items) => `
+    <section class="briefing-section">
+      <h3>${escapeHtml(title)}</h3>
+      <ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+    </section>
+  `;
+  return `
+    <div class="briefing-hero">
+      <span class="meta-tag primary">${escapeHtml(idea.format)}</span>
+      <span class="meta-tag">${escapeHtml(idea.topic)}</span>
+      <span class="meta-tag">${escapeHtml(idea.mechanic)}</span>
+      <h3>${escapeHtml(idea.title)}</h3>
+      <p>${escapeHtml(idea.hook)}</p>
+    </div>
+    <div class="briefing-grid">
+      <div><span>Ziel</span><strong>${escapeHtml(getBriefingGoal(idea))}</strong></div>
+      <div><span>Kernaussage</span><strong>${escapeHtml(getCoreMessage(idea))}</strong></div>
+      <div><span>Zielgruppe/Perspektive</span><strong>${escapeHtml(idea.protagonist)}</strong></div>
+      <div><span>Freigabe-Level</span><strong>${escapeHtml(idea.criticalReview?.label || "Standardprüfung")}</strong></div>
+    </div>
+    ${section("Benötigte Bilder / Shotlist", shotlist)}
+    ${section("Drehorte", playbook.locations)}
+    ${section("Vordefinierte O-Töne / Interviewfragen", playbook.otones)}
+    ${section("Requisiten / Produktionscheckliste", [
+      ...playbook.props,
+      "Einverständnis/Freigabe für sichtbare Personen einholen",
+      "Sicherheitsvorgaben am Drehort prüfen",
+      "Fachliche Aussage und Zahlen vor Veröffentlichung gegenprüfen",
+    ])}
+    ${section("Benötigte Motive", images)}
+    <section class="briefing-section">
+      <h3>Caption / Beschreibung</h3>
+      <textarea readonly>${escapeHtml(caption)}</textarea>
+      <p class="hashtags">${idea.hashtags.map(escapeHtml).join(" ")}</p>
+    </section>
+    ${section("Interne Prüfcheckliste", idea.criticalReview?.checks || ["Fakten vor Veröffentlichung prüfen."])}
+  `;
+}
+
+function openBriefing(idea) {
+  activeBriefingIdea = idea;
+  document.querySelector("#briefingContent").innerHTML = createBriefingHtml(idea);
+  document.querySelector("#briefingDialog").showModal();
 }
 
 function createAiImagePrompt(idea) {
@@ -2452,6 +2671,26 @@ document.querySelector("#favoritesButton").addEventListener("click", () => {
 document.querySelector("#closeFavorites").addEventListener("click", () => favoritesDialog.close());
 favoritesDialog.addEventListener("click", (event) => {
   if (event.target === favoritesDialog) favoritesDialog.close();
+});
+
+const briefingDialog = document.querySelector("#briefingDialog");
+document.querySelector("#closeBriefing").addEventListener("click", () => briefingDialog.close());
+briefingDialog.addEventListener("click", (event) => {
+  if (event.target === briefingDialog) briefingDialog.close();
+});
+document.querySelector("#copyBriefingButton").addEventListener("click", async () => {
+  if (!activeBriefingIdea) return;
+  try {
+    await navigator.clipboard.writeText(createBriefingText(activeBriefingIdea));
+    showToast("Briefing wurde kopiert.");
+  } catch {
+    showToast("Kopieren war im Browser nicht möglich.");
+  }
+});
+document.querySelector("#briefingToStudioButton").addEventListener("click", () => {
+  if (!activeBriefingIdea) return;
+  briefingDialog.close();
+  openPostStudio(activeBriefingIdea);
 });
 
 const postStudioDialog = document.querySelector("#postStudioDialog");
