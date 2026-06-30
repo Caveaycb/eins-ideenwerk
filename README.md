@@ -16,7 +16,7 @@ Danach `http://localhost:4173` öffnen.
 
 ## Funktionen
 
-- 30 fokussierte Kern-Themen: unter anderem Strom, Gas, E-Mobilität, Wasser, Abwasser,
+- 31 fokussierte Kern-Themen: unter anderem Strom, Gas, E-Mobilität, Wasser, Abwasser,
   Solar, Windkraft, Wärmepumpen, Wasserstoff, Glasfaser, Energiepreise,
   Wärmeplanung, Netzleitstelle, Entstörung, Rechnung, Sponsoring und Karriere
 - Themensuche und zufälliger Acht-Themen-Mix

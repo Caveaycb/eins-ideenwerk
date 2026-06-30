@@ -18,6 +18,7 @@ const topicCatalog = [
   { name: "Baustellen & Projekte", icon: "▲", keywords: ["Baustelle", "Projekt", "Infrastruktur"] },
   { name: "Zähler & Messwesen", icon: "◴", keywords: ["Zähler", "SmartMeter", "Verbrauch"] },
   { name: "Energiepreise & Markt", icon: "€", keywords: ["Energiepreis", "Energiemarkt", "Erklärt"] },
+  { name: "Preiswahrnehmung", icon: "◌", keywords: ["Preisgefühl", "Kostenwahrnehmung", "Energiepreise"] },
   { name: "Kommunale Wärmeplanung", icon: "⌘", keywords: ["Wärmeplanung", "Kommune", "Wärmewende"] },
   { name: "Kundenservice", icon: "☎", keywords: ["Kundenservice", "Hilfe", "EnergieIdeenwerk"] },
   { name: "Digitalisierung", icon: "⌘", keywords: ["Digitalisierung", "Innovation", "SmartCity"] },
@@ -54,6 +55,7 @@ const topicMedia = {
   "Baustellen & Projekte": "assets/photos/stromnetz.png",
   "Zähler & Messwesen": "assets/photos/smart-home.png",
   "Energiepreise & Markt": "assets/photos/smart-home.png",
+  Preiswahrnehmung: "assets/photos/smart-home.png",
   Klimaanpassung: "assets/photos/region.png",
   "Kommunale Wärmeplanung": "assets/photos/waerme.png",
   "Großkunden & Gewerbe": "assets/photos/stromnetz.png",
@@ -152,6 +154,7 @@ const topicMediaGroup = {
   "Netze & Infrastruktur": "grid", Netzleitstelle: "grid", Versorgungssicherheit: "grid",
   "Entstörung & Bereitschaft": "grid", "Baustellen & Projekte": "grid",
   Glasfaser: "grid", Straßenbeleuchtung: "grid", "Zähler & Messwesen": "grid",
+  Preiswahrnehmung: "people",
   "Berufe & Ausbildung": "people", "Frauen in Technik": "people",
   "Quereinstieg & Karriere": "people", Kundenservice: "people", Betrugsprävention: "people",
   "Region & Engagement": "region", "Sport & Sponsoring": "region", "Kultur & Bildung": "region",
@@ -295,6 +298,11 @@ const angles = {
     "Wie sich ein Energiepreis zusammensetzt",
     "Was Börsenpreis, Netzentgelt und Steuer miteinander zu tun haben",
     "Warum sinkende Marktpreise nicht sofort auf jeder Rechnung ankommen",
+  ],
+  Preiswahrnehmung: [
+    "Warum sich Energiepreise oft anders anfühlen, als sie sich zusammensetzen",
+    "Was Kund:innen auf der Rechnung sehen – und was dahinter steckt",
+    "Wie man Preisfrust ernst nimmt, ohne falsche Versprechen zu machen",
   ],
   Klimaanpassung: [
     "Wie Infrastruktur mit Hitze und Starkregen umgeht",
@@ -851,6 +859,12 @@ const topicPlaybooks = {
     visuals: ["geöffnete Fernwärmetrasse mit gedämmten Rohren", "Leitwarte Wärme mit Team", "Hausstation mit beschrifteten Komponenten"],
     hooks: ["„Unter dieser Straße liegt ein Stück Wärmewende.“", "„Warum Rücklauf-Temperatur plötzlich spannend wird.“", "„Fernwärme ist unsichtbar – bis gebaut wird.“"],
   },
+  Preiswahrnehmung: {
+    tensions: ["gefühlte Teuerung vs. tatsächliche Preisbestandteile", "Rechnungsfrust vs. transparente Einordnung", "Marktpreis-Schlagzeile vs. Kund:innenrechnung"],
+    proof: ["vereinfachte Beispielrechnung ohne individuelle Preiszusage", "Aufschlüsselung aus Beschaffung, Netzentgelt, Steuern und Abgaben", "O-Ton aus Kundenservice zu häufigen Missverständnissen"],
+    visuals: ["Kund:in schaut auf Rechnung neben erklärender Skizze", "Team erklärt Preisbestandteile an Whiteboard oder Tablet", "Close-up von Rechnung, Taschenrechner und verständlicher Farbcodierung"],
+    hooks: ["„Warum sich Energiepreise manchmal unfair anfühlen.“", "„Deine Rechnung ist mehr als ein Arbeitspreis.“", "„Sinkende Börsenpreise heißt nicht automatisch: morgen sinkt jede Rechnung.“"],
+  },
 };
 
 const topicSubthemes = {
@@ -865,6 +879,7 @@ const topicSubthemes = {
   Wärmepumpen: ["Aufstellort", "Lautstärke", "Vorlauftemperatur", "Altbau", "Stromverbrauch", "Förderung", "Wartung", "Hybridlösung"],
   Glasfaser: ["Tiefbau", "Hausanschluss", "Spleißen", "Lichtsignal", "Router", "Ausbauplanung", "Mehrfamilienhaus", "Störung"],
   "Energiepreise & Markt": ["Beschaffung", "Netzentgelte", "Steuern", "Abschlag", "Preisgarantie", "Börsenpreis", "Verbrauchsprognose", "Jahresabrechnung"],
+  Preiswahrnehmung: ["gefühlte Kosten", "Rechnungsschock", "Preisbestandteile", "Abschlag", "Verbrauchsverhalten", "Vergleichbarkeit", "Transparenz", "Kundenservice-Fragen"],
   "Berufe & Ausbildung": ["Bewerbung", "Berufsschule", "Praxisauftrag", "Schichtdienst", "Teamkultur", "Prüfung", "Weiterbildung", "Sinn der Arbeit"],
   Digitalisierung: ["Sensorik", "Datenanalyse", "Smart Meter", "Prozessautomatisierung", "Cybersecurity", "digitale Baustelle", "Kundenportal", "Smart City"],
 };
@@ -934,6 +949,7 @@ const campaignArcs = {
 
 const criticalTopicSignals = {
   "Energiepreise & Markt": ["Preisbestandteile prüfen", "keine Preisversprechen formulieren", "Zeitbezug und Quelle ergänzen"],
+  Preiswahrnehmung: ["emotionalen Preisfrust ernst nehmen", "keine individuellen Ersparnisse versprechen", "Preisbestandteile und Zeitbezug sauber erklären"],
   Tarife: ["Produktdetails gegen aktuelle Tarifseite prüfen", "keine individuelle Ersparnis versprechen"],
   Gas: ["Sicherheits- und Störfallhinweise fachlich freigeben", "keine Verharmlosung von Risiken"],
   Strom: ["Versorgungssicherheit differenziert formulieren", "keine absolute Ausfallsicherheit versprechen"],
@@ -949,6 +965,27 @@ const criticalTopicSignals = {
   "Entstörung & Bereitschaft": ["Notfallwege und Zuständigkeiten exakt prüfen", "keine Reaktionszeiten versprechen"],
   "Rechnung verstehen": ["rechtliche und abrechnungsrelevante Angaben prüfen", "keine Einzelfallberatung simulieren"],
 };
+
+const topicClarity = {
+  Strom: "Es geht um das unsichtbare System hinter jedem Lichtschalter: Netzstabilität, Schaltarbeit und Versorgung im Alltag.",
+  Gas: "Es geht um sichere Wärmeversorgung: Geruch, Prüfung, Verantwortung und richtiges Verhalten im Ernstfall.",
+  Elektromobilität: "Es geht um Alltagstauglichkeit beim Laden: Reichweite, Ladesäule, Ladezeit und verständliche Entscheidungen.",
+  Abwasser: "Es geht um Umweltschutz nach dem Abfluss: Was ankommt, wie gereinigt wird und warum Verhalten im Alltag zählt.",
+  Photovoltaik: "Es geht um die Frage, was ein Dach wirklich leisten kann: Ertrag, Eigenverbrauch, Technik und ehrliche Erwartungen.",
+  Windkraft: "Es geht um Windenergie ohne Schlagworte: Ertrag, Landschaft, Wartung, Artenschutz und Bürgerfragen.",
+  Trinkwasser: "Es geht um Vertrauen in Wasser aus dem Hahn: Qualität, Kontrolle, Weg vom Wasserwerk und Verantwortung im Netz.",
+  Fernwärme: "Es geht um Wärme, die man kaum sieht: Leitungen, Hausstation, Baustellen und Wärmewende vor Ort.",
+  "Energiepreise & Markt": "Es geht um Preisbestandteile und Marktlogik: Was die Rechnung beeinflusst und warum Veränderung zeitversetzt ankommt.",
+  Preiswahrnehmung: "Es geht um das Gefühl hinter der Rechnung: Warum Preise belastend wirken, was wirklich dahintersteckt und wie man fair darüber spricht.",
+  "Rechnung verstehen": "Es geht um Orientierung in Zahlen: Abschlag, Verbrauch, Arbeitspreis, Grundpreis und was Kund:innen prüfen können.",
+  "Zähler & Messwesen": "Es geht um Verbrauch sichtbar machen: Zählerstände, Messsysteme und die Frage, was Zahlen im Alltag bedeuten.",
+  "Baustellen & Projekte": "Es geht um Fortschritt mit Nebenwirkungen: Warum gebaut wird, was stört, was es bringt und wann es weitergeht.",
+  Versorgungssicherheit: "Es geht um Vorbereitung statt Panik: Wie Systeme robust bleiben und welche Arbeit im Hintergrund passiert.",
+};
+
+function clearTopicStatement(idea) {
+  return topicClarity[idea.topic] || `Es geht um ${idea.topic} ganz konkret: ${idea.subtheme}, reale Situationen und den Nutzen für Alltag oder Region.`;
+}
 
 let topics = [...topicCatalog];
 let selectedTopics = new Set(["Strom", "Photovoltaik", "Elektromobilität"]);
@@ -1125,6 +1162,7 @@ function createIdeaFromPlan() {
     topicTension: "konkreter Plan vs. fachlich sichere Veröffentlichung",
   });
   const keywords = topic.keywords || [topic.name.replaceAll(" ", "")];
+  const topicStatement = clearTopicStatement({ topic: topic.name, subtheme });
   return {
     id: `plan-${Date.now()}-${hash(planText)}`,
     topic: topic.name,
@@ -1141,12 +1179,13 @@ function createIdeaFromPlan() {
     platform: document.querySelector("#platform").value,
     title: extractPlanTitle(planText, topic.name, format),
     hook: planHook,
-    concept: planConcept,
+    concept: `${topicStatement} ${planConcept}`,
     cta: inferPlanCta(planText, format),
     strength: `Der Beitrag basiert auf einem konkreten Produktionsplan und wird direkt in Drehlogik, O-Töne, Requisiten und Caption übersetzt. ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
     criticalReview,
     preferredTone: tone,
     originalPlan: planText,
+    topicStatement,
     hashtags: [
       "#EnergieIdeenwerk",
       ...keywords.slice(0, 2).map((keyword) => `#${keyword.replaceAll(" ", "")}`),
@@ -1326,6 +1365,7 @@ function buildIdea(topic, index, settings) {
     .replaceAll("{topic}", topic.name)
     .replaceAll("{angle}", `${angle}; Schwerpunkt: ${subtheme}`);
   const keywords = topic.keywords || [topic.name.replaceAll(" ", "")];
+  const topicStatement = clearTopicStatement({ topic: topic.name, subtheme });
   const depthSentence =
     ` Fachlicher Kern: ${topicTension}. Beleg im Beitrag: ${topicProof}.`;
   const criticalReview = runCriticalReview({
@@ -1355,10 +1395,11 @@ function buildIdea(topic, index, settings) {
     platform: settings.platform,
     title,
     hook: topicHook,
-    concept: `${concept}${depthSentence}${regionalCue}${expertiseCue}${emotionCue}${viralCue}`,
+    concept: `${topicStatement} ${concept}${depthSentence}${regionalCue}${expertiseCue}${emotionCue}${viralCue}`,
     cta: template.cta,
     strength: `${template.strength} Der Beitrag geht nicht allgemein über ${topic.name}, sondern spitzt auf „${subtheme}“ und den Konflikt „${topicTension}“ zu. ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
     criticalReview,
+    topicStatement,
     hashtags: [
       "#EnergieIdeenwerk",
       ...keywords.slice(0, 2).map((keyword) => `#${keyword.replaceAll(" ", "")}`),
@@ -1597,6 +1638,7 @@ function renderIdeas() {
             <span>${escapeHtml(idea.visualApproach)}</span>
           </div>
           <h3>${escapeHtml(idea.title)}</h3>
+          <p class="topic-statement">${escapeHtml(idea.topicStatement || clearTopicStatement(idea))}</p>
           <p class="hook">${escapeHtml(idea.hook)}</p>
           <p class="concept">${escapeHtml(idea.concept)}</p>
           <div class="idea-brief">
@@ -1675,20 +1717,21 @@ ${idea.hashtags.join(" ")}`;
 
 function createCaption(idea, tone = "nahbar") {
   if (idea.format === "YouTube Long") return createYoutubeLongDescription(idea, tone);
-  const seed = hash(`${idea.title}-${tone}-${studioVariant}`);
-  const cleanHook = idea.hook.replace(/^„|“$/g, "").replace(/\.$/, "");
-  const topicLine = captionTopicLine(idea, seed);
-  const storyLine = captionStoryLine(idea, tone, seed);
-  const valueLine = captionValueLine(idea, tone, seed);
-  const formatLine = captionFormatLine(idea, seed);
+  return createFinishedSocialCaption(idea, tone);
+}
+
+function createFinishedSocialCaption(idea, tone = "nahbar") {
+  const seed = hash(`${idea.id}-${idea.title}-${tone}-${studioVariant}`);
+  const opening = captionOpening(idea, tone, seed);
+  const body = captionBody(idea, tone, seed);
+  const payoff = captionPayoff(idea, tone, seed);
   const cta = captionCta(idea, tone, seed);
+  const hashtags = idea.hashtags.join(" ");
 
   if (idea.format === "Story") {
-    return `${cleanHook}
+    return `${opening}
 
-${topicLine}
-
-${storyLine}
+${body}
 
 ${cta}
 
@@ -1696,94 +1739,106 @@ ${idea.hashtags.slice(0, 3).join(" ")}`;
   }
 
   if (idea.format === "Carousel") {
-    return `${cleanHook} 👀
+    return `${opening}
 
-Swipe dich durch ${idea.subtheme} – ohne Fachchinesisch, aber mit echtem Aha-Moment.
+${body}
 
-${valueLine}
+${payoff}
 
-${formatLine}
+Swipe durch und speicher dir den Beitrag, wenn du später nochmal nachschauen willst.
 
-${cta}
-
-${idea.hashtags.join(" ")}`;
+${hashtags}`;
   }
 
   if (idea.format === "Reel") {
-    return `${cleanHook} ⚡
+    return `${opening}
 
-${storyLine}
+${body}
 
-${valueLine}
-
-${formatLine}
+${payoff}
 
 ${cta}
 
-${idea.hashtags.join(" ")}`;
+${hashtags}`;
   }
 
-  return `${cleanHook}
+  return `${opening}
 
-${topicLine}
+${body}
 
-${storyLine}
-
-${valueLine}
+${payoff}
 
 ${cta}
 
-${idea.hashtags.join(" ")}`;
+${hashtags}`;
 }
 
-function captionTopicLine(idea, seed) {
-  return pick([
-    `${idea.topic} klingt erstmal nach Technik. Eigentlich geht es aber um Alltag, Vertrauen und die Frage, was im Hintergrund zuverlässig funktionieren muss.`,
-    `Hinter ${idea.subtheme} steckt mehr als ein Fachbegriff – nämlich Menschen, Entscheidungen und ziemlich viel unsichtbare Arbeit.`,
-    `Man sieht oft nur das Ergebnis. Spannend wird es aber genau da, wo ${idea.topic} im Hintergrund beginnt.`,
-    `${idea.topic} ist einer dieser Bereiche, die erst auffallen, wenn man genauer hinschaut.`,
+function captionOpening(idea, tone, seed) {
+  const hook = idea.hook.replace(/^„|“$/g, "").replace(/\.$/, "");
+  const byTopic = {
+    Preiswahrnehmung: [
+      "Energiepreise sind nicht nur Zahlen. Sie sind oft auch ein Gefühl.",
+      "Wenn die Rechnung kommt, zählt nicht nur der Betrag – sondern auch die Frage: Warum eigentlich?",
+      "Preisgefühl ist real. Genau deshalb lohnt sich ein genauer Blick.",
+    ],
+    "Energiepreise & Markt": [
+      "Warum verändert sich ein Energiepreis nicht so einfach, wie es Schlagzeilen manchmal klingen lassen?",
+      "Ein Preis besteht selten aus nur einem Preis.",
+      "Zwischen Börse, Netz und Rechnung passiert mehr, als man auf den ersten Blick sieht.",
+    ],
+    Photovoltaik: [
+      "Ein Solardach sieht einfach aus. Die entscheidenden Fragen liegen im Detail.",
+      "Sonne aufs Dach – und fertig? Nicht ganz.",
+      "PV wird spannend, sobald man nicht nur aufs Modul schaut.",
+    ],
+    Abwasser: [
+      "Was weg ist, ist nicht einfach weg.",
+      "Nach dem Abfluss beginnt ein Teil der Arbeit, den fast niemand sieht.",
+      "Klingt unsichtbar, ist aber echter Umweltschutz.",
+    ],
+    Strom: [
+      "Strom ist dann am besten, wenn niemand darüber nachdenken muss.",
+      "Hinter jedem Lichtschalter steckt mehr Timing, als man denkt.",
+      "Das Netz schläft nie – auch wenn bei uns alles ganz normal wirkt.",
+    ],
+  };
+  if (tone === "sachlich") return hook;
+  return pick(byTopic[idea.topic] || [
+    hook,
+    `${idea.topic} ist eines dieser Themen, die erst spannend werden, wenn man näher rangeht.`,
+    `Man sieht nur einen kleinen Ausschnitt – dahinter steckt die eigentliche Geschichte.`,
   ], seed);
 }
 
-function captionStoryLine(idea, tone, seed) {
-  const human = idea.protagonist.replace(/^eine |^ein /i, "");
+function captionBody(idea, tone, seed) {
+  const statement = idea.topicStatement || clearTopicStatement(idea);
+  const subtheme = idea.subtheme;
   if (tone === "sachlich") {
-    return pick([
-      `Wir zeigen, was bei ${idea.subtheme} konkret passiert, welche Rolle ${human} spielt und welcher Beleg das Thema greifbar macht.`,
-      `Im Fokus: ${idea.subtheme}, ein realer Schauplatz und eine Einordnung, die das Thema verständlich macht.`,
-      `Dieser Beitrag ordnet ein, warum ${idea.subtheme} relevant ist und worauf man bei der Bewertung achten sollte.`,
-    ], seed);
+    return `${statement} Im Mittelpunkt steht ${subtheme} – verständlich eingeordnet und ohne unnötige Abkürzungen.`;
   }
   if (tone === "aktivierend") {
     return pick([
-      `Kurz reinschauen lohnt sich: Bei ${idea.subtheme} steckt der überraschende Moment nicht am Anfang, sondern im Detail.`,
-      `Rate mal: Was ist bei ${idea.subtheme} der Teil, den die meisten unterschätzen? Genau darum geht’s hier.`,
-      `Wenn du dachtest, das Thema sei schnell erklärt: warte auf den Blick hinter die Kulissen.`,
+      `Schau kurz genauer hin: Bei ${subtheme} steckt der Aha-Moment genau da, wo man ihn nicht erwartet.`,
+      `Was würdest du zuerst vermuten? Bei ${subtheme} liegt die Antwort oft nicht auf der Hand.`,
+      `Ein Thema, ein Detail, ein Perspektivwechsel: ${subtheme} macht den Unterschied.`,
     ], seed);
   }
   return pick([
-    `Wir nehmen dich mit an einen Ort, den man im Alltag selten sieht – und zeigen, warum ${idea.subtheme} mehr mit dir zu tun hat, als man denkt.`,
-    `Zwischen Technik, Team und Region entsteht hier ein Moment, der ziemlich gut zeigt, wie Versorgung im Alltag wirklich funktioniert.`,
-    `Ein kleiner Blick hinter die Kulissen. Aber einer, der erklärt, warum ${idea.topic} nicht einfach „da“ ist.`,
+    `${statement} Und genau deshalb erzählen wir das Thema nicht abstrakt, sondern über ${subtheme}.`,
+    `Es geht um ${subtheme} – aber eigentlich auch darum, was gute Versorgung im Alltag bedeutet.`,
+    `Der Blick auf ${subtheme} zeigt ziemlich gut, wie viel Arbeit hinter etwas steckt, das oft selbstverständlich wirkt.`,
   ], seed);
 }
 
-function captionValueLine(idea, tone, seed) {
+function captionPayoff(idea, tone, seed) {
   const proof = humanizeProofForCaption(idea.proof);
   if (tone === "sachlich") {
-    return `Wichtig ist dabei: Wir arbeiten mit ${proof} und ordnen die Aussage so ein, dass sie nachvollziehbar bleibt.`;
-  }
-  if (tone === "aktivierend") {
-    return pick([
-      `Der Aha-Moment: ${proof} macht das Ganze plötzlich viel greifbarer.`,
-      `Und ja – ${proof} spielt dabei eine größere Rolle, als man auf den ersten Blick vermutet.`,
-      `Am Ende bleibt ein ziemlich einfacher Merksatz hängen. Genau dafür ist der Beitrag gemacht.`,
-    ], seed);
+    return `Wichtig: Aussagen, Zahlen und Beispiele sollten vor Veröffentlichung fachlich geprüft werden. Der Beitrag arbeitet mit ${proof}.`;
   }
   return pick([
-    `Was hängen bleiben soll: ${proof} macht aus einem abstrakten Thema etwas, das man sehen und verstehen kann.`,
-    `Der Beitrag zeigt nicht nur die schöne Oberfläche, sondern auch den Arbeitsschritt dahinter.`,
-    `So wird aus einem technischen Thema ein verständlicher Moment für die Region.`,
+    `Der spannendste Teil daran: ${proof} macht das Thema plötzlich greifbar.`,
+    `Genau solche Einblicke machen aus Technik ein Stück Alltag.`,
+    `Am Ende bleibt weniger Fachbegriff hängen – und mehr Verständnis dafür, was dahinter passiert.`,
   ], seed);
 }
 
@@ -1831,51 +1886,6 @@ function captionCta(idea, tone, seed) {
     `Welche Frage sollen wir dazu als Nächstes beantworten?`,
     `Speichern, wenn du solche Einblicke öfter sehen willst.`,
   ], seed);
-}
-
-function createCaptionAiPrompt(idea) {
-  const tone = document.querySelector("#captionTone")?.value || idea.preferredTone || "nahbar";
-  const briefingText = document.querySelector("#captionText")?.value || createCaption(idea, tone);
-  const platform = idea.platform || document.querySelector("#platform")?.value || "Instagram";
-  return `Du bist ein sehr guter Social-Media-Copywriter für einen regionalen Energieversorger.
-
-Aufgabe:
-Schreibe aus dem folgenden Caption-Briefing eine echte fertige Social-Media-Caption.
-
-Wichtig:
-- Schreibe NICHT wie eine Anleitung.
-- Schreibe NICHT "wir zeigen", "im Beitrag", "das Reel zeigt" als Meta-Beschreibung, außer es klingt absolut natürlich.
-- Schreibe so, als würde die Caption direkt unter dem Post stehen.
-- Starte mit einem starken, natürlichen Hook.
-- Klinge modern, klar, sympathisch und nicht werblich.
-- Keine langen Erklärabsätze.
-- Keine erfundenen Zahlen oder Fakten.
-- Keine übertriebenen Versprechen.
-- Wenn etwas fachlich sensibel ist, vorsichtig und transparent formulieren.
-- Am Ende eine passende Community-Frage oder Speicher-/Kommentar-CTA.
-- Hashtags natürlich ans Ende.
-- Gib NUR die fertige Caption aus, keine Analyse, keine Varianten, keine Überschrift.
-
-Kontext:
-Plattform: ${platform}
-Format: ${idea.format}
-Ton: ${tone}
-Thema: ${idea.topic}
-Fokus: ${idea.subtheme}
-Mechanik: ${idea.mechanic}
-Hook-Idee: ${idea.hook}
-CTA-Idee: ${idea.cta}
-Hashtags: ${idea.hashtags.join(" ")}
-
-Caption-Briefing:
-${briefingText}
-
-Schreibe daraus jetzt die fertige Caption:`;
-}
-
-function captionAiUrl() {
-  if (!activeStudioIdea) return "https://chatgpt.com/";
-  return `https://chatgpt.com/?q=${encodeURIComponent(createCaptionAiPrompt(activeStudioIdea))}`;
 }
 
 function createYoutubeLongDescription(idea, tone = "nahbar") {
@@ -3149,19 +3159,6 @@ document.querySelector("#copyCaptionButton").addEventListener("click", async () 
   } catch {
     showToast("Kopieren war im Browser nicht möglich.");
   }
-});
-document.querySelector("#copyCaptionPromptButton").addEventListener("click", async () => {
-  if (!activeStudioIdea) return;
-  try {
-    await navigator.clipboard.writeText(createCaptionAiPrompt(activeStudioIdea));
-    showToast("Caption-KI-Prompt wurde kopiert.");
-  } catch {
-    showToast("Kopieren war im Browser nicht möglich.");
-  }
-});
-document.querySelector("#openCaptionAiButton").addEventListener("click", () => {
-  if (!activeStudioIdea) return;
-  window.open(captionAiUrl(), "_blank", "noopener,noreferrer");
 });
 document.querySelector("#downloadAssetButton").addEventListener("click", downloadStudioAssets);
 
