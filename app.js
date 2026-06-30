@@ -1285,8 +1285,10 @@ function inferPlanCta(planText, format) {
 }
 
 const campaignPresetDefaults = {
+  off: { label: "Kampagne ausgeschaltet", duration: 0, frequency: 0, arc: "trust" },
   short: { label: "Kurzkampagne · 1 Woche", duration: 1, frequency: 3, arc: "activation" },
   normal: { label: "Normale Kampagne · 2 Monate", duration: 8, frequency: 2, arc: "trust" },
+  twelve: { label: "Kampagne · bis 12 Wochen", duration: 12, frequency: 2, arc: "trust" },
   long: { label: "Langzeitkampagne · 6+ Monate", duration: 26, frequency: 1, arc: "trust" },
 };
 
@@ -1296,6 +1298,7 @@ function campaignPresetLabel(preset) {
 
 function applyCampaignPreset(preset) {
   const defaults = campaignPresetDefaults[preset] || campaignPresetDefaults.normal;
+  if (preset === "off") return;
   const duration = document.querySelector("#campaignDuration");
   const frequency = document.querySelector("#campaignFrequency");
   const arc = document.querySelector("#campaignArc");
@@ -1305,12 +1308,10 @@ function applyCampaignPreset(preset) {
 }
 
 function updateCampaignUi({ applyPreset = false } = {}) {
-  const enabled = document.querySelector("#campaignEnabled")?.checked || false;
-  const preset = document.querySelector("#campaignPreset")?.value || "normal";
-  const presetField = document.querySelector("#campaignPresetField");
+  const preset = document.querySelector("#campaignMode")?.value || "off";
+  const enabled = preset !== "off";
   const plannerSection = document.querySelector("#campaignPlannerSection");
   const planGeneratorStep = document.querySelector("#planGeneratorStep");
-  if (presetField) presetField.hidden = !enabled;
   if (plannerSection) plannerSection.hidden = !enabled;
   if (planGeneratorStep) planGeneratorStep.textContent = enabled ? "05" : "04";
   if (enabled && applyPreset) applyCampaignPreset(preset);
@@ -1321,8 +1322,8 @@ function updateCampaignUi({ applyPreset = false } = {}) {
 }
 
 function getCampaignSettings() {
-  const enabled = document.querySelector("#campaignEnabled")?.checked || false;
-  const preset = document.querySelector("#campaignPreset")?.value || "normal";
+  const preset = document.querySelector("#campaignMode")?.value || "off";
+  const enabled = preset !== "off";
   const startInput = document.querySelector("#campaignStart");
   if (enabled && startInput && !startInput.value) {
     const date = new Date();
@@ -3216,13 +3217,9 @@ const updateCampaignPreview = () => {
   renderCampaignBoard(getSettings(), activeTopics);
 };
 
-document.querySelector("#campaignEnabled").addEventListener("change", () => {
-  updateCampaignUi({ applyPreset: document.querySelector("#campaignEnabled").checked });
-  updateCampaignPreview();
-});
-
-document.querySelector("#campaignPreset").addEventListener("change", () => {
-  applyCampaignPreset(document.querySelector("#campaignPreset").value);
+document.querySelector("#campaignMode").addEventListener("change", () => {
+  const mode = document.querySelector("#campaignMode").value;
+  updateCampaignUi({ applyPreset: mode !== "off" });
   updateCampaignPreview();
 });
 

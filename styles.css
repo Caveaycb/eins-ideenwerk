@@ -305,33 +305,8 @@ h3 {
     #fffdf8;
 }
 
-.campaign-switch {
-  display: flex;
-  gap: 11px;
-  align-items: flex-start;
-  cursor: pointer;
-}
-
-.campaign-switch input {
-  width: 18px;
-  height: 18px;
-  margin-top: 2px;
-  accent-color: var(--teal);
-}
-
-.campaign-switch strong,
-.campaign-switch small {
-  display: block;
-}
-
-.campaign-switch strong {
-  color: var(--ink);
-  font-size: 13px;
-  line-height: 1.25;
-}
-
-.campaign-switch small {
-  margin-top: 3px;
+.field-note {
+  margin: 7px 0 0;
   color: #75817d;
   font-size: 10px;
   line-height: 1.45;

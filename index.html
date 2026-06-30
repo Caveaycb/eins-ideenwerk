@@ -103,20 +103,16 @@
           </div>
 
           <div class="campaign-entry">
-            <label class="campaign-switch" for="campaignEnabled">
-              <input id="campaignEnabled" type="checkbox" />
-              <span>
-                <strong>Kampagnenplanung aktivieren</strong>
-                <small>Optional: aus Einzelideen wird ein Redaktionsplan mit Dramaturgie.</small>
-              </span>
-            </label>
-            <div class="field" id="campaignPresetField" hidden>
-              <label for="campaignPreset">Kampagnenlänge</label>
-              <select id="campaignPreset">
+            <div class="field">
+              <label for="campaignMode">Kampagnenplanung</label>
+              <select id="campaignMode">
+                <option value="off" selected>Kampagne ausschalten · nur Einzelideen</option>
                 <option value="short">Kurzkampagne · 1 Woche</option>
-                <option value="normal" selected>Normale Kampagne · 2 Monate</option>
+                <option value="normal">Normale Kampagne · 2 Monate</option>
+                <option value="twelve">Kampagne · bis 12 Wochen</option>
                 <option value="long">Langzeitkampagne · 6+ Monate</option>
               </select>
+              <p class="field-note">Wenn ausgeschaltet, werden Kampagnenplaner und Kampagnenboard komplett ausgeblendet.</p>
             </div>
           </div>
 
@@ -281,8 +277,11 @@
                   <label for="campaignDuration">Dauer</label>
                   <select id="campaignDuration">
                     <option value="1">1 Woche</option>
+                    <option value="2">2 Wochen</option>
                     <option value="4">4 Wochen</option>
+                    <option value="6">6 Wochen</option>
                     <option value="8" selected>8 Wochen / 2 Monate</option>
+                    <option value="10">10 Wochen</option>
                     <option value="12">12 Wochen</option>
                     <option value="26">26 Wochen / 6+ Monate</option>
                   </select>
