@@ -1162,6 +1162,7 @@ let studioUndoStack = [];
 let studioRedoStack = [];
 let studioHitboxes = [];
 let studioDrag = null;
+let studioPageScrollY = 0;
 let topicSearchTerm = "";
 
 const topicChips = document.querySelector("#topicChips");
@@ -3355,7 +3356,23 @@ function openPostStudio(idea) {
   updateCaptionLength();
   syncAiImagePrompt();
   renderStudioVisual();
+  lockStudioPageScroll();
   dialog.showModal();
+  dialog.querySelector(".studio-layout")?.scrollTo({ top: 0, left: 0 });
+}
+
+function lockStudioPageScroll() {
+  if (document.body.classList.contains("studio-scroll-locked")) return;
+  studioPageScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.body.style.top = `-${studioPageScrollY}px`;
+  document.body.classList.add("studio-scroll-locked");
+}
+
+function unlockStudioPageScroll() {
+  if (!document.body.classList.contains("studio-scroll-locked")) return;
+  document.body.classList.remove("studio-scroll-locked");
+  document.body.style.top = "";
+  window.scrollTo(0, studioPageScrollY);
 }
 
 function updateCaptionLength() {
@@ -3676,7 +3693,10 @@ document.querySelector("#briefingToStudioButton").addEventListener("click", () =
 
 const postStudioDialog = document.querySelector("#postStudioDialog");
 document.querySelector("#closePostStudio").addEventListener("click", () => postStudioDialog.close());
-postStudioDialog.addEventListener("close", stopStudioAnimation);
+postStudioDialog.addEventListener("close", () => {
+  stopStudioAnimation();
+  unlockStudioPageScroll();
+});
 postStudioDialog.addEventListener("click", (event) => {
   if (event.target === postStudioDialog) postStudioDialog.close();
 });

@@ -28,6 +28,14 @@ body {
   font-family: "Urbanist", sans-serif;
 }
 
+body.studio-scroll-locked {
+  position: fixed;
+  right: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
 button,
 select,
 input {
@@ -1579,11 +1587,18 @@ dialog::backdrop {
 
 .post-studio-dialog {
   width: min(1320px, calc(100% - 24px));
-  max-height: 96vh;
+  height: min(920px, calc(100dvh - 24px));
+  max-height: calc(100dvh - 24px);
   padding: 0;
+  flex-direction: column;
   overflow: hidden;
+  overscroll-behavior: contain;
   border: 1px solid rgba(255, 255, 255, 0.7);
   background: #f7f7f5;
+}
+
+.post-studio-dialog[open] {
+  display: flex;
 }
 
 .studio-header {
@@ -1628,8 +1643,8 @@ dialog::backdrop {
 .studio-layout {
   display: grid;
   grid-template-columns: minmax(520px, 1.25fr) minmax(390px, 0.75fr);
-  height: calc(96vh - 76px);
-  max-height: calc(96vh - 76px);
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -1639,6 +1654,7 @@ dialog::backdrop {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .visual-workbench {
@@ -2408,8 +2424,11 @@ dialog::backdrop {
 
   .studio-layout {
     grid-template-columns: 1fr;
-    height: auto;
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .caption-workbench {
@@ -2496,7 +2515,8 @@ dialog::backdrop {
 
   .post-studio-dialog {
     width: calc(100% - 16px);
-    max-height: 96vh;
+    height: calc(100dvh - 16px);
+    max-height: calc(100dvh - 16px);
   }
 
   .studio-header,
@@ -2506,7 +2526,7 @@ dialog::backdrop {
   }
 
   .studio-layout {
-    max-height: calc(96vh - 78px);
+    max-height: none;
   }
 
   .canvas-stage {
