@@ -1675,35 +1675,162 @@ ${idea.hashtags.join(" ")}`;
 
 function createCaption(idea, tone = "nahbar") {
   if (idea.format === "YouTube Long") return createYoutubeLongDescription(idea, tone);
-  const intros = {
-    nahbar: [
-      "Manches nutzen wir jeden Tag – ohne zu sehen, wie viel dahintersteckt.",
-      "Schon mal darüber nachgedacht, was hinter unserem Alltag eigentlich passiert?",
-      "Energie und Infrastruktur klingen technisch. Dabei erzählen sie Geschichten über uns alle.",
-    ],
-    sachlich: [
-      "Gut versorgt zu sein, beginnt mit verlässlicher Infrastruktur und klarem Wissen.",
-      "Ein kompakter Blick auf ein Thema, das unseren Alltag jeden Tag begleitet:",
-      "Zahlen, Technik und regionale Verantwortung – verständlich zusammengefasst.",
-    ],
-    aktivierend: [
-      "Stopp kurz: Hättest du das gewusst?",
-      "Zeit für einen schnellen Faktencheck.",
-      "Teste dein Wissen – die Auflösung überrascht.",
-    ],
-  };
   const seed = hash(`${idea.title}-${tone}-${studioVariant}`);
-  const intro = pick(intros[tone] || intros.nahbar, seed);
-  const cleanHook = idea.hook.replace(/^„|“$/g, "");
-  return `${intro}
+  const cleanHook = idea.hook.replace(/^„|“$/g, "").replace(/\.$/, "");
+  const topicLine = captionTopicLine(idea, seed);
+  const storyLine = captionStoryLine(idea, tone, seed);
+  const valueLine = captionValueLine(idea, tone, seed);
+  const formatLine = captionFormatLine(idea, seed);
+  const cta = captionCta(idea, tone, seed);
 
-${cleanHook}
+  if (idea.format === "Story") {
+    return `${cleanHook}
 
-${idea.concept}
+${topicLine}
 
-${idea.cta}
+${storyLine}
+
+${cta}
+
+${idea.hashtags.slice(0, 3).join(" ")}`;
+  }
+
+  if (idea.format === "Carousel") {
+    return `${cleanHook} 👀
+
+Swipe dich durch ${idea.subtheme} – ohne Fachchinesisch, aber mit echtem Aha-Moment.
+
+${valueLine}
+
+${formatLine}
+
+${cta}
 
 ${idea.hashtags.join(" ")}`;
+  }
+
+  if (idea.format === "Reel") {
+    return `${cleanHook} ⚡
+
+${storyLine}
+
+${valueLine}
+
+${formatLine}
+
+${cta}
+
+${idea.hashtags.join(" ")}`;
+  }
+
+  return `${cleanHook}
+
+${topicLine}
+
+${storyLine}
+
+${valueLine}
+
+${cta}
+
+${idea.hashtags.join(" ")}`;
+}
+
+function captionTopicLine(idea, seed) {
+  return pick([
+    `${idea.topic} klingt erstmal nach Technik. Eigentlich geht es aber um Alltag, Vertrauen und die Frage, was im Hintergrund zuverlässig funktionieren muss.`,
+    `Hinter ${idea.subtheme} steckt mehr als ein Fachbegriff – nämlich Menschen, Entscheidungen und ziemlich viel unsichtbare Arbeit.`,
+    `Man sieht oft nur das Ergebnis. Spannend wird es aber genau da, wo ${idea.topic} im Hintergrund beginnt.`,
+    `${idea.topic} ist einer dieser Bereiche, die erst auffallen, wenn man genauer hinschaut.`,
+  ], seed);
+}
+
+function captionStoryLine(idea, tone, seed) {
+  const human = idea.protagonist.replace(/^eine |^ein /i, "");
+  if (tone === "sachlich") {
+    return pick([
+      `Wir zeigen, was bei ${idea.subtheme} konkret passiert, welche Rolle ${human} spielt und welcher Beleg das Thema greifbar macht.`,
+      `Im Fokus: ${idea.subtheme}, ein realer Schauplatz und eine Einordnung, die das Thema verständlich macht.`,
+      `Dieser Beitrag ordnet ein, warum ${idea.subtheme} relevant ist und worauf man bei der Bewertung achten sollte.`,
+    ], seed);
+  }
+  if (tone === "aktivierend") {
+    return pick([
+      `Kurz reinschauen lohnt sich: Bei ${idea.subtheme} steckt der überraschende Moment nicht am Anfang, sondern im Detail.`,
+      `Rate mal: Was ist bei ${idea.subtheme} der Teil, den die meisten unterschätzen? Genau darum geht’s hier.`,
+      `Wenn du dachtest, das Thema sei schnell erklärt: warte auf den Blick hinter die Kulissen.`,
+    ], seed);
+  }
+  return pick([
+    `Wir nehmen dich mit an einen Ort, den man im Alltag selten sieht – und zeigen, warum ${idea.subtheme} mehr mit dir zu tun hat, als man denkt.`,
+    `Zwischen Technik, Team und Region entsteht hier ein Moment, der ziemlich gut zeigt, wie Versorgung im Alltag wirklich funktioniert.`,
+    `Ein kleiner Blick hinter die Kulissen. Aber einer, der erklärt, warum ${idea.topic} nicht einfach „da“ ist.`,
+  ], seed);
+}
+
+function captionValueLine(idea, tone, seed) {
+  const proof = humanizeProofForCaption(idea.proof);
+  if (tone === "sachlich") {
+    return `Wichtig ist dabei: Wir arbeiten mit ${proof} und ordnen die Aussage so ein, dass sie nachvollziehbar bleibt.`;
+  }
+  if (tone === "aktivierend") {
+    return pick([
+      `Der Aha-Moment: ${proof} macht das Ganze plötzlich viel greifbarer.`,
+      `Und ja – ${proof} spielt dabei eine größere Rolle, als man auf den ersten Blick vermutet.`,
+      `Am Ende bleibt ein ziemlich einfacher Merksatz hängen. Genau dafür ist der Beitrag gemacht.`,
+    ], seed);
+  }
+  return pick([
+    `Was hängen bleiben soll: ${proof} macht aus einem abstrakten Thema etwas, das man sehen und verstehen kann.`,
+    `Der Beitrag zeigt nicht nur die schöne Oberfläche, sondern auch den Arbeitsschritt dahinter.`,
+    `So wird aus einem technischen Thema ein verständlicher Moment für die Region.`,
+  ], seed);
+}
+
+function humanizeProofForCaption(proof = "einem konkreten Beispiel") {
+  return String(proof)
+    .replace("eine belastbare regionale Kennzahl", "einer Zahl aus der Region")
+    .replace("ein sichtbares Vorher-Nachher-Ergebnis", "einem sichtbaren Vorher-Nachher-Moment")
+    .replace("ein Originalton einer Fachperson", "einer Stimme aus dem Fachteam")
+    .replace("ein praktischer Test vor der Kamera", "einem Test direkt vor der Kamera")
+    .replace("eine verständliche Beispielrechnung", "einer Rechnung, die man wirklich nachvollziehen kann")
+    .replace("ein Vergleich mit einem Alltagsgegenstand", "einem Vergleich aus dem Alltag")
+    .replace("eine Karte oder ein konkreter Streckenverlauf", "einer Karte oder einem echten Weg")
+    .replace("ein Zeitraffer des tatsächlichen Ablaufs", "einem Zeitraffer aus dem echten Ablauf")
+    .replace("eine Messung mit vorher angekündigtem Ergebnis", "einer Messung mit Auflösung")
+    .replace("drei echte Community-Antworten", "echten Antworten aus der Community");
+}
+
+function captionFormatLine(idea, seed) {
+  const lines = {
+    Reel: [
+      "Im Reel: ein starker Einstieg, echte Bilder und eine kurze Auflösung ohne unnötiges Drumherum.",
+      "Kurz, nah dran und mit einem Detail, das man beim nächsten Mal anders sieht.",
+    ],
+    Carousel: [
+      "Im Carousel: erst die Frage, dann die Einordnung, dann der praktische Merksatz.",
+      "Slide für Slide wird klarer, was wirklich hinter dem Thema steckt.",
+    ],
+    Story: [
+      "In der Story darf die Community mitraten, reagieren und die nächste Frage stellen.",
+      "Kurz antippen, mitraten, Auflösung mitnehmen.",
+    ],
+    Post: [
+      "Ein Bild, ein Gedanke, eine klare Einordnung.",
+      "Kein langer Vortrag – nur der Punkt, der hängen bleiben soll.",
+    ],
+  };
+  return pick(lines[idea.format] || lines.Post, seed);
+}
+
+function captionCta(idea, tone, seed) {
+  if (tone === "sachlich") return idea.cta;
+  return pick([
+    idea.cta,
+    `Was würdest du dazu gern genauer sehen? Schreib’s in die Kommentare.`,
+    `Welche Frage sollen wir dazu als Nächstes beantworten?`,
+    `Speichern, wenn du solche Einblicke öfter sehen willst.`,
+  ], seed);
 }
 
 function createYoutubeLongDescription(idea, tone = "nahbar") {
