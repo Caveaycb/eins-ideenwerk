@@ -300,9 +300,9 @@ const angles = {
     "Warum sinkende Marktpreise nicht sofort auf jeder Rechnung ankommen",
   ],
   Preiswahrnehmung: [
-    "Warum der Preis mehr ist als nur Kilowattstunden – und was davon in der Region ankommt",
-    "Was Kund:innen bekommen, wenn sie sich für einen regionalen Versorger entscheiden",
-    "Wie Sponsoring, Service und Verantwortung den gefühlten Wert eines Tarifs verändern",
+    "Warum der günstigste Preis nicht automatisch der beste Deal für Chemnitz ist",
+    "Wie man Preisakzeptanz aufbaut: mit Service, regionalem Nutzen und sichtbaren Beweisen",
+    "Warum ein regionaler Versorger nicht nur Energie verkauft, sondern Verantwortung vor Ort trägt",
   ],
   Klimaanpassung: [
     "Wie Infrastruktur mit Hitze und Starkregen umgeht",
@@ -544,43 +544,43 @@ const topicSpecificTemplates = {
   Preiswahrnehmung: [
     {
       format: "Reel",
-      mechanic: "Regionaler Gegenwert",
-      title: "Was dein Preis in Chemnitz möglich macht",
-      hook: "„Nicht immer der billigste Preis. Aber ein Preis, der hier etwas bewegt.“",
+      mechanic: "Wertbeweis",
+      title: "Warum „billiger“ nicht immer besser ist",
+      hook: "„Ja, es gibt billigere Anbieter. Aber was bleibt davon hier?“",
       concept:
-        "Kurzes Reel mit drei echten Szenen: Service vor Ort, ein unterstütztes regionales Projekt und ein sichtbarer Infrastruktur- oder Vereinsmoment. Die Botschaft: Preis wird verständlicher, wenn der regionale Gegenwert sichtbar wird.",
+        "Direktes Reel mit klarer Wertargumentation: Erst der harte Preisvergleich, dann drei sichtbare Beweise für regionalen Mehrwert – Service vor Ort, Sponsoring/Vereinsleben und Verantwortung für Infrastruktur in Chemnitz.",
       cta: "Welches regionale Projekt sollten mehr Menschen kennen?",
-      strength: "Der Beitrag macht Preisakzeptanz emotional und konkret, ohne sich defensiv zu rechtfertigen.",
+      strength: "Der Beitrag spricht den Preis-Einwand offen aus und dreht ihn in eine starke Wertfrage.",
     },
     {
       format: "Carousel",
       mechanic: "Vergleichsportal sieht das nicht",
       title: "Was ein Vergleichsportal nicht zeigt",
-      hook: "Folie 1: „Der günstigste Preis erzählt selten die ganze Geschichte.“",
+      hook: "Folie 1: „Vergleichsportale vergleichen Preise. Nicht Verantwortung.“",
       concept:
-        "Carousel mit klarer Gegenüberstellung: Preiszahl auf dem Portal vs. Service, regionale Ansprechpartner:innen, Sponsoring, Stadtprojekte, Infrastrukturverantwortung und Verlässlichkeit vor Ort.",
-      cta: "Was gehört für dich zu einem fairen Preis dazu?",
-      strength: "Das Format verschiebt die Diskussion von billig zu wertvoll und bleibt trotzdem nachvollziehbar.",
+        "Klares Argumentations-Carousel: links die reine Tarifzahl, rechts die Leistungen, die ein Preisvergleich nicht abbildet – erreichbarer Service, regionale Ansprechpartner:innen, Sponsoring, Stadtprojekte, Verantwortung und Verlässlichkeit.",
+      cta: "Was müsste ein Vergleichsportal deiner Meinung nach zusätzlich anzeigen?",
+      strength: "Das Format macht die blinde Stelle im Preisvergleich sichtbar und liefert eine starke Markenargumentation.",
     },
     {
       format: "Post",
-      mechanic: "Danke an die Region",
+      mechanic: "Preisakzeptanz-Statement",
       title: "Ein Preis, der hier bleibt",
-      hook: "„Manchmal sieht man den Wert nicht auf der Rechnung – sondern auf dem Platz, in der Halle oder in der Stadt.“",
+      hook: "„Preis ist nicht nur eine Zahl. Preis ist auch die Frage, was damit möglich wird.“",
       concept:
-        "Starkes dokumentarisches Bild aus Chemnitz oder der Region: Verein, Kulturort, Stadtprojekt oder Service-Situation. Die Caption erzählt, warum regionale Entscheidung auch regionale Wirkung bedeuten kann.",
+        "Selbstbewusster Markenpost mit dokumentarischem Bild aus Chemnitz: Verein, Kulturort, Stadtprojekt oder Service-Situation. Die Caption benennt klar: Wir wollen nicht nur über Kosten sprechen, sondern über Wert, Nähe und regionale Wirkung.",
       cta: "Welcher Ort in Chemnitz steht für dich für Zusammenhalt?",
-      strength: "Ein einzelnes echtes Bild macht den Mehrwert glaubwürdiger als abstrakte Markenargumente.",
+      strength: "Ein klarer Standpunkt ist stärker als subtile Image-Kommunikation und eröffnet eine faire Wertdebatte.",
     },
     {
       format: "Reel",
       mechanic: "Preis vs. Wert",
       title: "Preis ist nicht gleich Wert",
-      hook: "„Günstig ist schnell verglichen. Wert muss man zeigen.“",
+      hook: "„Wer nur auf den Preis schaut, übersieht oft den Wert.“",
       concept:
-        "Schneller Schnitt zwischen Preisvergleich, Servicekontakt, Sponsoringmoment, regionalem Projekt und Team vor Ort. Am Ende steht keine Rechtfertigung, sondern eine ruhige Haltung: Wir wollen zeigen, was dazugehört.",
+        "Schneller Schnitt zwischen Vergleichsportal, Servicekontakt, Sponsoringmoment, regionalem Projekt und Team vor Ort. Der Beitrag argumentiert sichtbar: Günstig ist schnell behauptet, Wert muss man belegen.",
       cta: "Was macht für dich einen Versorger wertvoll?",
-      strength: "Die Mechanik bringt eine klare Markenhaltung auf den Punkt, ohne belehrend zu wirken.",
+      strength: "Die Mechanik übersetzt ein schwieriges Preisargument in eine einfache Social-Media-Formel.",
     },
     {
       format: "Story",
@@ -596,9 +596,9 @@ const topicSpecificTemplates = {
       format: "LinkedIn",
       mechanic: "Regionale Wertschöpfung",
       title: "Warum Preiswahrnehmung auch eine Standortfrage ist",
-      hook: "„Energieversorgung endet nicht beim Tarif. Sie wirkt in der Region.“",
+      hook: "„Der günstigste Anbieter stärkt nicht automatisch den Standort.“",
       concept:
-        "LinkedIn-Post mit professioneller Einordnung: Preiswettbewerb, regionale Verantwortung, Servicequalität, Sponsoring und Infrastruktur als Bausteine von Vertrauen und Standortstärke.",
+        "LinkedIn-Post mit professioneller Einordnung: Preiswettbewerb ist real, aber regionale Verantwortung, Servicequalität, Sponsoring, Infrastruktur und lokale Wertschöpfung sind strategische Standortfaktoren.",
       cta: "Welche Rolle sollte regionale Verantwortung bei Kaufentscheidungen spielen?",
       strength: "Das Thema wird strategisch eingeordnet und eignet sich für Stakeholder, Kommunen und Geschäftskund:innen.",
     },
@@ -925,10 +925,10 @@ const topicPlaybooks = {
     hooks: ["„Unter dieser Straße liegt ein Stück Wärmewende.“", "„Warum Rücklauf-Temperatur plötzlich spannend wird.“", "„Fernwärme ist unsichtbar – bis gebaut wird.“"],
   },
   Preiswahrnehmung: {
-    tensions: ["günstigster Anbieter vs. regionaler Mehrwert", "Preisvergleich vs. Service, Nähe und Verantwortung", "Tarifkosten vs. das, was in Chemnitz und der Region möglich wird"],
+    tensions: ["billigster Anbieter vs. nachweisbarer regionaler Mehrwert", "Preisvergleich vs. Service, Nähe und Verantwortung", "Tarifkosten vs. das, was in Chemnitz und der Region möglich wird"],
     proof: ["konkretes Sponsoring- oder Vereinsbeispiel aus der Region", "O-Ton aus Service, Projektteam oder gefördertem Verein", "sichtbarer Vor-Ort-Beleg: Veranstaltung, Vereinsarbeit, Stadtprojekt oder Servicefall"],
     visuals: ["Vereinstraining, Kulturort oder Stadtprojekt mit sichtbarem regionalem Bezug", "Serviceteam im direkten Kund:innenkontakt", "Collage aus Region, Sponsoring, Service und Infrastruktur"],
-    hooks: ["„Nicht immer der billigste Preis. Aber ein Preis, der hier etwas bewegt.“", "„Was bleibt eigentlich in der Region, wenn du regional kaufst?“", "„Ein Tarif ist mehr als eine Zahl auf dem Vergleichsportal.“"],
+    hooks: ["„Ja, es gibt billigere Anbieter. Aber was bleibt davon hier?“", "„Der günstigste Preis ist nicht automatisch der größte Wert.“", "„Ein Tarif ist mehr als eine Zahl auf dem Vergleichsportal.“"],
   },
 };
 
@@ -1041,7 +1041,7 @@ const topicClarity = {
   Trinkwasser: "Es geht um Vertrauen in Wasser aus dem Hahn: Qualität, Kontrolle, Weg vom Wasserwerk und Verantwortung im Netz.",
   Fernwärme: "Es geht um Wärme, die man kaum sieht: Leitungen, Hausstation, Baustellen und Wärmewende vor Ort.",
   "Energiepreise & Markt": "Es geht um Preisbestandteile und Marktlogik: Was die Rechnung beeinflusst und warum Veränderung zeitversetzt ankommt.",
-  Preiswahrnehmung: "Es geht um den Wert hinter dem Preis: Service vor Ort, regionale Verantwortung, Sponsoring, Chemnitz-Bezug und das Gefühl, dass Geld in der Region etwas bewirkt.",
+  Preiswahrnehmung: "Es geht um aktive Wertargumentation: Nicht zwingend der günstigste Anbieter, sondern ein regionaler Versorger mit Service, Sponsoring, Chemnitz-Bezug und sichtbarer Verantwortung vor Ort.",
   "Rechnung verstehen": "Es geht um Orientierung in Zahlen: Abschlag, Verbrauch, Arbeitspreis, Grundpreis und was Kund:innen prüfen können.",
   "Zähler & Messwesen": "Es geht um Verbrauch sichtbar machen: Zählerstände, Messsysteme und die Frage, was Zahlen im Alltag bedeuten.",
   "Baustellen & Projekte": "Es geht um Fortschritt mit Nebenwirkungen: Warum gebaut wird, was stört, was es bringt und wann es weitergeht.",
@@ -1284,14 +1284,55 @@ function inferPlanCta(planText, format) {
   return "Welche Perspektive sollen wir als Nächstes zeigen?";
 }
 
+const campaignPresetDefaults = {
+  short: { label: "Kurzkampagne · 1 Woche", duration: 1, frequency: 3, arc: "activation" },
+  normal: { label: "Normale Kampagne · 2 Monate", duration: 8, frequency: 2, arc: "trust" },
+  long: { label: "Langzeitkampagne · 6+ Monate", duration: 26, frequency: 1, arc: "trust" },
+};
+
+function campaignPresetLabel(preset) {
+  return (campaignPresetDefaults[preset] || campaignPresetDefaults.normal).label;
+}
+
+function applyCampaignPreset(preset) {
+  const defaults = campaignPresetDefaults[preset] || campaignPresetDefaults.normal;
+  const duration = document.querySelector("#campaignDuration");
+  const frequency = document.querySelector("#campaignFrequency");
+  const arc = document.querySelector("#campaignArc");
+  if (duration) duration.value = String(defaults.duration);
+  if (frequency) frequency.value = String(defaults.frequency);
+  if (arc) arc.value = defaults.arc;
+}
+
+function updateCampaignUi({ applyPreset = false } = {}) {
+  const enabled = document.querySelector("#campaignEnabled")?.checked || false;
+  const preset = document.querySelector("#campaignPreset")?.value || "normal";
+  const presetField = document.querySelector("#campaignPresetField");
+  const plannerSection = document.querySelector("#campaignPlannerSection");
+  const planGeneratorStep = document.querySelector("#planGeneratorStep");
+  if (presetField) presetField.hidden = !enabled;
+  if (plannerSection) plannerSection.hidden = !enabled;
+  if (planGeneratorStep) planGeneratorStep.textContent = enabled ? "05" : "04";
+  if (enabled && applyPreset) applyCampaignPreset(preset);
+  if (!enabled) {
+    campaignBoard.hidden = true;
+    campaignBoard.innerHTML = "";
+  }
+}
+
 function getCampaignSettings() {
+  const enabled = document.querySelector("#campaignEnabled")?.checked || false;
+  const preset = document.querySelector("#campaignPreset")?.value || "normal";
   const startInput = document.querySelector("#campaignStart");
-  if (startInput && !startInput.value) {
+  if (enabled && startInput && !startInput.value) {
     const date = new Date();
     date.setDate(date.getDate() + 7);
     startInput.value = date.toISOString().slice(0, 10);
   }
   return {
+    enabled,
+    preset,
+    label: campaignPresetLabel(preset),
     theme: document.querySelector("#campaignTheme").value.trim(),
     duration: Number(document.querySelector("#campaignDuration").value),
     frequency: Number(document.querySelector("#campaignFrequency").value),
@@ -1607,7 +1648,7 @@ function generateFromConcretePlan() {
 }
 
 function renderCampaignBoard(settings, activeTopics) {
-  if (!currentIdeas.length) {
+  if (!settings.campaign?.enabled || !currentIdeas.length) {
     campaignBoard.hidden = true;
     campaignBoard.innerHTML = "";
     return;
@@ -1636,7 +1677,7 @@ function renderCampaignBoard(settings, activeTopics) {
       <div>
         <span class="step">KAMPAGNENPLAN</span>
         <h3>${escapeHtml(theme)}</h3>
-        <p>${escapeHtml(arc.promise)} ${campaign.duration} ${campaign.duration === 1 ? "Woche" : "Wochen"} · ${campaign.frequency} Posts/Woche</p>
+        <p>${escapeHtml(campaign.label)} · ${escapeHtml(arc.promise)} ${campaign.duration} ${campaign.duration === 1 ? "Woche" : "Wochen"} · ${campaign.frequency} ${campaign.frequency === 1 ? "Post" : "Posts"}/Woche</p>
       </div>
       <button id="copyCampaignPlan" type="button">Plan kopieren</button>
     </div>
@@ -1848,9 +1889,9 @@ function captionOpening(idea, tone, seed) {
   const hook = idea.hook.replace(/^„|“$/g, "").replace(/\.$/, "");
   const byTopic = {
     Preiswahrnehmung: [
-      "Nicht immer geht es nur darum, wer am günstigsten ist.",
-      "Ein Preis ist eine Zahl. Der Wert dahinter zeigt sich vor Ort.",
-      "Was passiert eigentlich in der Region, wenn man regional entscheidet?",
+      "Ja, es gibt billigere Anbieter. Aber was bleibt davon hier?",
+      "Wer nur auf den Preis schaut, sieht nur die halbe Wahrheit.",
+      "Der günstigste Preis ist nicht automatisch der größte Wert.",
     ],
     "Energiepreise & Markt": [
       "Warum verändert sich ein Energiepreis nicht so einfach, wie es Schlagzeilen manchmal klingen lassen?",
@@ -1890,15 +1931,15 @@ function captionBody(idea, tone, seed) {
     }
     if (tone === "aktivierend") {
       return pick([
-        `Vergleichsportale zeigen Zahlen. Aber sie zeigen selten, was mit regionalem Engagement, Service vor Ort und Verantwortung für Chemnitz passiert.`,
-        `Die spannende Frage ist nicht nur: Was kostet es? Sondern auch: Was ermöglicht dieser Preis hier bei uns?`,
-        `Wenn du an Preis denkst, denk auch an das, was dahintersteht: Menschen, Projekte, Vereine, Service und Infrastruktur vor Ort.`,
+        `Vergleichsportale zeigen Zahlen. Aber sie zeigen nicht, wer in Chemnitz erreichbar ist, wer Vereine unterstützt und wer Verantwortung vor Ort übernimmt.`,
+        `Die bessere Frage ist nicht nur: Was kostet es? Sondern: Was bekommt die Region dafür zurück?`,
+        `Wenn du über Preis sprichst, sprich auch über Wert: Service, Sponsoring, Infrastruktur, Nähe und Verlässlichkeit vor Ort.`,
       ], seed);
     }
     return pick([
-      `Ja, Preis zählt. Aber bei ${subtheme} wird sichtbar, dass es nicht nur um die günstigste Zahl geht – sondern um Service, Nähe und Wirkung in der Region.`,
-      `Vergleichen ist wichtig. Genauso wichtig ist der Blick darauf, was vor Ort zurückkommt: Unterstützung, Erreichbarkeit, Verlässlichkeit und Engagement für Chemnitz.`,
-      `Der Unterschied liegt oft nicht auf der Rechnung, sondern im Alltag: bei Service, regionalen Projekten, Sponsorings und der Verantwortung für das, was hier funktioniert.`,
+      `Natürlich zählt der Preis. Aber bei ${subtheme} geht es auch um die Frage, was dieser Preis hier ermöglicht: Service vor Ort, regionale Projekte, Sponsoring und Verantwortung für Chemnitz.`,
+      `Billiger kann man schnell behaupten. Wertvoll wird es erst, wenn man sieht, was vor Ort zurückkommt: Unterstützung, Erreichbarkeit, Verlässlichkeit und Engagement für die Region.`,
+      `Der Unterschied liegt nicht nur in Centbeträgen, sondern im Alltag: bei Service, regionalen Projekten, Sponsorings und der Verantwortung für das, was hier funktionieren muss.`,
     ], seed);
   }
   if (tone === "sachlich") {
@@ -1925,9 +1966,9 @@ function captionPayoff(idea, tone, seed) {
       return `Wichtig: Der Beitrag sollte den Mehrwert mit ${proof} konkret belegen und nicht pauschal behaupten.`;
     }
     return pick([
-      `Genau deshalb zählt der konkrete Blick: ${proof} macht sichtbar, wo aus einem Preis regionaler Wert wird.`,
-      `Am Ende geht es nicht darum, Preisfragen wegzureden – sondern zu zeigen, was vor Ort dadurch möglich wird.`,
-      `So wird aus „teurer oder günstiger?“ eine fairere Frage: Welchen Wert bekommt die Region dafür zurück?`,
+      `Genau deshalb braucht Preiswahrnehmung Beweise: ${proof} zeigt, wo aus einem Tarif regionaler Gegenwert wird.`,
+      `Das ist keine Ausrede für Preise. Es ist der Teil der Geschichte, der in reinen Preisvergleichen fast immer fehlt.`,
+      `So wird aus „teurer oder günstiger?“ die ehrlichere Frage: Welchen Wert bekommt Chemnitz dafür zurück?`,
     ], seed);
   }
   if (tone === "sachlich") {
@@ -3168,15 +3209,29 @@ document.querySelectorAll(".format-option").forEach((button) => {
   button.addEventListener("click", () => button.classList.toggle("active"));
 });
 
+const updateCampaignPreview = () => {
+  updateCampaignUi();
+  if (!currentIdeas.length) return;
+  const activeTopics = topics.filter((topic) => selectedTopics.has(topic.name));
+  renderCampaignBoard(getSettings(), activeTopics);
+};
+
+document.querySelector("#campaignEnabled").addEventListener("change", () => {
+  updateCampaignUi({ applyPreset: document.querySelector("#campaignEnabled").checked });
+  updateCampaignPreview();
+});
+
+document.querySelector("#campaignPreset").addEventListener("change", () => {
+  applyCampaignPreset(document.querySelector("#campaignPreset").value);
+  updateCampaignPreview();
+});
+
 document.querySelectorAll("#campaignTheme, #campaignDuration, #campaignFrequency, #campaignStart, #campaignArc").forEach((field) => {
-  const updateCampaignPreview = () => {
-    if (!currentIdeas.length) return;
-    const activeTopics = topics.filter((topic) => selectedTopics.has(topic.name));
-    renderCampaignBoard(getSettings(), activeTopics);
-  };
   field.addEventListener("input", updateCampaignPreview);
   field.addEventListener("change", updateCampaignPreview);
 });
+
+updateCampaignUi();
 
 ["virality", "regionality", "expertise", "emotion"].forEach((id) => {
   const slider = document.querySelector(`#${id}`);

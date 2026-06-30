@@ -293,6 +293,50 @@ h3 {
     radial-gradient(circle at 80% 70%, rgba(223, 29, 103, 0.2), transparent 32%);
 }
 
+.campaign-entry {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 18px;
+  padding: 14px;
+  border: 1px solid rgba(25, 123, 108, 0.18);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(25, 123, 108, 0.08), rgba(242, 230, 0, 0.08)),
+    #fffdf8;
+}
+
+.campaign-switch {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.campaign-switch input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--teal);
+}
+
+.campaign-switch strong,
+.campaign-switch small {
+  display: block;
+}
+
+.campaign-switch strong {
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.campaign-switch small {
+  margin-top: 3px;
+  color: #75817d;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
 .campaign-planner input,
 .plan-generator textarea {
   width: 100%;

@@ -102,6 +102,24 @@
             </select>
           </div>
 
+          <div class="campaign-entry">
+            <label class="campaign-switch" for="campaignEnabled">
+              <input id="campaignEnabled" type="checkbox" />
+              <span>
+                <strong>Kampagnenplanung aktivieren</strong>
+                <small>Optional: aus Einzelideen wird ein Redaktionsplan mit Dramaturgie.</small>
+              </span>
+            </label>
+            <div class="field" id="campaignPresetField" hidden>
+              <label for="campaignPreset">Kampagnenlänge</label>
+              <select id="campaignPreset">
+                <option value="short">Kurzkampagne · 1 Woche</option>
+                <option value="normal" selected>Normale Kampagne · 2 Monate</option>
+                <option value="long">Langzeitkampagne · 6+ Monate</option>
+              </select>
+            </div>
+          </div>
+
           <div class="field-row">
             <div class="field">
               <label for="goal">Ziel</label>
@@ -242,62 +260,66 @@
             </button>
           </div>
 
+          <div id="campaignPlannerSection" hidden>
+            <div class="divider"></div>
+
+            <div class="panel-heading">
+              <div>
+                <span class="step">04</span>
+                <h2>Kampagnenplaner</h2>
+              </div>
+            </div>
+            <p class="helper">Erstellt aus den Ideen automatisch eine Kampagne mit Dramaturgie und Redaktionsplan.</p>
+
+            <div class="campaign-planner">
+              <div class="field">
+                <label for="campaignTheme">Kampagnenthema</label>
+                <input id="campaignTheme" type="text" placeholder="z. B. Preis & regionaler Wert, PV-Woche, Abwasser erklärt …" />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="campaignDuration">Dauer</label>
+                  <select id="campaignDuration">
+                    <option value="1">1 Woche</option>
+                    <option value="4">4 Wochen</option>
+                    <option value="8" selected>8 Wochen / 2 Monate</option>
+                    <option value="12">12 Wochen</option>
+                    <option value="26">26 Wochen / 6+ Monate</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="campaignFrequency">Frequenz</label>
+                  <select id="campaignFrequency">
+                    <option value="1">1 Post/Woche</option>
+                    <option value="2">2 Posts/Woche</option>
+                    <option value="3" selected>3 Posts/Woche</option>
+                    <option value="4">4 Posts/Woche</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="campaignStart">Startdatum</label>
+                  <input id="campaignStart" type="date" />
+                </div>
+                <div class="field">
+                  <label for="campaignArc">Dramaturgie</label>
+                  <select id="campaignArc">
+                    <option value="trust" selected>Vertrauen aufbauen</option>
+                    <option value="education">Wissen vertiefen</option>
+                    <option value="activation">Community aktivieren</option>
+                    <option value="project">Projekt begleiten</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="divider"></div>
 
           <div class="panel-heading">
             <div>
-              <span class="step">04</span>
-              <h2>Kampagnenplaner</h2>
-            </div>
-          </div>
-          <p class="helper">Erstellt aus den Ideen automatisch eine kleine Kampagne mit Dramaturgie und Wochenplan.</p>
-
-          <div class="campaign-planner">
-            <div class="field">
-              <label for="campaignTheme">Kampagnenthema</label>
-              <input id="campaignTheme" type="text" placeholder="z. B. PV-Woche, Abwasser erklärt …" />
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label for="campaignDuration">Dauer</label>
-                <select id="campaignDuration">
-                  <option value="1">1 Woche</option>
-                  <option value="2" selected>2 Wochen</option>
-                  <option value="4">4 Wochen</option>
-                  <option value="6">6 Wochen</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campaignFrequency">Frequenz</label>
-                <select id="campaignFrequency">
-                  <option value="2">2 Posts/Woche</option>
-                  <option value="3" selected>3 Posts/Woche</option>
-                  <option value="4">4 Posts/Woche</option>
-                </select>
-              </div>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label for="campaignStart">Startdatum</label>
-                <input id="campaignStart" type="date" />
-              </div>
-              <div class="field">
-                <label for="campaignArc">Dramaturgie</label>
-                <select id="campaignArc">
-                  <option value="trust" selected>Vertrauen aufbauen</option>
-                  <option value="education">Wissen vertiefen</option>
-                  <option value="activation">Community aktivieren</option>
-                  <option value="project">Projekt begleiten</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="panel-heading">
-            <div>
-              <span class="step">05</span>
+              <span class="step" id="planGeneratorStep">04</span>
               <h2>Postgenerator nach Plan</h2>
             </div>
           </div>
