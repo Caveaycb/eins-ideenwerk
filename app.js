@@ -1052,6 +1052,96 @@ function clearTopicStatement(idea) {
   return topicClarity[idea.topic] || `Es geht um ${idea.topic} ganz konkret: ${idea.subtheme}, reale Situationen und den Nutzen für Alltag oder Region.`;
 }
 
+const pillarLabels = {
+  Wissen: ["Wissen", "Erklärt ein Thema verständlich und speicherbar."],
+  Menschen: ["Menschen", "Gibt der Versorgung ein Gesicht und stärkt Nähe."],
+  Service: ["Service", "Hilft konkret im Alltag und reduziert Rückfragen."],
+  Region: ["Region", "Zeigt lokalen Nutzen, Chemnitz-Bezug und Verantwortung."],
+  Innovation: ["Innovation", "Macht Zukunftsthemen greifbar statt abstrakt."],
+  Dialog: ["Dialog", "Lädt zur Reaktion ein und nutzt Community-Fragen."],
+  Transparenz: ["Transparenz", "Ordnet ein, benennt Grenzen und baut Vertrauen auf."],
+  Unterhaltung: ["Unterhaltung", "Senkt die Einstiegshürde und erzeugt Aufmerksamkeit."],
+  Awareness: ["Awareness", "Schafft Aufmerksamkeit für ein Kampagnenthema."],
+  Aktivierung: ["Aktivierung", "Bringt Menschen zum Abstimmen, Kommentieren oder Teilen."],
+  Serie: ["Serie", "Baut ein Thema über mehrere Posts wiedererkennbar auf."],
+  "Hero-Story": ["Hero-Story", "Erzählt den stärksten Moment groß und emotional."],
+  "Proof Point": ["Proof Point", "Belegt eine Aussage mit einem sichtbaren Beispiel."],
+  Testimonials: ["Testimonials", "Nutzt Stimmen von Menschen als Vertrauensbeweis."],
+  Anleitung: ["Anleitung", "Macht aus Wissen eine konkrete Handlung."],
+  Checkliste: ["Checkliste", "Wird gespeichert, weil sie praktisch nutzbar ist."],
+  FAQ: ["FAQ", "Beantwortet echte Fragen knapp und auffindbar."],
+  Entscheidungshilfe: ["Entscheidungshilfe", "Hilft Zielgruppen bei einer konkreten Abwägung."],
+  Produktion: ["Produktion", "Übersetzt einen vorhandenen Plan in ein drehbares Format."],
+};
+
+function contentPillarInfo(pillar = "Wissen") {
+  const fallback = pillarLabels[pillar] || [pillar, "Definiert die strategische Rolle dieses Posts im Content-Mix."];
+  return { label: fallback[0], description: fallback[1] };
+}
+
+function approvalInfo(criticalReview = {}) {
+  const risk = criticalReview.riskScore || 32;
+  if (risk >= 64) return { level: "red", label: "Rot", text: "Fachfreigabe" };
+  if (risk >= 44) return { level: "yellow", label: "Gelb", text: "Beleg prüfen" };
+  return { level: "green", label: "Grün", text: "Direkt nutzbar" };
+}
+
+function clampMetric(value) {
+  return Math.max(1, Math.min(100, Math.round(value)));
+}
+
+function buildQualityProfile(idea, settings = getSettings()) {
+  const risk = idea.criticalReview?.riskScore || 32;
+  const formatBoost = idea.format === "Reel" ? 7 : idea.format === "Carousel" ? 5 : idea.format === "YouTube Long" ? 3 : 2;
+  const visualBoost = /Motiv|echte|Video|Foto|Doku|vor Ort|Collage|Zeitraffer/i.test(idea.visualApproach || idea.concept) ? 10 : 3;
+  const effortBase = idea.format === "YouTube Long" ? 82 : idea.format === "Reel" ? 66 : idea.format === "Carousel" ? 58 : 42;
+  const interactionBoost = /Frage|Abstimmung|Kommentar|Quiz|Challenge|Community|Schätz/i.test(`${idea.mechanic} ${idea.cta}`) ? 13 : 4;
+  const regionalBoost = /Chemnitz|Region|Südsachsen|vor Ort|regional/i.test(`${idea.concept} ${idea.topicStatement}`) ? 8 : 2;
+
+  return {
+    strategy: clampMetric(58 + regionalBoost + (settings.goal === "Image & Marke" ? 8 : 0) + (idea.topic === "Preiswahrnehmung" ? 9 : 0) + (idea.score || 72) / 8),
+    visual: clampMetric(54 + visualBoost + formatBoost + (settings.virality || 6)),
+    interaction: clampMetric(48 + interactionBoost + (settings.emotion || 5) + (settings.virality || 6)),
+    effort: clampMetric(effortBase + (idea.protagonist?.length > 70 ? 7 : 0) + (risk >= 64 ? 8 : 0)),
+    risk: clampMetric(risk),
+  };
+}
+
+function effortLabel(value) {
+  if (value >= 76) return "hoch";
+  if (value >= 55) return "mittel";
+  return "niedrig";
+}
+
+function generateAgencyRationale(idea) {
+  if (idea.topic === "Preiswahrnehmung") {
+    return "Stark, weil der Preis-Einwand offen benannt und über konkrete regionale Wertbeweise gedreht wird – statt defensiv zu erklären.";
+  }
+  if (/Störung|Sicherheit|Entstörung|Bereitschaft/i.test(`${idea.topic} ${idea.subtheme}`)) {
+    return "Stark, weil ein sensibles Thema ruhig, serviceorientiert und mit klarer Handlungssicherheit erzählt wird.";
+  }
+  if (/Region|Sponsoring|Kultur|Sport|Chemnitz/i.test(`${idea.topic} ${idea.concept}`)) {
+    return "Stark, weil der Beitrag nicht abstrakt über Marke spricht, sondern regionale Wirkung sichtbar macht.";
+  }
+  if (idea.format === "YouTube Long") {
+    return "Stark, weil das Thema genug Tiefe für Long Content hat und über Kapitel, O-Töne und Belege Vertrauen aufbauen kann.";
+  }
+  if (/FAQ|Checkliste|Service|Anleitung|Entscheidung/i.test(`${idea.mechanic} ${idea.pillar}`)) {
+    return "Stark, weil der Beitrag einen konkreten Nutzen liefert und dadurch speicherbar statt nur nett anzusehen ist.";
+  }
+  return "Stark, weil Thema, Hook, Bildidee und Beleg eine klare Social-Mechanik ergeben – verständlich, visuell und anschlussfähig.";
+}
+
+function enrichIdea(idea, settings = getSettings()) {
+  const enriched = { ...idea };
+  enriched.topicStatement = enriched.topicStatement || clearTopicStatement(enriched);
+  enriched.qualityProfile = buildQualityProfile(enriched, settings);
+  enriched.approval = approvalInfo(enriched.criticalReview);
+  enriched.pillarInfo = contentPillarInfo(enriched.pillar);
+  enriched.whyThisIdea = generateAgencyRationale(enriched);
+  return enriched;
+}
+
 let topics = [...topicCatalog];
 let selectedTopics = new Set(["Strom", "Photovoltaik", "Elektromobilität"]);
 let currentIdeas = [];
@@ -1228,7 +1318,7 @@ function createIdeaFromPlan() {
   });
   const keywords = topic.keywords || [topic.name.replaceAll(" ", "")];
   const topicStatement = clearTopicStatement({ topic: topic.name, subtheme });
-  return {
+  const idea = {
     id: `plan-${Date.now()}-${hash(planText)}`,
     topic: topic.name,
     format,
@@ -1258,6 +1348,7 @@ function createIdeaFromPlan() {
     ],
     score: 88,
   };
+  return enrichIdea(idea, settings);
 }
 
 function inferPlanProtagonist(planText) {
@@ -1492,7 +1583,7 @@ function buildIdea(topic, index, settings) {
     topicTension,
   });
 
-  return {
+  const idea = {
     id: `${Date.now()}-${index}-${seed}`,
     topic: topic.name,
     format: template.format,
@@ -1520,6 +1611,7 @@ function buildIdea(topic, index, settings) {
     ],
     score,
   };
+  return enrichIdea(idea, settings);
 }
 
 function runCriticalReview({ topic, subtheme, goal, audience, template, concept, topicProof, topicTension }) {
@@ -1733,6 +1825,9 @@ function renderIdeas() {
       const isFavorite = favorites.some((favorite) => favorite.title === idea.title);
       const mediaOptions = getMediaOptions(idea.topic);
       const previewMedia = mediaOptions[idea.mediaIndex % mediaOptions.length];
+      const quality = idea.qualityProfile || buildQualityProfile(idea);
+      const approval = idea.approval || approvalInfo(idea.criticalReview);
+      const pillar = idea.pillarInfo || contentPillarInfo(idea.pillar);
       return `
         <article class="idea-card" style="animation-delay:${index * 60}ms">
           <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
@@ -1744,7 +1839,10 @@ function renderIdeas() {
               <span class="meta-tag">${escapeHtml(idea.pillar)}</span>
               <span class="meta-tag">${escapeHtml(idea.platform)}</span>
             </div>
-            <span class="score">${idea.score}% Potenzial</span>
+            <div class="score-group">
+              <span class="approval-chip ${approval.level}"><i></i>${approval.label} · ${approval.text}</span>
+              <span class="score">${idea.score}% Potenzial</span>
+            </div>
           </div>
           <div class="idea-media">
             <img src="${previewMedia}" alt="${escapeHtml(idea.topic)} – vorgeschlagenes Fotomotiv" loading="lazy" />
@@ -1754,6 +1852,23 @@ function renderIdeas() {
           <p class="topic-statement">${escapeHtml(idea.topicStatement || clearTopicStatement(idea))}</p>
           <p class="hook">${escapeHtml(idea.hook)}</p>
           <p class="concept">${escapeHtml(idea.concept)}</p>
+          <div class="strategy-panel">
+            <div class="pillar-note">
+              <span>Content-Säule</span>
+              <strong>${escapeHtml(pillar.label)}</strong>
+              <small>${escapeHtml(pillar.description)}</small>
+            </div>
+            <div class="why-note">
+              <span>Warum diese Idee?</span>
+              <p>${escapeHtml(idea.whyThisIdea || generateAgencyRationale(idea))}</p>
+            </div>
+          </div>
+          <div class="quality-grid" aria-label="Qualitätsbewertung">
+            <span><b>${quality.strategy}</b><small>Strategie</small></span>
+            <span><b>${quality.visual}</b><small>Visual</small></span>
+            <span><b>${quality.interaction}</b><small>Interaktion</small></span>
+            <span><b>${effortLabel(quality.effort)}</b><small>Aufwand</small></span>
+          </div>
           <div class="idea-brief">
             <div><span>Fokus</span><strong>${escapeHtml(idea.subtheme)}</strong></div>
             <div><span>Aufhänger</span><strong>${escapeHtml(idea.occasion)}</strong></div>
@@ -1766,7 +1881,7 @@ function renderIdeas() {
               <p>${escapeHtml(idea.cta)}</p>
             </div>
             <div>
-              <span class="detail-label">Warum es funktioniert</span>
+              <span class="detail-label">Produktionslogik</span>
               <p>${escapeHtml(idea.strength)}</p>
             </div>
           </div>
@@ -1774,6 +1889,7 @@ function renderIdeas() {
           <div class="card-actions">
             <button class="card-action create-post-action" data-index="${index}" type="button">✦ Fertigen Post erstellen</button>
             <button class="card-action briefing-action" data-index="${index}" type="button">▤ Briefing erstellen</button>
+            <button class="card-action series-action" data-index="${index}" type="button">▥ Serie daraus machen</button>
             <button class="card-action copy-action" data-index="${index}" type="button">□ Idee kopieren</button>
             <button class="card-action favorite-action ${isFavorite ? "active" : ""}" data-index="${index}" type="button">
               ${isFavorite ? "♥ Gespeichert" : "♡ Favorisieren"}
@@ -1797,6 +1913,11 @@ function renderIdeas() {
       openBriefing(currentIdeas[Number(button.dataset.index)]),
     );
   });
+  document.querySelectorAll(".series-action").forEach((button) => {
+    button.addEventListener("click", () =>
+      createSeriesFromIdea(currentIdeas[Number(button.dataset.index)]),
+    );
+  });
   document.querySelectorAll(".favorite-action").forEach((button) => {
     button.addEventListener("click", () =>
       toggleFavorite(currentIdeas[Number(button.dataset.index)]),
@@ -1804,7 +1925,102 @@ function renderIdeas() {
   });
 }
 
+function createSeriesFromIdea(baseIdea) {
+  if (!baseIdea) return;
+  const settings = getSettings();
+  const steps = [
+    {
+      role: "Aufmerksamkeit",
+      format: "Reel",
+      mechanic: "Serienauftakt",
+      title: `Teil 1: Der stärkste Punkt zu ${baseIdea.subtheme}`,
+      hook: baseIdea.hook,
+      cta: "Soll Teil 2 tiefer reingehen? Schreib deine Frage in die Kommentare.",
+    },
+    {
+      role: "Einordnung",
+      format: "Carousel",
+      mechanic: "Kontext in 5 Slides",
+      title: `Teil 2: Was man über ${baseIdea.subtheme} wissen muss`,
+      hook: "„Kurz erklärt, ohne Fachchinesisch.“",
+      cta: "Speichern, wenn du den Überblick später nochmal brauchst.",
+    },
+    {
+      role: "Beweis",
+      format: "Post",
+      mechanic: "Proof Point",
+      title: `Teil 3: Der Beweis vor Ort`,
+      hook: "„Nicht behaupten. Zeigen.“",
+      cta: "Welchen Beleg sollen wir als Nächstes sichtbar machen?",
+    },
+    {
+      role: "Mensch",
+      format: "Reel",
+      mechanic: "O-Ton",
+      title: `Teil 4: Eine Stimme aus der Praxis`,
+      hook: "„Was sagt jemand, der täglich damit zu tun hat?“",
+      cta: "Welche Frage würdest du der Person stellen?",
+    },
+    {
+      role: "Abschluss",
+      format: "Carousel",
+      mechanic: "Merksatz & CTA",
+      title: `Teil 5: Was davon hängen bleiben soll`,
+      hook: "„Wenn du nur eins mitnimmst, dann das.“",
+      cta: baseIdea.cta,
+    },
+  ];
+
+  currentIdeas = steps.map((step, index) => {
+    const template = {
+      format: step.format,
+      mechanic: step.mechanic,
+      title: step.title,
+      concept: baseIdea.concept,
+    };
+    const criticalReview = runCriticalReview({
+      topic: baseIdea.topic,
+      subtheme: baseIdea.subtheme,
+      goal: settings.goal,
+      audience: settings.audience,
+      template,
+      concept: baseIdea.concept,
+      topicProof: baseIdea.proof,
+      topicTension: `Serienlogik: ${step.role} innerhalb einer mehrteiligen Content-Strecke`,
+    });
+    const idea = {
+      ...baseIdea,
+      id: `series-${Date.now()}-${index}-${hash(`${baseIdea.title}-${step.role}`)}`,
+      format: step.format,
+      mechanic: step.mechanic,
+      pillar: "Serie",
+      title: step.title,
+      hook: step.hook,
+      concept: `${baseIdea.topicStatement || clearTopicStatement(baseIdea)} Serienrolle: ${step.role}. ${step.mechanic} als Teil einer 5-teiligen Strecke zu „${baseIdea.subtheme}“. ${baseIdea.concept}`,
+      cta: step.cta,
+      strength: `Teil ${index + 1} erfüllt die Serienrolle „${step.role}“ und baut auf derselben Kernidee auf, damit Wiedererkennung und fachliche Tiefe entstehen.`,
+      mediaIndex: (baseIdea.mediaIndex + index) % getMediaOptions(baseIdea.topic).length,
+      criticalReview,
+      score: Math.min(98, (baseIdea.score || 82) + 2 - index),
+    };
+    return enrichIdea(idea, settings);
+  });
+
+  renderIdeas();
+  renderCampaignBoard(settings, [topics.find((topic) => topic.name === baseIdea.topic) || { name: baseIdea.topic }]);
+  resultsSummary.innerHTML = `
+    <span class="pulse"></span>
+    5-teilige Content-Serie aus „${escapeHtml(baseIdea.subtheme)}“ erstellt · ${escapeHtml(baseIdea.topic)}
+  `;
+  showToast("Content-Serie wurde erstellt.");
+  if (window.innerWidth < 1050) {
+    document.querySelector(".results-panel").scrollIntoView({ behavior: "smooth" });
+  }
+}
+
 function ideaAsText(idea) {
+  const quality = idea.qualityProfile || buildQualityProfile(idea);
+  const approval = idea.approval || approvalInfo(idea.criticalReview);
   return `${idea.title}
 
 Hook: ${idea.hook}
@@ -1812,6 +2028,7 @@ Hook: ${idea.hook}
 Konzept: ${idea.concept}
 
 Fokus: ${idea.subtheme}
+Content-Säule: ${contentPillarInfo(idea.pillar).label} – ${contentPillarInfo(idea.pillar).description}
 Aufhänger: ${idea.occasion}
 Perspektive: ${idea.protagonist}
 Schauplatz: ${idea.setting}
@@ -1820,7 +2037,10 @@ Bildidee: ${idea.visualApproach}
 
 Format: ${idea.format} für ${idea.platform}
 CTA: ${idea.cta}
-Warum es funktioniert: ${idea.strength}
+Warum diese Idee: ${idea.whyThisIdea || generateAgencyRationale(idea)}
+Produktionslogik: ${idea.strength}
+Qualität: Strategie ${quality.strategy}/100 · Visual ${quality.visual}/100 · Interaktion ${quality.interaction}/100 · Aufwand ${effortLabel(quality.effort)}
+Freigabe-Ampel: ${approval.label} – ${approval.text}
 Interne Prüfung: ${idea.criticalReview?.label || "Standardprüfung"}
 Prüfpunkte:
 ${(idea.criticalReview?.checks || ["Fakten vor Veröffentlichung gegenprüfen."]).map((check) => `- ${check}`).join("\n")}
@@ -3131,31 +3351,54 @@ function exportIdeas() {
     showToast("Erst Ideen generieren oder favorisieren.");
     return;
   }
+  const settings = getSettings();
+  const campaign = settings.campaign;
+  const startDate = campaign.enabled && campaign.start ? new Date(`${campaign.start}T12:00:00`) : null;
   const headers = [
-    "Thema", "Unterthema", "Content-Säule", "Mechanik", "Anlass", "Perspektive",
-    "Schauplatz", "Beleg", "Bildidee", "Format", "Plattform", "Titel", "Hook",
-    "Konzept", "CTA", "Interne Prüfung", "Prüfpunkte", "Hashtags",
+    "Status", "Vorgeschlagenes Datum", "Kampagnenrolle", "Thema", "Unterthema",
+    "Content-Säule", "Strategie-Notiz", "Mechanik", "Format", "Plattform", "Titel",
+    "Hook", "Kernaussage", "CTA", "Qualität Strategie", "Qualität Visual",
+    "Qualität Interaktion", "Aufwand", "Freigabe-Ampel", "Interne Prüfung",
+    "Prüfpunkte", "Benötigter Beleg", "Bildidee / Shot-Hinweis", "Hashtags",
   ];
-  const rows = exportData.map((idea) => [
-    idea.topic,
-    idea.subtheme,
-    idea.pillar,
-    idea.mechanic,
-    idea.occasion,
-    idea.protagonist,
-    idea.setting,
-    idea.proof,
-    idea.visualApproach,
-    idea.format,
-    idea.platform,
-    idea.title,
-    idea.hook,
-    idea.concept,
-    idea.cta,
-    idea.criticalReview?.label || "Standardprüfung",
-    (idea.criticalReview?.checks || []).join(" | "),
-    idea.hashtags.join(" "),
-  ]);
+  const rows = exportData.map((idea, index) => {
+    const quality = idea.qualityProfile || buildQualityProfile(idea, settings);
+    const approval = idea.approval || approvalInfo(idea.criticalReview);
+    const pillar = idea.pillarInfo || contentPillarInfo(idea.pillar);
+    const date = startDate ? new Date(startDate) : null;
+    if (date) {
+      const frequency = Math.max(1, campaign.frequency || 1);
+      const week = Math.floor(index / frequency);
+      const offsets = frequency === 1 ? [0] : frequency === 2 ? [0, 3] : frequency === 3 ? [0, 2, 4] : [0, 1, 3, 5];
+      date.setDate(startDate.getDate() + week * 7 + offsets[index % offsets.length]);
+    }
+    return [
+      "Idee",
+      date ? date.toLocaleDateString("de-DE") : "",
+      idea.pillar === "Serie" ? idea.mechanic : campaign.enabled ? campaign.label : "",
+      idea.topic,
+      idea.subtheme,
+      pillar.label,
+      idea.whyThisIdea || generateAgencyRationale(idea),
+      idea.mechanic,
+      idea.format,
+      idea.platform,
+      idea.title,
+      idea.hook,
+      idea.concept,
+      idea.cta,
+      `${quality.strategy}/100`,
+      `${quality.visual}/100`,
+      `${quality.interaction}/100`,
+      effortLabel(quality.effort),
+      `${approval.label} – ${approval.text}`,
+      idea.criticalReview?.label || "Standardprüfung",
+      (idea.criticalReview?.checks || []).join(" | "),
+      idea.proof,
+      idea.visualApproach,
+      idea.hashtags.join(" "),
+    ];
+  });
   const csv = [headers, ...rows]
     .map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(";"))
     .join("\n");
@@ -3163,10 +3406,10 @@ function exportIdeas() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `energie-ideenwerk-content-ideen-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.download = `energie-ideenwerk-redaktionsplan-${new Date().toISOString().slice(0, 10)}.csv`;
   link.click();
   URL.revokeObjectURL(url);
-  showToast("CSV-Export wurde erstellt.");
+  showToast("Redaktionsplan-Export wurde erstellt.");
 }
 
 document.querySelector("#customTopicForm").addEventListener("submit", (event) => {

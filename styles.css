@@ -941,6 +941,48 @@ input[type="range"]::-webkit-slider-thumb {
   font-weight: 700;
 }
 
+.score-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.approval-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #f5f4ef;
+  color: #68736f;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.approval-chip i {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.approval-chip.green {
+  background: rgba(25, 123, 108, 0.1);
+  color: var(--teal);
+}
+
+.approval-chip.yellow {
+  background: rgba(242, 230, 0, 0.22);
+  color: #7a7000;
+}
+
+.approval-chip.red {
+  background: rgba(223, 29, 103, 0.1);
+  color: var(--pink);
+}
+
 .idea-card h3 {
   position: relative;
   margin: 14px 40px 7px 0;
@@ -1011,6 +1053,80 @@ input[type="range"]::-webkit-slider-thumb {
   color: #5e6a66;
   font-size: 12px;
   line-height: 1.65;
+}
+
+.strategy-panel {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.pillar-note,
+.why-note {
+  padding: 12px;
+  border: 1px solid rgba(25, 123, 108, 0.13);
+  border-radius: 13px;
+  background: #fbfaf5;
+}
+
+.pillar-note span,
+.why-note span {
+  display: block;
+  margin-bottom: 5px;
+  color: #9aa19f;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pillar-note strong {
+  display: block;
+  color: var(--teal);
+  font-size: 13px;
+}
+
+.pillar-note small,
+.why-note p {
+  display: block;
+  margin: 4px 0 0;
+  color: #59645f;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.quality-grid span {
+  padding: 8px 9px;
+  border-radius: 11px;
+  background: #f2f4ed;
+}
+
+.quality-grid b,
+.quality-grid small {
+  display: block;
+}
+
+.quality-grid b {
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.quality-grid small {
+  margin-top: 2px;
+  color: #87908c;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .idea-brief {
@@ -2224,6 +2340,10 @@ dialog::backdrop {
     width: 100%;
   }
 
+  .strategy-panel {
+    grid-template-columns: 1fr;
+  }
+
   .briefing-grid,
   .briefing-actions {
     grid-template-columns: 1fr;
@@ -2293,6 +2413,19 @@ dialog::backdrop {
 
   .idea-details {
     grid-template-columns: 1fr;
+  }
+
+  .card-meta,
+  .score-group {
+    align-items: flex-start;
+  }
+
+  .card-meta {
+    flex-direction: column;
+  }
+
+  .quality-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .post-studio-dialog {
