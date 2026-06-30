@@ -79,21 +79,20 @@ button {
   text-decoration: none;
 }
 
-.brand-mark {
-  position: relative;
-  width: auto;
-  height: auto;
-  color: var(--teal);
-  font-family: "Urbanist", sans-serif;
-  font-size: 30px;
-  font-weight: 900;
-  letter-spacing: -0.06em;
-  line-height: 0.9;
+.brand-logo-wrap {
+  display: flex;
+  align-items: center;
+  width: 146px;
+  height: 58px;
+  flex: 0 0 auto;
 }
 
-.brand-mark span {
-  position: relative;
-  color: #0090d4;
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .brand > span:last-child {
