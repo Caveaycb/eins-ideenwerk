@@ -18,7 +18,7 @@ const topicCatalog = [
   { name: "Baustellen & Projekte", icon: "▲", keywords: ["Baustelle", "Projekt", "Infrastruktur"] },
   { name: "Zähler & Messwesen", icon: "◴", keywords: ["Zähler", "SmartMeter", "Verbrauch"] },
   { name: "Energiepreise & Markt", icon: "€", keywords: ["Energiepreis", "Energiemarkt", "Erklärt"] },
-  { name: "Preiswahrnehmung", icon: "◌", keywords: ["Preisgefühl", "Kostenwahrnehmung", "Energiepreise"] },
+  { name: "Preiswahrnehmung", icon: "◌", keywords: ["Preiswert", "Region", "Mehrwert"] },
   { name: "Kommunale Wärmeplanung", icon: "⌘", keywords: ["Wärmeplanung", "Kommune", "Wärmewende"] },
   { name: "Kundenservice", icon: "☎", keywords: ["Kundenservice", "Hilfe", "EnergieIdeenwerk"] },
   { name: "Digitalisierung", icon: "⌘", keywords: ["Digitalisierung", "Innovation", "SmartCity"] },
@@ -55,7 +55,7 @@ const topicMedia = {
   "Baustellen & Projekte": "assets/photos/stromnetz.png",
   "Zähler & Messwesen": "assets/photos/smart-home.png",
   "Energiepreise & Markt": "assets/photos/smart-home.png",
-  Preiswahrnehmung: "assets/photos/smart-home.png",
+  Preiswahrnehmung: "assets/photos/region.png",
   Klimaanpassung: "assets/photos/region.png",
   "Kommunale Wärmeplanung": "assets/photos/waerme.png",
   "Großkunden & Gewerbe": "assets/photos/stromnetz.png",
@@ -154,7 +154,7 @@ const topicMediaGroup = {
   "Netze & Infrastruktur": "grid", Netzleitstelle: "grid", Versorgungssicherheit: "grid",
   "Entstörung & Bereitschaft": "grid", "Baustellen & Projekte": "grid",
   Glasfaser: "grid", Straßenbeleuchtung: "grid", "Zähler & Messwesen": "grid",
-  Preiswahrnehmung: "people",
+  Preiswahrnehmung: "region",
   "Berufe & Ausbildung": "people", "Frauen in Technik": "people",
   "Quereinstieg & Karriere": "people", Kundenservice: "people", Betrugsprävention: "people",
   "Region & Engagement": "region", "Sport & Sponsoring": "region", "Kultur & Bildung": "region",
@@ -300,9 +300,9 @@ const angles = {
     "Warum sinkende Marktpreise nicht sofort auf jeder Rechnung ankommen",
   ],
   Preiswahrnehmung: [
-    "Warum sich Energiepreise oft anders anfühlen, als sie sich zusammensetzen",
-    "Was Kund:innen auf der Rechnung sehen – und was dahinter steckt",
-    "Wie man Preisfrust ernst nimmt, ohne falsche Versprechen zu machen",
+    "Warum der Preis mehr ist als nur Kilowattstunden – und was davon in der Region ankommt",
+    "Was Kund:innen bekommen, wenn sie sich für einen regionalen Versorger entscheiden",
+    "Wie Sponsoring, Service und Verantwortung den gefühlten Wert eines Tarifs verändern",
   ],
   Klimaanpassung: [
     "Wie Infrastruktur mit Hitze und Starkregen umgeht",
@@ -539,6 +539,71 @@ templates.push(
     strength: "Zeitreisen verbinden Nostalgie, Orientierung und Zukunftsbild.",
   },
 );
+
+const topicSpecificTemplates = {
+  Preiswahrnehmung: [
+    {
+      format: "Reel",
+      mechanic: "Regionaler Gegenwert",
+      title: "Was dein Preis in Chemnitz möglich macht",
+      hook: "„Nicht immer der billigste Preis. Aber ein Preis, der hier etwas bewegt.“",
+      concept:
+        "Kurzes Reel mit drei echten Szenen: Service vor Ort, ein unterstütztes regionales Projekt und ein sichtbarer Infrastruktur- oder Vereinsmoment. Die Botschaft: Preis wird verständlicher, wenn der regionale Gegenwert sichtbar wird.",
+      cta: "Welches regionale Projekt sollten mehr Menschen kennen?",
+      strength: "Der Beitrag macht Preisakzeptanz emotional und konkret, ohne sich defensiv zu rechtfertigen.",
+    },
+    {
+      format: "Carousel",
+      mechanic: "Vergleichsportal sieht das nicht",
+      title: "Was ein Vergleichsportal nicht zeigt",
+      hook: "Folie 1: „Der günstigste Preis erzählt selten die ganze Geschichte.“",
+      concept:
+        "Carousel mit klarer Gegenüberstellung: Preiszahl auf dem Portal vs. Service, regionale Ansprechpartner:innen, Sponsoring, Stadtprojekte, Infrastrukturverantwortung und Verlässlichkeit vor Ort.",
+      cta: "Was gehört für dich zu einem fairen Preis dazu?",
+      strength: "Das Format verschiebt die Diskussion von billig zu wertvoll und bleibt trotzdem nachvollziehbar.",
+    },
+    {
+      format: "Post",
+      mechanic: "Danke an die Region",
+      title: "Ein Preis, der hier bleibt",
+      hook: "„Manchmal sieht man den Wert nicht auf der Rechnung – sondern auf dem Platz, in der Halle oder in der Stadt.“",
+      concept:
+        "Starkes dokumentarisches Bild aus Chemnitz oder der Region: Verein, Kulturort, Stadtprojekt oder Service-Situation. Die Caption erzählt, warum regionale Entscheidung auch regionale Wirkung bedeuten kann.",
+      cta: "Welcher Ort in Chemnitz steht für dich für Zusammenhalt?",
+      strength: "Ein einzelnes echtes Bild macht den Mehrwert glaubwürdiger als abstrakte Markenargumente.",
+    },
+    {
+      format: "Reel",
+      mechanic: "Preis vs. Wert",
+      title: "Preis ist nicht gleich Wert",
+      hook: "„Günstig ist schnell verglichen. Wert muss man zeigen.“",
+      concept:
+        "Schneller Schnitt zwischen Preisvergleich, Servicekontakt, Sponsoringmoment, regionalem Projekt und Team vor Ort. Am Ende steht keine Rechtfertigung, sondern eine ruhige Haltung: Wir wollen zeigen, was dazugehört.",
+      cta: "Was macht für dich einen Versorger wertvoll?",
+      strength: "Die Mechanik bringt eine klare Markenhaltung auf den Punkt, ohne belehrend zu wirken.",
+    },
+    {
+      format: "Story",
+      mechanic: "Wert-Abstimmung",
+      title: "Was ist dir bei Energie wirklich wichtig?",
+      hook: "„Nur der Preis – oder auch das Drumherum?“",
+      concept:
+        "Interaktive Story mit Abstimmungen zu Service, regionaler Nähe, Sponsoring, Verlässlichkeit und Preis. Danach folgt eine kurze Auflösung mit konkretem regionalem Beispiel.",
+      cta: "Stimme ab – wir zeigen danach ein echtes Beispiel aus der Region.",
+      strength: "Die Community formuliert selbst, welche Werte neben dem Preis zählen.",
+    },
+    {
+      format: "LinkedIn",
+      mechanic: "Regionale Wertschöpfung",
+      title: "Warum Preiswahrnehmung auch eine Standortfrage ist",
+      hook: "„Energieversorgung endet nicht beim Tarif. Sie wirkt in der Region.“",
+      concept:
+        "LinkedIn-Post mit professioneller Einordnung: Preiswettbewerb, regionale Verantwortung, Servicequalität, Sponsoring und Infrastruktur als Bausteine von Vertrauen und Standortstärke.",
+      cta: "Welche Rolle sollte regionale Verantwortung bei Kaufentscheidungen spielen?",
+      strength: "Das Thema wird strategisch eingeordnet und eignet sich für Stakeholder, Kommunen und Geschäftskund:innen.",
+    },
+  ],
+};
 
 const expertMechanicRows = [
   ["Reel", "Cold Open", "Der härteste Einstieg zu {topic}", "„Wenn du nur 3 Sekunden hast: Das hier zählt.“", "Startet ohne Intro direkt mit einem starken Bild zu „{angle}“, friert den Moment ein und erklärt erst danach, warum er relevant ist.", "Welcher Moment hätte dich gestoppt?"],
@@ -860,10 +925,10 @@ const topicPlaybooks = {
     hooks: ["„Unter dieser Straße liegt ein Stück Wärmewende.“", "„Warum Rücklauf-Temperatur plötzlich spannend wird.“", "„Fernwärme ist unsichtbar – bis gebaut wird.“"],
   },
   Preiswahrnehmung: {
-    tensions: ["gefühlte Teuerung vs. tatsächliche Preisbestandteile", "Rechnungsfrust vs. transparente Einordnung", "Marktpreis-Schlagzeile vs. Kund:innenrechnung"],
-    proof: ["vereinfachte Beispielrechnung ohne individuelle Preiszusage", "Aufschlüsselung aus Beschaffung, Netzentgelt, Steuern und Abgaben", "O-Ton aus Kundenservice zu häufigen Missverständnissen"],
-    visuals: ["Kund:in schaut auf Rechnung neben erklärender Skizze", "Team erklärt Preisbestandteile an Whiteboard oder Tablet", "Close-up von Rechnung, Taschenrechner und verständlicher Farbcodierung"],
-    hooks: ["„Warum sich Energiepreise manchmal unfair anfühlen.“", "„Deine Rechnung ist mehr als ein Arbeitspreis.“", "„Sinkende Börsenpreise heißt nicht automatisch: morgen sinkt jede Rechnung.“"],
+    tensions: ["günstigster Anbieter vs. regionaler Mehrwert", "Preisvergleich vs. Service, Nähe und Verantwortung", "Tarifkosten vs. das, was in Chemnitz und der Region möglich wird"],
+    proof: ["konkretes Sponsoring- oder Vereinsbeispiel aus der Region", "O-Ton aus Service, Projektteam oder gefördertem Verein", "sichtbarer Vor-Ort-Beleg: Veranstaltung, Vereinsarbeit, Stadtprojekt oder Servicefall"],
+    visuals: ["Vereinstraining, Kulturort oder Stadtprojekt mit sichtbarem regionalem Bezug", "Serviceteam im direkten Kund:innenkontakt", "Collage aus Region, Sponsoring, Service und Infrastruktur"],
+    hooks: ["„Nicht immer der billigste Preis. Aber ein Preis, der hier etwas bewegt.“", "„Was bleibt eigentlich in der Region, wenn du regional kaufst?“", "„Ein Tarif ist mehr als eine Zahl auf dem Vergleichsportal.“"],
   },
 };
 
@@ -879,7 +944,7 @@ const topicSubthemes = {
   Wärmepumpen: ["Aufstellort", "Lautstärke", "Vorlauftemperatur", "Altbau", "Stromverbrauch", "Förderung", "Wartung", "Hybridlösung"],
   Glasfaser: ["Tiefbau", "Hausanschluss", "Spleißen", "Lichtsignal", "Router", "Ausbauplanung", "Mehrfamilienhaus", "Störung"],
   "Energiepreise & Markt": ["Beschaffung", "Netzentgelte", "Steuern", "Abschlag", "Preisgarantie", "Börsenpreis", "Verbrauchsprognose", "Jahresabrechnung"],
-  Preiswahrnehmung: ["gefühlte Kosten", "Rechnungsschock", "Preisbestandteile", "Abschlag", "Verbrauchsverhalten", "Vergleichbarkeit", "Transparenz", "Kundenservice-Fragen"],
+  Preiswahrnehmung: ["regionaler Mehrwert", "Sponsoring", "Servicequalität", "Nähe vor Ort", "Chemnitz", "Vereinsleben", "Kulturförderung", "Stadtentwicklung", "Verlässlichkeit", "Preisakzeptanz", "Vergleichsportal", "Kundenservice"],
   "Berufe & Ausbildung": ["Bewerbung", "Berufsschule", "Praxisauftrag", "Schichtdienst", "Teamkultur", "Prüfung", "Weiterbildung", "Sinn der Arbeit"],
   Digitalisierung: ["Sensorik", "Datenanalyse", "Smart Meter", "Prozessautomatisierung", "Cybersecurity", "digitale Baustelle", "Kundenportal", "Smart City"],
 };
@@ -949,7 +1014,7 @@ const campaignArcs = {
 
 const criticalTopicSignals = {
   "Energiepreise & Markt": ["Preisbestandteile prüfen", "keine Preisversprechen formulieren", "Zeitbezug und Quelle ergänzen"],
-  Preiswahrnehmung: ["emotionalen Preisfrust ernst nehmen", "keine individuellen Ersparnisse versprechen", "Preisbestandteile und Zeitbezug sauber erklären"],
+  Preiswahrnehmung: ["keine pauschale Rechtfertigung höherer Preise formulieren", "konkrete regionale Leistungen und Beispiele belegen", "Preisakzeptanz über Mehrwert statt über Druck oder Schuld argumentieren"],
   Tarife: ["Produktdetails gegen aktuelle Tarifseite prüfen", "keine individuelle Ersparnis versprechen"],
   Gas: ["Sicherheits- und Störfallhinweise fachlich freigeben", "keine Verharmlosung von Risiken"],
   Strom: ["Versorgungssicherheit differenziert formulieren", "keine absolute Ausfallsicherheit versprechen"],
@@ -976,7 +1041,7 @@ const topicClarity = {
   Trinkwasser: "Es geht um Vertrauen in Wasser aus dem Hahn: Qualität, Kontrolle, Weg vom Wasserwerk und Verantwortung im Netz.",
   Fernwärme: "Es geht um Wärme, die man kaum sieht: Leitungen, Hausstation, Baustellen und Wärmewende vor Ort.",
   "Energiepreise & Markt": "Es geht um Preisbestandteile und Marktlogik: Was die Rechnung beeinflusst und warum Veränderung zeitversetzt ankommt.",
-  Preiswahrnehmung: "Es geht um das Gefühl hinter der Rechnung: Warum Preise belastend wirken, was wirklich dahintersteckt und wie man fair darüber spricht.",
+  Preiswahrnehmung: "Es geht um den Wert hinter dem Preis: Service vor Ort, regionale Verantwortung, Sponsoring, Chemnitz-Bezug und das Gefühl, dass Geld in der Region etwas bewirkt.",
   "Rechnung verstehen": "Es geht um Orientierung in Zahlen: Abschlag, Verbrauch, Arbeitspreis, Grundpreis und was Kund:innen prüfen können.",
   "Zähler & Messwesen": "Es geht um Verbrauch sichtbar machen: Zählerstände, Messsysteme und die Frage, was Zahlen im Alltag bedeuten.",
   "Baustellen & Projekte": "Es geht um Fortschritt mit Nebenwirkungen: Warum gebaut wird, was stört, was es bringt und wann es weitergeht.",
@@ -1242,10 +1307,16 @@ function buildIdea(topic, index, settings) {
   const preferredTemplates = templates.filter((template) =>
     settings.formats.includes(template.format),
   );
+  const topicTemplates = topicSpecificTemplates[topic.name] || [];
+  const preferredTopicTemplates = topicTemplates.filter((template) =>
+    settings.formats.includes(template.format),
+  );
   const modePool = modeMechanics[settings.ideaMode]
     ? preferredTemplates.filter((template) => modeMechanics[settings.ideaMode].includes(template.mechanic))
     : preferredTemplates;
-  const templatePool = modePool.length
+  const templatePool = preferredTopicTemplates.length
+    ? preferredTopicTemplates
+    : modePool.length
     ? modePool
     : preferredTemplates.length
       ? preferredTemplates
@@ -1777,9 +1848,9 @@ function captionOpening(idea, tone, seed) {
   const hook = idea.hook.replace(/^„|“$/g, "").replace(/\.$/, "");
   const byTopic = {
     Preiswahrnehmung: [
-      "Energiepreise sind nicht nur Zahlen. Sie sind oft auch ein Gefühl.",
-      "Wenn die Rechnung kommt, zählt nicht nur der Betrag – sondern auch die Frage: Warum eigentlich?",
-      "Preisgefühl ist real. Genau deshalb lohnt sich ein genauer Blick.",
+      "Nicht immer geht es nur darum, wer am günstigsten ist.",
+      "Ein Preis ist eine Zahl. Der Wert dahinter zeigt sich vor Ort.",
+      "Was passiert eigentlich in der Region, wenn man regional entscheidet?",
     ],
     "Energiepreise & Markt": [
       "Warum verändert sich ein Energiepreis nicht so einfach, wie es Schlagzeilen manchmal klingen lassen?",
@@ -1813,6 +1884,23 @@ function captionOpening(idea, tone, seed) {
 function captionBody(idea, tone, seed) {
   const statement = idea.topicStatement || clearTopicStatement(idea);
   const subtheme = idea.subtheme;
+  if (idea.topic === "Preiswahrnehmung") {
+    if (tone === "sachlich") {
+      return `${statement} Im Mittelpunkt steht ${subtheme}: konkret, belegbar und ohne zu behaupten, dass Preis allein alles erklärt.`;
+    }
+    if (tone === "aktivierend") {
+      return pick([
+        `Vergleichsportale zeigen Zahlen. Aber sie zeigen selten, was mit regionalem Engagement, Service vor Ort und Verantwortung für Chemnitz passiert.`,
+        `Die spannende Frage ist nicht nur: Was kostet es? Sondern auch: Was ermöglicht dieser Preis hier bei uns?`,
+        `Wenn du an Preis denkst, denk auch an das, was dahintersteht: Menschen, Projekte, Vereine, Service und Infrastruktur vor Ort.`,
+      ], seed);
+    }
+    return pick([
+      `Ja, Preis zählt. Aber bei ${subtheme} wird sichtbar, dass es nicht nur um die günstigste Zahl geht – sondern um Service, Nähe und Wirkung in der Region.`,
+      `Vergleichen ist wichtig. Genauso wichtig ist der Blick darauf, was vor Ort zurückkommt: Unterstützung, Erreichbarkeit, Verlässlichkeit und Engagement für Chemnitz.`,
+      `Der Unterschied liegt oft nicht auf der Rechnung, sondern im Alltag: bei Service, regionalen Projekten, Sponsorings und der Verantwortung für das, was hier funktioniert.`,
+    ], seed);
+  }
   if (tone === "sachlich") {
     return `${statement} Im Mittelpunkt steht ${subtheme} – verständlich eingeordnet und ohne unnötige Abkürzungen.`;
   }
@@ -1832,6 +1920,16 @@ function captionBody(idea, tone, seed) {
 
 function captionPayoff(idea, tone, seed) {
   const proof = humanizeProofForCaption(idea.proof);
+  if (idea.topic === "Preiswahrnehmung") {
+    if (tone === "sachlich") {
+      return `Wichtig: Der Beitrag sollte den Mehrwert mit ${proof} konkret belegen und nicht pauschal behaupten.`;
+    }
+    return pick([
+      `Genau deshalb zählt der konkrete Blick: ${proof} macht sichtbar, wo aus einem Preis regionaler Wert wird.`,
+      `Am Ende geht es nicht darum, Preisfragen wegzureden – sondern zu zeigen, was vor Ort dadurch möglich wird.`,
+      `So wird aus „teurer oder günstiger?“ eine fairere Frage: Welchen Wert bekommt die Region dafür zurück?`,
+    ], seed);
+  }
   if (tone === "sachlich") {
     return `Wichtig: Aussagen, Zahlen und Beispiele sollten vor Veröffentlichung fachlich geprüft werden. Der Beitrag arbeitet mit ${proof}.`;
   }
