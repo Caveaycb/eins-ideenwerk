@@ -1246,6 +1246,7 @@ function getSettings() {
     expertise: Number(document.querySelector("#expertise").value),
     emotion: Number(document.querySelector("#emotion").value),
     count: Number(document.querySelector("#ideaCount").value),
+    seriesLength: Number(document.querySelector("#seriesLength")?.value || 5),
     campaign: getCampaignSettings(),
   };
 }
@@ -1928,7 +1929,8 @@ function renderIdeas() {
 function createSeriesFromIdea(baseIdea) {
   if (!baseIdea) return;
   const settings = getSettings();
-  const steps = [
+  const seriesLength = Math.max(3, Math.min(10, settings.seriesLength || 5));
+  const seriesSteps = [
     {
       role: "Aufmerksamkeit",
       format: "Reel",
@@ -1940,7 +1942,7 @@ function createSeriesFromIdea(baseIdea) {
     {
       role: "Einordnung",
       format: "Carousel",
-      mechanic: "Kontext in 5 Slides",
+      mechanic: "Kontext-Slides",
       title: `Teil 2: Was man über ${baseIdea.subtheme} wissen muss`,
       hook: "„Kurz erklärt, ohne Fachchinesisch.“",
       cta: "Speichern, wenn du den Überblick später nochmal brauchst.",
@@ -1954,22 +1956,71 @@ function createSeriesFromIdea(baseIdea) {
       cta: "Welchen Beleg sollen wir als Nächstes sichtbar machen?",
     },
     {
+      role: "Irrtum",
+      format: "Reel",
+      mechanic: "Mythos/Fakt",
+      title: `Teil 4: Was viele bei ${baseIdea.subtheme} falsch einschätzen`,
+      hook: "„Klingt logisch. Ist aber nur die halbe Wahrheit.“",
+      cta: "Welchen Mythos sollen wir noch prüfen?",
+    },
+    {
       role: "Mensch",
       format: "Reel",
       mechanic: "O-Ton",
-      title: `Teil 4: Eine Stimme aus der Praxis`,
+      title: `Teil 5: Eine Stimme aus der Praxis`,
       hook: "„Was sagt jemand, der täglich damit zu tun hat?“",
       cta: "Welche Frage würdest du der Person stellen?",
+    },
+    {
+      role: "Community",
+      format: "Story",
+      mechanic: "Abstimmung",
+      title: `Teil 6: Eure Frage zu ${baseIdea.subtheme}`,
+      hook: "„Jetzt seid ihr dran.“",
+      cta: "Stimme ab oder schick uns deine Frage.",
+    },
+    {
+      role: "Blick hinter die Kulissen",
+      format: "Reel",
+      mechanic: "Behind the Scenes",
+      title: `Teil 7: Der Moment, den man sonst nicht sieht`,
+      hook: "„Diesen Teil sieht man im Alltag fast nie.“",
+      cta: "Sollen wir davon mehr zeigen?",
+    },
+    {
+      role: "Service",
+      format: "Carousel",
+      mechanic: "Checkliste",
+      title: `Teil 8: Was du dir zu ${baseIdea.subtheme} merken kannst`,
+      hook: "„Kurz speichern. Später froh sein.“",
+      cta: "Speichern, wenn du es später wiederfinden willst.",
+    },
+    {
+      role: "Region",
+      format: "Post",
+      mechanic: "Local Proof",
+      title: `Teil 9: Was das hier vor Ort bedeutet`,
+      hook: "„Nicht irgendwo. Hier.“",
+      cta: "Welchen Ort sollen wir als Nächstes zeigen?",
     },
     {
       role: "Abschluss",
       format: "Carousel",
       mechanic: "Merksatz & CTA",
-      title: `Teil 5: Was davon hängen bleiben soll`,
+      title: `Teil 10: Was davon hängen bleiben soll`,
       hook: "„Wenn du nur eins mitnimmst, dann das.“",
       cta: baseIdea.cta,
     },
   ];
+  const finalStep = seriesSteps[seriesSteps.length - 1];
+  const coreSteps = seriesSteps.slice(0, -1);
+  const selectedSeriesSteps = seriesLength >= seriesSteps.length
+    ? seriesSteps
+    : [...coreSteps.slice(0, seriesLength - 1), finalStep];
+  const steps = selectedSeriesSteps.map((step, index) => ({
+    ...step,
+    title: step.title.replace(/Teil \d+:/, `Teil ${index + 1}:`),
+  }));
 
   currentIdeas = steps.map((step, index) => {
     const template = {
@@ -1996,7 +2047,7 @@ function createSeriesFromIdea(baseIdea) {
       pillar: "Serie",
       title: step.title,
       hook: step.hook,
-      concept: `${baseIdea.topicStatement || clearTopicStatement(baseIdea)} Serienrolle: ${step.role}. ${step.mechanic} als Teil einer 5-teiligen Strecke zu „${baseIdea.subtheme}“. ${baseIdea.concept}`,
+      concept: `${baseIdea.topicStatement || clearTopicStatement(baseIdea)} Serienrolle: ${step.role}. ${step.mechanic} als Teil einer ${seriesLength}-teiligen Strecke zu „${baseIdea.subtheme}“. ${baseIdea.concept}`,
       cta: step.cta,
       strength: `Teil ${index + 1} erfüllt die Serienrolle „${step.role}“ und baut auf derselben Kernidee auf, damit Wiedererkennung und fachliche Tiefe entstehen.`,
       mediaIndex: (baseIdea.mediaIndex + index) % getMediaOptions(baseIdea.topic).length,
@@ -2010,9 +2061,9 @@ function createSeriesFromIdea(baseIdea) {
   renderCampaignBoard(settings, [topics.find((topic) => topic.name === baseIdea.topic) || { name: baseIdea.topic }]);
   resultsSummary.innerHTML = `
     <span class="pulse"></span>
-    5-teilige Content-Serie aus „${escapeHtml(baseIdea.subtheme)}“ erstellt · ${escapeHtml(baseIdea.topic)}
+    ${seriesLength}-teilige Content-Serie aus „${escapeHtml(baseIdea.subtheme)}“ erstellt · ${escapeHtml(baseIdea.topic)}
   `;
-  showToast("Content-Serie wurde erstellt.");
+  showToast(`${seriesLength}-teilige Content-Serie wurde erstellt.`);
   if (window.innerWidth < 1050) {
     document.querySelector(".results-panel").scrollIntoView({ behavior: "smooth" });
   }
@@ -2055,55 +2106,148 @@ function createCaption(idea, tone = "nahbar") {
 
 function createFinishedSocialCaption(idea, tone = "nahbar") {
   const seed = hash(`${idea.id}-${idea.title}-${tone}-${studioVariant}`);
-  const opening = captionOpening(idea, tone, seed);
-  const body = captionBody(idea, tone, seed);
-  const payoff = captionPayoff(idea, tone, seed);
-  const cta = captionCta(idea, tone, seed);
+  const caption = naturalCaptionParts(idea, tone, seed);
   const hashtags = idea.hashtags.join(" ");
 
   if (idea.format === "Story") {
-    return `${opening}
+    return `${caption.opening}
 
-${body}
+${caption.body}
 
-${cta}
+${caption.cta}
 
 ${idea.hashtags.slice(0, 3).join(" ")}`;
   }
 
   if (idea.format === "Carousel") {
-    return `${opening}
+    return `${caption.opening}
 
-${body}
+${caption.body}
 
-${payoff}
+${caption.payoff}
 
-Swipe durch und speicher dir den Beitrag, wenn du später nochmal nachschauen willst.
+${caption.saveLine}
 
 ${hashtags}`;
   }
 
   if (idea.format === "Reel") {
-    return `${opening}
+    return `${caption.opening}
 
-${body}
+${caption.body}
 
-${payoff}
+${caption.payoff}
 
-${cta}
+${caption.cta}
 
 ${hashtags}`;
   }
 
-  return `${opening}
+  return `${caption.opening}
 
-${body}
+${caption.body}
 
-${payoff}
+${caption.payoff}
 
-${cta}
+${caption.cta}
 
 ${hashtags}`;
+}
+
+function naturalCaptionParts(idea, tone, seed) {
+  const proof = humanizeProofForCaption(idea.proof);
+  const topic = idea.topic;
+  const subtheme = idea.subtheme;
+  const seriesNumber = extractSeriesNumber(idea.title);
+  const seriesIntro = idea.pillar === "Serie"
+    ? `Teil ${seriesNumber || ""} unserer Reihe: `.replace("Teil  unserer", "Teil unserer")
+    : "";
+
+  if (topic === "Preiswahrnehmung") {
+    return {
+      opening: pick([
+        `${seriesIntro}Ja, Preis ist wichtig. Aber billig ist nicht automatisch besser.`,
+        `${seriesIntro}Der günstigste Anbieter gewinnt im Vergleichsportal. Aber gewinnt dadurch auch die Region?`,
+        `${seriesIntro}Manchmal steht auf dem Papier nur ein Preis. Vor Ort steckt viel mehr dahinter.`,
+      ], seed),
+      body: pick([
+        `Bei ${subtheme} geht es genau darum: Service, Nähe, Sponsoring, Infrastruktur und Verantwortung für Chemnitz nicht als nette Extras zu sehen, sondern als Teil des Werts.`,
+        `Wir finden: Wer Preise vergleicht, sollte auch vergleichen, was vor Ort zurückkommt. Erreichbarkeit. Unterstützung. Verlässlichkeit. Engagement.`,
+        `Ein Tarif ist schnell verglichen. Schwieriger ist die Frage, wer hier bleibt, wenn es Fragen gibt, Projekte Unterstützung brauchen oder Infrastruktur funktionieren muss.`,
+      ], seed + 3),
+      payoff: pick([
+        `Deshalb zählen für uns konkrete Beweise mehr als große Worte — zum Beispiel mit ${proof}.`,
+        `Nicht als Ausrede für Preise. Sondern als ehrlicher Blick auf den Wert, der in reinen Preisvergleichen oft fehlt.`,
+        `Am Ende geht es nicht um „teuer schönreden“. Es geht darum, sichtbar zu machen, wofür regionaler Wert steht.`,
+      ], seed + 7),
+      cta: pick([
+        `Was gehört für dich zu einem fairen Preis dazu?`,
+        `Würdest du regionale Verantwortung bei deiner Entscheidung mitbewerten?`,
+        `Was sollte ein Vergleichsportal außer dem Preis noch zeigen?`,
+      ], seed + 11),
+      saveLine: "Swipe durch, wenn du Preis nicht nur als Zahl, sondern als Wertfrage sehen willst.",
+    };
+  }
+
+  if (tone === "sachlich") {
+    return {
+      opening: cleanCaptionHook(idea),
+      body: `${subtheme} ist kein Randdetail, sondern ein guter Einstieg, um ${topic} verständlich einzuordnen.`,
+      payoff: `Wichtig bleibt: konkrete Aussagen vor Veröffentlichung fachlich prüfen. Als Beleg einplanen: ${proof}.`,
+      cta: idea.cta,
+      saveLine: "Speichern, wenn du die Einordnung später nochmal brauchst.",
+    };
+  }
+
+  if (tone === "aktivierend") {
+    return {
+      opening: pick([
+        cleanCaptionHook(idea),
+        `${seriesIntro}Kurze Frage: Hättest du das bei ${subtheme} gewusst?`,
+        `${seriesIntro}Das wirkt erstmal unscheinbar. Genau deshalb lohnt sich der Blick dahinter.`,
+      ], seed),
+      body: pick([
+        `Hier steckt mehr drin, als man auf den ersten Blick sieht: ein echter Arbeitsschritt, eine Entscheidung und ein Detail, das im Alltag oft untergeht.`,
+        `Bei ${topic} geht es selten nur um Technik. Es geht darum, dass am Ende etwas zuverlässig funktioniert, ohne dass man ständig darüber nachdenken muss.`,
+        `${subtheme} klingt vielleicht trocken. Wird aber ziemlich spannend, sobald man sieht, wer daran arbeitet und warum es vor Ort zählt.`,
+      ], seed + 5),
+      payoff: pick([
+        `Der Moment, der hängen bleibt, wird mit ${proof} greifbar.`,
+        `Genau solche Details machen aus einem Fachthema etwas, das man wirklich versteht.`,
+        `Und plötzlich ist das Thema nicht mehr abstrakt, sondern ziemlich nah am Alltag.`,
+      ], seed + 9),
+      cta: captionCta(idea, tone, seed + 13),
+      saveLine: "Swipe durch und speicher dir den Beitrag, wenn du später nochmal nachschauen willst.",
+    };
+  }
+
+  return {
+    opening: pick([
+      cleanCaptionHook(idea),
+      `${seriesIntro}Manche Dinge fallen erst auf, wenn man sie einmal aus der Nähe sieht.`,
+      `${seriesIntro}${topic} klingt groß. Der spannendste Teil beginnt aber oft bei einem kleinen Detail.`,
+    ], seed),
+    body: pick([
+      `Bei ${subtheme} sieht man ziemlich gut, wie viel Arbeit hinter etwas steckt, das im Alltag selbstverständlich wirken soll.`,
+      `Es geht nicht nur um Technik. Es geht um Menschen, Entscheidungen und diese vielen unsichtbaren Handgriffe, die am Ende Versorgung möglich machen.`,
+      `Wir nehmen euch mit zu einem Moment, den man sonst eher selten sieht — und der zeigt, was hinter ${subtheme} wirklich steckt.`,
+    ], seed + 4),
+    payoff: pick([
+      `Das wird greifbar mit ${proof}.`,
+      `Genau da wird aus einem abstrakten Thema ein echter Einblick.`,
+      `Kleiner Blick hinter die Kulissen, großer Aha-Moment.`,
+    ], seed + 8),
+    cta: captionCta(idea, tone, seed + 12),
+    saveLine: "Swipe durch und speicher dir den Beitrag, wenn du solche Einblicke öfter sehen willst.",
+  };
+}
+
+function cleanCaptionHook(idea) {
+  return idea.hook.replace(/^„|“$/g, "").replace(/\.$/, "");
+}
+
+function extractSeriesNumber(title = "") {
+  return title.match(/Teil\s+(\d+)/i)?.[1] || "";
 }
 
 function captionOpening(idea, tone, seed) {
