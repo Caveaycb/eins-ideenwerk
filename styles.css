@@ -1224,6 +1224,39 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: 16px;
 }
 
+.series-control {
+  display: inline-grid;
+  grid-template-columns: 74px auto;
+  grid-template-rows: auto auto;
+  gap: 4px 7px;
+  align-items: end;
+  padding: 7px;
+  border: 1px solid rgba(25, 123, 108, 0.16);
+  border-radius: 10px;
+  background: #fbfaf5;
+}
+
+.series-control label {
+  grid-column: 1 / -1;
+  color: #7f8985;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.series-control select {
+  height: 31px;
+  min-width: 74px;
+  padding-left: 9px;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+.series-control .series-action {
+  margin: 0;
+}
+
 .card-action {
   padding: 7px 10px;
   border: 1px solid var(--line);

@@ -1890,7 +1890,15 @@ function renderIdeas() {
           <div class="card-actions">
             <button class="card-action create-post-action" data-index="${index}" type="button">✦ Fertigen Post erstellen</button>
             <button class="card-action briefing-action" data-index="${index}" type="button">▤ Briefing erstellen</button>
-            <button class="card-action series-action" data-index="${index}" type="button">▥ Serie daraus machen</button>
+            <div class="series-control">
+              <label for="seriesLength-${index}">Serie</label>
+              <select id="seriesLength-${index}" class="series-length-select" data-index="${index}">
+                ${[3, 4, 5, 6, 7, 8, 9, 10].map((count) => `
+                  <option value="${count}" ${count === (Number(document.querySelector("#seriesLength")?.value) || 5) ? "selected" : ""}>${count} Teile</option>
+                `).join("")}
+              </select>
+              <button class="card-action series-action" data-index="${index}" type="button">▥ Serie daraus machen</button>
+            </div>
             <button class="card-action copy-action" data-index="${index}" type="button">□ Idee kopieren</button>
             <button class="card-action favorite-action ${isFavorite ? "active" : ""}" data-index="${index}" type="button">
               ${isFavorite ? "♥ Gespeichert" : "♡ Favorisieren"}
@@ -1915,9 +1923,11 @@ function renderIdeas() {
     );
   });
   document.querySelectorAll(".series-action").forEach((button) => {
-    button.addEventListener("click", () =>
-      createSeriesFromIdea(currentIdeas[Number(button.dataset.index)]),
-    );
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.index);
+      const length = Number(document.querySelector(`.series-length-select[data-index="${index}"]`)?.value || document.querySelector("#seriesLength")?.value || 5);
+      createSeriesFromIdea(currentIdeas[index], length);
+    });
   });
   document.querySelectorAll(".favorite-action").forEach((button) => {
     button.addEventListener("click", () =>
@@ -1926,10 +1936,12 @@ function renderIdeas() {
   });
 }
 
-function createSeriesFromIdea(baseIdea) {
+function createSeriesFromIdea(baseIdea, requestedLength) {
   if (!baseIdea) return;
   const settings = getSettings();
-  const seriesLength = Math.max(3, Math.min(10, settings.seriesLength || 5));
+  const seriesLength = Math.max(3, Math.min(10, Number(requestedLength || settings.seriesLength || 5)));
+  const globalSeriesLength = document.querySelector("#seriesLength");
+  if (globalSeriesLength) globalSeriesLength.value = String(seriesLength);
   const seriesSteps = [
     {
       role: "Aufmerksamkeit",
