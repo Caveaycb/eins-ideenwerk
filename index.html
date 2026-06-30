@@ -573,11 +573,21 @@
           </div>
 
           <div class="editor-divider"></div>
-          <label for="captionText">Fertige Caption</label>
+          <label for="captionText">Caption-Briefing / Ausgangstext</label>
           <textarea id="captionText" spellcheck="true"></textarea>
           <div class="caption-stats">
             <span id="captionLength">0 Zeichen</span>
             <span id="captionPlatform">für Instagram</span>
+          </div>
+          <div class="caption-ai-box">
+            <div>
+              <strong>KI-Caption daraus machen</strong>
+              <span>Übergibt das Briefing an ChatGPT mit klarer Caption-Anweisung.</span>
+            </div>
+            <div class="caption-ai-actions">
+              <button id="copyCaptionPromptButton" type="button">Prompt kopieren</button>
+              <button id="openCaptionAiButton" type="button">In ChatGPT öffnen</button>
+            </div>
           </div>
 
           <div class="studio-settings">

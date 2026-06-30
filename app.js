@@ -1833,6 +1833,51 @@ function captionCta(idea, tone, seed) {
   ], seed);
 }
 
+function createCaptionAiPrompt(idea) {
+  const tone = document.querySelector("#captionTone")?.value || idea.preferredTone || "nahbar";
+  const briefingText = document.querySelector("#captionText")?.value || createCaption(idea, tone);
+  const platform = idea.platform || document.querySelector("#platform")?.value || "Instagram";
+  return `Du bist ein sehr guter Social-Media-Copywriter für einen regionalen Energieversorger.
+
+Aufgabe:
+Schreibe aus dem folgenden Caption-Briefing eine echte fertige Social-Media-Caption.
+
+Wichtig:
+- Schreibe NICHT wie eine Anleitung.
+- Schreibe NICHT "wir zeigen", "im Beitrag", "das Reel zeigt" als Meta-Beschreibung, außer es klingt absolut natürlich.
+- Schreibe so, als würde die Caption direkt unter dem Post stehen.
+- Starte mit einem starken, natürlichen Hook.
+- Klinge modern, klar, sympathisch und nicht werblich.
+- Keine langen Erklärabsätze.
+- Keine erfundenen Zahlen oder Fakten.
+- Keine übertriebenen Versprechen.
+- Wenn etwas fachlich sensibel ist, vorsichtig und transparent formulieren.
+- Am Ende eine passende Community-Frage oder Speicher-/Kommentar-CTA.
+- Hashtags natürlich ans Ende.
+- Gib NUR die fertige Caption aus, keine Analyse, keine Varianten, keine Überschrift.
+
+Kontext:
+Plattform: ${platform}
+Format: ${idea.format}
+Ton: ${tone}
+Thema: ${idea.topic}
+Fokus: ${idea.subtheme}
+Mechanik: ${idea.mechanic}
+Hook-Idee: ${idea.hook}
+CTA-Idee: ${idea.cta}
+Hashtags: ${idea.hashtags.join(" ")}
+
+Caption-Briefing:
+${briefingText}
+
+Schreibe daraus jetzt die fertige Caption:`;
+}
+
+function captionAiUrl() {
+  if (!activeStudioIdea) return "https://chatgpt.com/";
+  return `https://chatgpt.com/?q=${encodeURIComponent(createCaptionAiPrompt(activeStudioIdea))}`;
+}
+
 function createYoutubeLongDescription(idea, tone = "nahbar") {
   const intro = tone === "sachlich"
     ? "In diesem Video ordnen wir das Thema ausführlich, verständlich und mit Blick auf die Region ein."
@@ -3104,6 +3149,19 @@ document.querySelector("#copyCaptionButton").addEventListener("click", async () 
   } catch {
     showToast("Kopieren war im Browser nicht möglich.");
   }
+});
+document.querySelector("#copyCaptionPromptButton").addEventListener("click", async () => {
+  if (!activeStudioIdea) return;
+  try {
+    await navigator.clipboard.writeText(createCaptionAiPrompt(activeStudioIdea));
+    showToast("Caption-KI-Prompt wurde kopiert.");
+  } catch {
+    showToast("Kopieren war im Browser nicht möglich.");
+  }
+});
+document.querySelector("#openCaptionAiButton").addEventListener("click", () => {
+  if (!activeStudioIdea) return;
+  window.open(captionAiUrl(), "_blank", "noopener,noreferrer");
 });
 document.querySelector("#downloadAssetButton").addEventListener("click", downloadStudioAssets);
 

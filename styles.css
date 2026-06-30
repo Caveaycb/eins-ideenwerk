@@ -2096,6 +2096,55 @@ dialog::backdrop {
   font-size: 9px;
 }
 
+.caption-ai-box {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid rgba(25, 123, 108, 0.16);
+  border-radius: 13px;
+  background:
+    linear-gradient(135deg, rgba(25, 123, 108, 0.08), rgba(233, 94, 15, 0.07)),
+    #fffdf9;
+}
+
+.caption-ai-box strong {
+  display: block;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.caption-ai-box span {
+  display: block;
+  margin-top: 2px;
+  color: #7a837f;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.caption-ai-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.caption-ai-actions button {
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: white;
+  color: #36504d;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.caption-ai-actions button:last-child {
+  border-color: #0090d4;
+  background: #0090d4;
+  color: white;
+}
+
 .studio-settings {
   display: grid;
   grid-template-columns: 1fr 1fr;
