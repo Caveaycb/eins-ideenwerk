@@ -768,32 +768,121 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .generate-button {
-  height: 48px;
+  position: relative;
+  isolation: isolate;
+  height: 54px;
   border: 0;
-  border-radius: 12px;
-  background: #e95e0f;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.35), transparent 21%),
+    linear-gradient(135deg, #ff7a1a 0%, #e95e0f 38%, #be3b4a 72%, #101010 145%);
   color: white;
   cursor: pointer;
   font-family: "Urbanist", sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  box-shadow: 0 10px 20px rgba(233, 94, 15, 0.24);
-  transition: 0.2s ease;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  box-shadow:
+    0 16px 34px rgba(233, 94, 15, 0.34),
+    0 4px 10px rgba(16, 16, 16, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -14px 24px rgba(0, 0, 0, 0.12);
+  transform: translateZ(0);
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    filter 0.24s ease;
+}
+
+.generate-button::before,
+.generate-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.generate-button::before {
+  background:
+    linear-gradient(105deg, transparent 0%, transparent 26%, rgba(255, 255, 255, 0.5) 42%, transparent 58%, transparent 100%);
+  transform: translateX(-120%);
+  animation: generateShine 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.generate-button::after {
+  inset: -55%;
+  background:
+    radial-gradient(circle at 20% 45%, rgba(255, 255, 255, 0.42) 0 3px, transparent 4px),
+    radial-gradient(circle at 66% 30%, rgba(255, 255, 255, 0.34) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 72%, rgba(255, 255, 255, 0.28) 0 3px, transparent 4px),
+    conic-gradient(from 40deg, rgba(255, 255, 255, 0.22), transparent 22%, rgba(255, 255, 255, 0.2), transparent 58%, rgba(255, 255, 255, 0.18));
+  opacity: 0.52;
+  animation: generateAura 7s linear infinite;
 }
 
 .generate-button:hover {
-  background: #d1540d;
-  transform: translateY(-2px);
-  box-shadow: 0 13px 25px rgba(223, 29, 103, 0.3);
+  filter: saturate(1.1) brightness(1.04);
+  transform: translateY(-3px) scale(1.012);
+  box-shadow:
+    0 22px 44px rgba(233, 94, 15, 0.42),
+    0 8px 20px rgba(190, 59, 74, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    inset 0 -14px 24px rgba(0, 0, 0, 0.1);
 }
 
 .generate-button:active {
-  transform: translateY(0);
+  transform: translateY(-1px) scale(0.985);
 }
 
 .generate-button span {
-  margin-right: 5px;
+  display: inline-block;
+  margin-right: 7px;
   color: white;
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.55));
+  animation: generateSpark 1.9s ease-in-out infinite;
+}
+
+@keyframes generateShine {
+  0%,
+  36% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  58%,
+  100% {
+    transform: translateX(130%) skewX(-18deg);
+  }
+}
+
+@keyframes generateAura {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.08);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes generateSpark {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  45% {
+    transform: translateY(-1px) rotate(12deg) scale(1.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .generate-button::before,
+  .generate-button::after,
+  .generate-button span {
+    animation: none;
+  }
 }
 
 .icon-button {
