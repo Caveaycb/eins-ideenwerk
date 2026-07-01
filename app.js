@@ -1143,7 +1143,7 @@ function enrichIdea(idea, settings = getSettings()) {
 }
 
 let topics = [...topicCatalog];
-let selectedTopics = new Set(["Strom", "Photovoltaik", "Elektromobilität"]);
+let selectedTopics = new Set();
 let currentIdeas = [];
 let favorites = JSON.parse(localStorage.getItem("energie-ideenwerk-favorites") || "[]");
 let generationRound = 0;
