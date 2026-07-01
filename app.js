@@ -1325,7 +1325,6 @@ function getSettings() {
     emotion: Number(document.querySelector("#emotion").value),
     originality: Number(document.querySelector("#originality").value),
     count: Number(document.querySelector("#ideaCount").value),
-    seriesLength: Number(document.querySelector("#seriesLength")?.value || 5),
     campaign: getCampaignSettings(),
   };
 }
@@ -1995,7 +1994,7 @@ function renderIdeas() {
               <label for="seriesLength-${index}">Serie</label>
               <select id="seriesLength-${index}" class="series-length-select" data-index="${index}">
                 ${[3, 4, 5, 6, 7, 8, 9, 10].map((count) => `
-                  <option value="${count}" ${count === (Number(document.querySelector("#seriesLength")?.value) || 5) ? "selected" : ""}>${count} Teile</option>
+                  <option value="${count}" ${count === 5 ? "selected" : ""}>${count} Teile</option>
                 `).join("")}
               </select>
               <button class="card-action series-action" data-index="${index}" type="button">▥ Serie daraus machen</button>
@@ -2026,7 +2025,7 @@ function renderIdeas() {
   document.querySelectorAll(".series-action").forEach((button) => {
     button.addEventListener("click", () => {
       const index = Number(button.dataset.index);
-      const length = Number(document.querySelector(`.series-length-select[data-index="${index}"]`)?.value || document.querySelector("#seriesLength")?.value || 5);
+      const length = Number(document.querySelector(`.series-length-select[data-index="${index}"]`)?.value || 5);
       createSeriesFromIdea(currentIdeas[index], length);
     });
   });
@@ -2039,10 +2038,7 @@ function renderIdeas() {
 
 function createSeriesFromIdea(baseIdea, requestedLength) {
   if (!baseIdea) return;
-  const settings = getSettings();
-  const seriesLength = Math.max(3, Math.min(10, Number(requestedLength || settings.seriesLength || 5)));
-  const globalSeriesLength = document.querySelector("#seriesLength");
-  if (globalSeriesLength) globalSeriesLength.value = String(seriesLength);
+  const seriesLength = Math.max(3, Math.min(10, Number(requestedLength || 5)));
   const seriesSteps = [
     {
       role: "Aufmerksamkeit",
