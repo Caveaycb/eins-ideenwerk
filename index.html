@@ -104,20 +104,6 @@
             </select>
           </div>
 
-          <div class="campaign-entry">
-            <div class="field">
-              <label for="campaignMode">Kampagnenplanung</label>
-              <select id="campaignMode">
-                <option value="off" selected>Kampagne ausschalten · nur Einzelideen</option>
-                <option value="short">Kurzkampagne · 1 Woche</option>
-                <option value="normal">Normale Kampagne · 2 Monate</option>
-                <option value="twelve">Kampagne · bis 12 Wochen</option>
-                <option value="long">Langzeitkampagne · 6+ Monate</option>
-              </select>
-              <p class="field-note">Wenn ausgeschaltet, werden Kampagnenplaner und Kampagnenboard komplett ausgeblendet.</p>
-            </div>
-          </div>
-
           <div class="field-row">
             <div class="field">
               <label for="goal">Ziel</label>
@@ -278,7 +264,7 @@
             </button>
           </div>
 
-          <div id="campaignPlannerSection" hidden>
+          <div id="campaignPlannerSection">
             <div class="divider"></div>
 
             <div class="panel-heading">
@@ -290,13 +276,35 @@
             <p class="helper">Erstellt aus den Ideen automatisch eine Kampagne mit Dramaturgie und Redaktionsplan.</p>
 
             <div class="campaign-planner">
-              <div class="field">
-                <label for="campaignTheme">Kampagnenthema</label>
-                <input id="campaignTheme" type="text" placeholder="z. B. Preis & regionaler Wert, PV-Woche, Abwasser erklärt …" />
-              </div>
-              <div class="field-row">
+              <div class="field-row campaign-setup-row">
                 <div class="field">
-                  <label for="campaignDuration">Dauer</label>
+                  <label for="campaignMode">Kampagnengröße</label>
+                  <select id="campaignMode">
+                    <option value="off" selected>Kampagne ausschalten · nur Einzelideen</option>
+                    <option value="short">Kurzkampagne · 1 Woche</option>
+                    <option value="normal">Normale Kampagne · 2 Monate</option>
+                    <option value="twelve">Kampagne · bis 12 Wochen</option>
+                    <option value="long">Langzeitkampagne · 6+ Monate</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="campaignFrequency">Posting-Frequenz</label>
+                  <select id="campaignFrequency">
+                    <option value="1">1 Post/Woche</option>
+                    <option value="2">2 Posts/Woche</option>
+                    <option value="3" selected>3 Posts/Woche</option>
+                    <option value="4">4 Posts/Woche</option>
+                  </select>
+                </div>
+              </div>
+              <p class="field-note" id="campaignOffNote">Wenn ausgeschaltet, werden Kampagnenboard und Kampagnenlogik nicht angezeigt.</p>
+              <div id="campaignDetails" hidden>
+                <div class="field">
+                  <label for="campaignTheme">Kampagnenthema</label>
+                  <input id="campaignTheme" type="text" placeholder="z. B. Preis & regionaler Wert, PV-Woche, Abwasser erklärt …" />
+                </div>
+                <div class="field">
+                  <label for="campaignDuration">Laufzeit feinjustieren</label>
                   <select id="campaignDuration">
                     <option value="1">1 Woche</option>
                     <option value="2">2 Wochen</option>
@@ -308,29 +316,20 @@
                     <option value="26">26 Wochen / 6+ Monate</option>
                   </select>
                 </div>
-                <div class="field">
-                  <label for="campaignFrequency">Frequenz</label>
-                  <select id="campaignFrequency">
-                    <option value="1">1 Post/Woche</option>
-                    <option value="2">2 Posts/Woche</option>
-                    <option value="3" selected>3 Posts/Woche</option>
-                    <option value="4">4 Posts/Woche</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label for="campaignStart">Startdatum</label>
-                  <input id="campaignStart" type="date" />
-                </div>
-                <div class="field">
-                  <label for="campaignArc">Dramaturgie</label>
-                  <select id="campaignArc">
-                    <option value="trust" selected>Vertrauen aufbauen</option>
-                    <option value="education">Wissen vertiefen</option>
-                    <option value="activation">Community aktivieren</option>
-                    <option value="project">Projekt begleiten</option>
-                  </select>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="campaignStart">Startdatum</label>
+                    <input id="campaignStart" type="date" />
+                  </div>
+                  <div class="field">
+                    <label for="campaignArc">Dramaturgie</label>
+                    <select id="campaignArc">
+                      <option value="trust" selected>Vertrauen aufbauen</option>
+                      <option value="education">Wissen vertiefen</option>
+                      <option value="activation">Community aktivieren</option>
+                      <option value="project">Projekt begleiten</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
@@ -340,7 +339,7 @@
 
           <div class="panel-heading">
             <div>
-              <span class="step" id="planGeneratorStep">04</span>
+              <span class="step" id="planGeneratorStep">05</span>
               <h2>Postgenerator nach Plan</h2>
             </div>
           </div>

@@ -300,7 +300,8 @@ h3 {
     radial-gradient(circle at 80% 70%, rgba(223, 29, 103, 0.2), transparent 32%);
 }
 
-.campaign-entry {
+.campaign-entry,
+.campaign-planner {
   display: grid;
   gap: 12px;
   margin: 16px 0 18px;
@@ -310,6 +311,28 @@ h3 {
   background:
     linear-gradient(135deg, rgba(25, 123, 108, 0.08), rgba(242, 230, 0, 0.08)),
     #fffdf8;
+}
+
+.campaign-planner {
+  margin: 14px 0 0;
+}
+
+.campaign-setup-row {
+  align-items: end;
+}
+
+#campaignDetails {
+  display: grid;
+  gap: 12px;
+}
+
+#campaignDetails[hidden] {
+  display: none;
+}
+
+#campaignFrequency:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .field-note {

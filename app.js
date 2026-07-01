@@ -1481,11 +1481,19 @@ function applyCampaignPreset(preset) {
 function updateCampaignUi({ applyPreset = false } = {}) {
   const preset = document.querySelector("#campaignMode")?.value || "off";
   const enabled = preset !== "off";
-  const plannerSection = document.querySelector("#campaignPlannerSection");
+  const campaignDetails = document.querySelector("#campaignDetails");
+  const campaignFrequency = document.querySelector("#campaignFrequency");
+  const campaignOffNote = document.querySelector("#campaignOffNote");
   const planGeneratorStep = document.querySelector("#planGeneratorStep");
-  if (plannerSection) plannerSection.hidden = !enabled;
-  if (planGeneratorStep) planGeneratorStep.textContent = enabled ? "05" : "04";
   if (enabled && applyPreset) applyCampaignPreset(preset);
+  if (campaignDetails) campaignDetails.hidden = !enabled;
+  if (campaignFrequency) campaignFrequency.disabled = !enabled;
+  if (campaignOffNote) {
+    campaignOffNote.textContent = enabled
+      ? "Größe und Frequenz steuern, wie groß das Kampagnenboard später aufgebaut wird."
+      : "Wenn ausgeschaltet, werden Kampagnenboard und Kampagnenlogik nicht angezeigt.";
+  }
+  if (planGeneratorStep) planGeneratorStep.textContent = "05";
   if (!enabled) {
     campaignBoard.hidden = true;
     campaignBoard.innerHTML = "";
