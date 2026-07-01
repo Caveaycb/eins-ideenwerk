@@ -1009,6 +1009,138 @@ const topicPlaybooks = {
   },
 };
 
+const concreteUtilityExamples = {
+  Strom: [
+    ["Abendspitze im Netz", "Leitstelle beobachtet Lastkurve zwischen 17 und 20 Uhr", "Netzmeister:in erklärt, warum Schalthandlungen geplant und nicht improvisiert werden", "Monitor mit Lastkurve, Hand am Schaltplan, Außenaufnahme Umspannwerk", "„Man sieht am Bildschirm ziemlich genau, wann die Stadt nach Hause kommt.“"],
+    ["Umspannwerk im Alltag", "kurzer Vor-Ort-Dreh an einem Umspannwerk am Stadtrand", "Fachkraft zeigt Schutzkleidung, Schaltfeld und Sicherheitsabstand", "Establishing Shot Tor, Close-up Warnschild, O-Ton vor Anlage", "„Das hier wirkt still. Tatsächlich ist es einer der wichtigsten Knotenpunkte.“"],
+  ],
+  Gas: [
+    ["Gasgeruch richtig einordnen", "Service-Team demonstriert Geruchsstoff und Verhalten im Ernstfall", "ruhige Sicherheitskommunikation ohne Panik", "Geruchsprobe, Kellerflur, geöffnete Fenster, Serviceteam am Messgerät", "„Wenn Gas riecht, sollst du es merken — genau dafür wird es odoriert.“"],
+    ["Wintercheck Gasnetz", "Monteur:in prüft Armatur und Druckwerte vor der Heizperiode", "warum Wartung unspektakulär, aber wichtig ist", "gelbe Leitungsmarkierung, Messgerät, Handschuhe, warme Wohnung als Nutzenbild", "„Sichere Wärme beginnt lange vor dem ersten Frost.“"],
+  ],
+  Elektromobilität: [
+    ["Ladesäule im Regen", "E-Auto lädt an öffentlicher Säule an einem normalen Werktag", "Anzeige, Stecker, Ladeleistung und Abrechnung werden verständlich gezeigt", "Regennasse Säule, Display, Hand am Kabel, Timer im Bild", "„Diese Zahl auf dem Display ist nicht deine Ladegeschwindigkeit für die ganze Zeit.“"],
+    ["Alltagsstrecke Chemnitz-Umland", "kurzer Streckentest mit Zwischenladen und ehrlicher Restreichweite", "Reichweitenangst durch reale Route statt Prospektwert einordnen", "Start am Wohngebiet, Navi, Säule, Kaffee während Ladestopp", "„Wir fahren keine Laborroute. Wir fahren Alltag.“"],
+  ],
+  Abwasser: [
+    ["Was im Rechen hängen bleibt", "Kläranlage zeigt sachlich, welche Fremdstoffe täglich ankommen", "kein Ekel-Content, sondern klare Alltagshilfe: Was gehört nicht ins WC", "Rechenanlage, Handschuhe, beschriftete Fundstücke, sauberes Ablaufwasser", "„Aus den Augen heißt nicht aus dem System.“"],
+    ["Laborprobe vor und nach Reinigung", "zwei Wasserproben erklären den Reinigungsprozess", "Biologie und Technik als Umweltschutz sichtbar machen", "Probenflaschen, Laborbank, Klärbecken, Mikroskopaufnahme", "„Eine Kläranlage arbeitet nicht mit Magie, sondern mit Biologie.“"],
+  ],
+  Photovoltaik: [
+    ["PV-Dachcheck vor Montage", "Fachperson prüft Dachfläche, Verschattung und Zählerschrank", "zeigt, warum nicht jedes Süddach automatisch perfekt ist", "Dachkante, Schattenwurf, Wechselrichter, App-Screenshot Beispieldaten", "„Das wichtigste PV-Detail sieht man oft nicht auf dem Dach.“"],
+    ["Eigenverbrauch am Abend", "Hausbesitzer:in schaut abends in Verbrauchs-App", "erklärt, warum Speicher/Lastverschiebung nach Sonnenuntergang spannend werden", "Küche am Abend, App-Kurve, Wechselrichter-LED, Moduldetail", "„Der spannendste PV-Moment ist manchmal nach Sonnenuntergang.“"],
+  ],
+  Windkraft: [
+    ["Geräuschmessung am Anlagenstandort", "Team misst Schall und ordnet Wahrnehmung ein", "Debatte fair und messbar statt behauptend führen", "Windrad, Messgerät, Grasbewegung, Größenvergleich Mensch/Rotor", "„Wir reden nicht über Lautstärke. Wir messen sie.“"],
+    ["Wartung im Maschinenhaus", "Serviceteam zeigt Sicherheitscheck und Arbeitsschritt", "Windkraft als Handwerk und Technik statt nur Landschaftsbild", "Helm, Werkzeug, Turmfuß, Blick nach oben", "„Von unten sieht man ein Windrad. Von innen sieht man Arbeit.“"],
+  ],
+  Trinkwasser: [
+    ["Trinkwasserlabor", "Labor zeigt drei typische Prüfwerte verständlich", "Vertrauen durch Kontrolle und Sorgfalt sichtbar machen", "Pipette, Probe, Glas Wasser, Laborprotokoll ohne sensible Daten", "„Dieses Lebensmittel kommt direkt aus deiner Wand — und wird genau deshalb kontrolliert.“"],
+    ["Weg vom Wasserwerk bis zum Glas", "Karte und reale Stationen zeigen Wasserweg", "vom Wasserwerk über Netz bis Hausinstallation erklären", "Wasserwerk außen, Rohrnetzplan, Schieber, Glas am Wasserhahn", "„Der Weg bis zum Wasserhahn ist länger, als man denkt.“"],
+  ],
+  Fernwärme: [
+    ["Fernwärme-Baustelle vor der Haustür", "geöffnete Straße zeigt gedämmte Rohre und Baufortschritt", "Belastung ehrlich benennen und Nutzen erklären", "Baugrube, Rohrdetail, Bauleiter-O-Ton, fertige Straße", "„Heute Baustelle. Morgen ein Stück Wärmewende unter der Straße.“"],
+    ["Hausstation im Keller", "Fachperson erklärt Vorlauf/Rücklauf an echter Hausstation", "Fernwärme greifbar machen, wo sie ins Gebäude kommt", "Keller, Temperaturanzeige, Rohrleitungen, ruhige Erklärung", "„Hier wird aus Netztemperatur eine warme Wohnung.“"],
+  ],
+  "Netze & Infrastruktur": [
+    ["Eine Straße, fünf Leitungen", "Baustellenblick zeigt, welche Infrastruktur unter einer Straße zusammenkommt", "Koordination von Strom, Wärme, Wasser, Glasfaser erklären", "offene Straße, Leitungsplan, Markierungen, Bau-Team", "„Unter einer Straße liegt oft mehr Stadt, als oben zu sehen ist.“"],
+  ],
+  Energiesparen: [
+    ["7-Tage-Verbrauchscheck", "Haushalt testet kleine Maßnahmen ohne erhobenen Zeigefinger", "realistische Tipps mit Alltagssituationen", "Thermostat, Steckdosenleiste, Dusche, App-Verlauf", "„Nicht perfekt sparen. Erstmal sehen, wo es wirklich etwas bringt.“"],
+  ],
+  Nachhaltigkeit: [
+    ["Nachhaltigkeit als Arbeitsentscheidung", "Team zeigt konkrete Maßnahme statt abstraktem Claim", "Material, Weg, Energie oder Ressource sichtbar einsparen", "Werkstatt, wiederverwendetes Material, regionaler Ort, Team-O-Ton", "„Nachhaltigkeit klingt groß. Manchmal beginnt sie mit einer Entscheidung im Arbeitsalltag.“"],
+  ],
+  "Region & Engagement": [
+    ["Vereinstraining mit Energie dahinter", "regionaler Verein oder Jugendprojekt zeigt, was Unterstützung ermöglicht", "Engagement sichtbar über Menschen statt Logo-Wand", "Training, Trainer:in, Kinder/Jugendliche, kurzer Dank-O-Ton", "„Manche Wirkung sieht man nicht auf der Rechnung, sondern auf dem Platz.“"],
+  ],
+  "Berufe & Ausbildung": [
+    ["Azubi im ersten echten Auftrag", "Auszubildende:r begleitet Fachkraft und erklärt einen Handgriff", "Beruf greifbar machen: Verantwortung, Lernen, Team", "Arbeitskleidung, Werkzeug, Schulterblick, kurzer Azubi-O-Ton", "„Heute durfte ich es nicht nur anschauen — heute habe ich es gemacht.“"],
+  ],
+  "Service & Sicherheit": [
+    ["Was tun bei Störung?", "Service erklärt drei Schritte bei Strom-, Gas- oder Wasserausfall", "speicherbarer Post mit klarer Reihenfolge", "Handy, Notfallnummer, ruhige Serviceperson, Checkliste", "„Im Störfall zählt nicht Hektik, sondern die richtige Reihenfolge.“"],
+  ],
+  Wärmepumpen: [
+    ["Altbau-Beratung ehrlich erklärt", "Beratungsgespräch zeigt Vorlauftemperatur, Heizkörper und Dämmfragen", "keine pauschale Lösung, sondern Entscheidungskriterien", "Keller, Heizkörper, Außengerät-Standort, Beratungsnotizen", "„Wärmepumpe ja oder nein? Die ehrliche Antwort beginnt im Gebäude.“"],
+  ],
+  Batteriespeicher: [
+    ["Solarstrom nach Sonnenuntergang", "Beispielhaushalt zeigt Speicherladung und Abendverbrauch", "Eigenverbrauch verständlich und nicht als Renditeversprechen", "App-Kurve, Speichergerät, Abendküche, PV-Dach", "„Der Solarstrom vom Mittag kann abends nochmal wichtig werden.“"],
+  ],
+  "Baustellen & Projekte": [
+    ["Baustellenupdate ohne Beschönigung", "Projektleitung erklärt Status, Einschränkung und nächsten Schritt", "Anwohner:innen bekommen Klarheit statt Werbesprache", "Bauschild, Baugrube, Projektleiter:in, Vorher-Nachher-Ort", "„Das ist erledigt. Das nervt noch. Und das passiert als Nächstes.“"],
+  ],
+  "Zähler & Messwesen": [
+    ["Zählerstand richtig lesen", "Service zeigt an echtem Zähler, welche Zahl wohin gehört", "Fehler vermeiden und Rechnung verständlicher machen", "Zähler-Display, Finger zeigt Feld, Kundenportal, Notizzettel", "„Ein Zählerstand ist klein — aber auf der Rechnung ziemlich wichtig.“"],
+  ],
+  "Energiepreise & Markt": [
+    ["Preisbestandteile am Beispiel", "ein Muster-Euro wird in Beschaffung, Netz, Steuern und Vertrieb zerlegt", "Preislogik verständlich und sachlich erklären", "Münzen/Blöcke, einfache Grafik, Rechnungsausschnitt anonymisiert", "„Ein Energiepreis besteht selten aus nur einem Preis.“"],
+  ],
+  Preiswahrnehmung: [
+    ["Was der Preisvergleich nicht zeigt", "Vergleichsportal wird einem regionalen Mehrwert-Beispiel gegenübergestellt", "Service, Sponsoring, Infrastruktur und Nähe als belegbare Wertargumente", "Laptop mit Vergleichsportal unscharf, Vereinstraining, Servicekontakt, Stadtprojekt", "„Der Preisvergleich zeigt Zahlen. Nicht, was vor Ort bleibt.“"],
+  ],
+  "Kommunale Wärmeplanung": [
+    ["Wärmeplanung für eine Straße", "Karte zeigt, warum nicht jede Straße dieselbe Lösung bekommt", "Daten, Gebäude und Infrastruktur verständlich verbinden", "Stadtkarte, Straßenzug, Wärmeleitung, Beratungssituation", "„Wärmeplanung entscheidet sich nicht im Bauchgefühl, sondern Straße für Straße.“"],
+  ],
+  Kundenservice: [
+    ["Drei Infos, die den Anruf schneller machen", "Serviceperson zeigt Vorbereitung für Kund:innenkontakt", "hilft konkret und entlastet Hotline", "Telefonarbeitsplatz, Kundennummer verdeckt, Notizzettel, freundlicher O-Ton", "„Mit drei Infos wird aus Warten oft Klären.“"],
+  ],
+  Digitalisierung: [
+    ["Sensor meldet, bevor jemand etwas merkt", "digitaler Messpunkt zeigt Störung/Abweichung im Hintergrund", "Digitalisierung als konkrete Hilfe statt Buzzword", "Dashboard, Sensor, Team vor Monitor, reale Anlage", "„Smart wird es erst, wenn es im Alltag hilft.“"],
+  ],
+  Netzleitstelle: [
+    ["Nachtschicht in der Leitstelle", "ruhiger Blick auf Monitore, Abläufe und Verantwortung", "Versorgungssicherheit als Teamroutine zeigen", "Nachtaufnahme, Monitorwand, Headset, Logbuch", "„Die Stadt schläft. Die Leitstelle nicht.“"],
+  ],
+  Straßenbeleuchtung: [
+    ["Defekte Leuchte melden", "Team zeigt Weg von Meldung bis Reparatur", "kommunalen Service sichtbar und nützlich erklären", "Straßenlaterne, Meldemaske, Hubsteiger, Licht-an-Moment", "„Eine dunkle Ecke wird nicht heller, wenn niemand sie meldet.“"],
+  ],
+  Ladeinfrastruktur: [
+    ["Neue Ladesäule vom Fundament bis Freischaltung", "Projekt zeigt Bau, Anschluss, Testladung und App-Freigabe", "Infrastrukturaufbau realistisch erklären", "Fundament, Kabel, Monteur:in, Testladung, Display", "„Eine Ladesäule ist nicht einfach ein Parkplatz mit Stecker.“"],
+  ],
+  "Kraft-Wärme-Kopplung": [
+    ["Eine Anlage, zwei Nutzen", "KWK-Prinzip mit Strom und Wärme am Standort erklären", "Effizienz ohne Fachchinesisch zeigen", "Maschinenraum, Wärmerohr, Stromanzeige, einfache Zwei-Pfeile-Grafik", "„Hier entsteht nicht nur Strom. Die Wärme arbeitet mit.“"],
+  ],
+  "Starkregen & Hochwasser": [
+    ["Gully ist kein Mülleimer", "Team zeigt, warum Laub und Müll bei Starkregen zum Problem werden", "Vorsorge praktisch und nicht panisch erklären", "Straßeneinlauf, Handschuhe, Regenaufnahme, Checkliste", "„Bei Starkregen zählt manchmal ein freier Ablauf.“"],
+  ],
+  Versorgungssicherheit: [
+    ["Probealarm im Hintergrund", "Team zeigt Übung, Materialcheck oder Bereitschaftsplanung", "Vorbereitung statt Angstmache", "Materiallager, Einsatzplan, Teambriefing, Funkgerät", "„Versorgungssicherheit beginnt, bevor jemand eine Störung bemerkt.“"],
+  ],
+  "Entstörung & Bereitschaft": [
+    ["Bereitschaftstasche am Abend", "Mitarbeiter:in zeigt, was vor einem Einsatz griffbereit ist", "menschlicher Blick auf Rufbereitschaft und Verantwortung", "Tasche, Helm, Fahrzeug, dunkle Straße, kurzer O-Ton", "„Feierabend heißt in der Bereitschaft: erreichbar bleiben.“"],
+  ],
+  "Rechnung verstehen": [
+    ["Abschlag vs. Verbrauch", "anonymisierte Beispielrechnung erklärt häufigstes Missverständnis", "Orientierung ohne Einzelfallberatung", "Rechnungsausschnitt, Marker, Taschenrechner, Kundenportal", "„Der Abschlag ist nicht die Jahresrechnung — und genau da beginnt oft das Missverständnis.“"],
+  ],
+};
+
+function getConcreteUtilityExample(topicName, seed) {
+  const examples = concreteUtilityExamples[topicName] ||
+    concreteUtilityExamples[topicMediaGroup[topicName] === "heat" ? "Fernwärme" :
+      topicMediaGroup[topicName] === "water" ? "Trinkwasser" :
+      topicMediaGroup[topicName] === "mobility" ? "Elektromobilität" :
+      topicMediaGroup[topicName] === "people" ? "Berufe & Ausbildung" :
+      topicMediaGroup[topicName] === "region" ? "Region & Engagement" : "Netze & Infrastruktur"];
+  const [label, scene, concreteProof, visuals, quote] = pick(examples, seed);
+  return { label, scene, proof: concreteProof, visuals, quote };
+}
+
+function formatConcretePostPlan(ideaDraft, example) {
+  const format = ideaDraft.format;
+  if (format === "Carousel") {
+    return `Fertige Swipe-Logik: 1) Hook „${example.quote.replace(/^„|“$/g, "")}“ 2) echtes Bild: ${example.scene} 3) Erklärung: ${example.proof} 4) Nutzen für Alltag/Region 5) Merksatz 6) CTA.`;
+  }
+  if (format === "Story") {
+    return `Story-Ablauf: Frame 1 Schätzfrage, Frame 2 Szene „${example.scene}“, Frame 3 Auflösung durch ${example.proof}, Frame 4 Fragensticker.`;
+  }
+  if (format === "YouTube Long") {
+    return `Longform-Aufbau: Einstieg am Ort, Rundgang durch „${example.scene}“, O-Ton, Belegteil „${example.proof}“, kritische Fragen, Fazit und Kommentarfrage.`;
+  }
+  if (format === "Reel") {
+    return `Reel-Ablauf: 0–2 s starker O-Ton „${example.quote.replace(/^„|“$/g, "")}“, 2–6 s ${example.scene}, 6–12 s ${example.proof}, 12–18 s Nutzen, 18–22 s CTA.`;
+  }
+  return `Post-Aufbau: starkes Hauptbild „${example.visuals}“, Einstieg mit O-Ton, kurzer Kontext, konkreter Beleg, klare Frage am Ende.`;
+}
+
 const topicSubthemes = {
   Strom: ["Netzfrequenz", "Umspannwerke", "Strommix", "Spitzenlast", "Hausanschluss", "Netzausbau", "Stromausfall", "Erneuerbare Einspeisung"],
   Gas: ["Gasnetzprüfung", "Hausanschluss", "Speicherung", "Geruchsstoff", "Versorgung im Winter", "Heizverhalten", "Sicherheitskontrolle"],
@@ -1595,18 +1727,19 @@ function buildIdea(topic, index, settings) {
     (generationRound * 13 + generationSalt + index * 5 + hash(settings.goal)) % proofPoints.length
   ];
   const playbook = topicPlaybooks[topic.name];
+  const concreteExample = getConcreteUtilityExample(topic.name, seed + index * 19 + generationSalt);
   const topicTension = playbook
     ? pick(playbook.tensions, seed + generationRound + index)
     : `${subtheme} aus Sicht von Alltag, Technik und Region`;
   const topicProof = playbook
-    ? pick(playbook.proof, seed + generationSalt + index * 3)
-    : proof;
+    ? pick([concreteExample.proof, ...playbook.proof], seed + generationSalt + index * 3)
+    : concreteExample.proof || proof;
   const topicVisual = playbook
-    ? pick(playbook.visuals, seed + generationRound * 5 + index)
-    : null;
+    ? pick([concreteExample.visuals, ...playbook.visuals], seed + generationRound * 5 + index)
+    : concreteExample.visuals;
   const topicHook = playbook
-    ? pick(playbook.hooks, seed + generationRound * 7 + index)
-    : template.hook;
+    ? pick([concreteExample.quote, ...playbook.hooks], seed + generationRound * 7 + index)
+    : concreteExample.quote || template.hook;
   const visualApproachBase = visualApproaches[
     (generationRound * 17 + generationSalt + index * 7) % visualApproaches.length
   ];
@@ -1669,10 +1802,11 @@ function buildIdea(topic, index, settings) {
   const concept = template.concept
     .replaceAll("{topic}", topic.name)
     .replaceAll("{angle}", `${angle}; Schwerpunkt: ${subtheme}`);
+  const concretePostPlan = formatConcretePostPlan({ format: template.format }, concreteExample);
   const keywords = topic.keywords || [topic.name.replaceAll(" ", "")];
   const topicStatement = clearTopicStatement({ topic: topic.name, subtheme });
   const depthSentence =
-    ` Fachlicher Kern: ${topicTension}. Beleg im Beitrag: ${topicProof}.`;
+    ` Konkretes Beispiel: ${concreteExample.label} – ${concreteExample.scene}. Fachlicher Kern: ${topicTension}. Beleg im Beitrag: ${topicProof}. O-Ton-Vorschlag: ${concreteExample.quote}. ${concretePostPlan}`;
   const criticalReview = runCriticalReview({
     topic: topic.name,
     subtheme,
@@ -1694,8 +1828,11 @@ function buildIdea(topic, index, settings) {
     occasion,
     protagonist,
     setting,
-    proof,
+    proof: topicProof,
     visualApproach,
+    concreteExample,
+    concretePostPlan,
+    suggestedOTone: concreteExample.quote,
     mediaIndex: (seed + generationRound + index * 3) % getMediaOptions(topic.name).length,
     platform: settings.platform,
     title,
@@ -1953,6 +2090,12 @@ function renderIdeas() {
           <p class="topic-statement">${escapeHtml(idea.topicStatement || clearTopicStatement(idea))}</p>
           <p class="hook">${escapeHtml(idea.hook)}</p>
           <p class="concept">${escapeHtml(idea.concept)}</p>
+          <div class="ready-post-box">
+            <span>Direkt nutzbares Praxisbeispiel</span>
+            <strong>${escapeHtml(idea.concreteExample?.label || idea.subtheme)}</strong>
+            <p>${escapeHtml(idea.concreteExample?.scene || idea.concept)}</p>
+            <small>O-Ton: ${escapeHtml(idea.suggestedOTone || idea.hook)} · Ablauf: ${escapeHtml(idea.concretePostPlan || idea.strength)}</small>
+          </div>
           <div class="strategy-panel">
             <div class="pillar-note">
               <span>Content-Säule</span>
@@ -2192,6 +2335,9 @@ Content-Säule: ${contentPillarInfo(idea.pillar).label} – ${contentPillarInfo(
 Aufhänger: ${idea.occasion}
 Perspektive: ${idea.protagonist}
 Schauplatz: ${idea.setting}
+Praxisbeispiel: ${idea.concreteExample ? `${idea.concreteExample.label} – ${idea.concreteExample.scene}` : "—"}
+O-Ton: ${idea.suggestedOTone || "—"}
+Post-Ablauf: ${idea.concretePostPlan || "—"}
 Beleg: ${idea.proof}
 Bildidee: ${idea.visualApproach}
 
@@ -2205,6 +2351,9 @@ Interne Prüfung: ${idea.criticalReview?.label || "Standardprüfung"}
 Prüfpunkte:
 ${(idea.criticalReview?.checks || ["Fakten vor Veröffentlichung gegenprüfen."]).map((check) => `- ${check}`).join("\n")}
 
+Fertige Caption:
+${createCaption(idea, idea.preferredTone || "nahbar")}
+
 ${idea.hashtags.join(" ")}`;
 }
 
@@ -2214,6 +2363,7 @@ function createCaption(idea, tone = "nahbar") {
 }
 
 function createFinishedSocialCaption(idea, tone = "nahbar") {
+  if (idea.concreteExample) return createConcreteUtilityCaption(idea, tone);
   const seed = hash(`${idea.id}-${idea.title}-${tone}-${studioVariant}`);
   const caption = naturalCaptionParts(idea, tone, seed);
   const hashtags = idea.hashtags.join(" ");
@@ -2259,6 +2409,88 @@ ${caption.body}
 ${caption.payoff}
 
 ${caption.cta}
+
+${hashtags}`;
+}
+
+function createConcreteUtilityCaption(idea, tone = "nahbar") {
+  const seed = hash(`${idea.id}-${idea.title}-${tone}-${studioVariant}`);
+  const example = idea.concreteExample;
+  const hashtags = idea.hashtags.join(" ");
+  const cleanQuote = (idea.suggestedOTone || example.quote || idea.hook).replace(/^„|“$/g, "");
+  const topicLine = idea.topic === "Preiswahrnehmung"
+    ? "Denn ein Preis ist nicht nur eine Zahl. Er entscheidet auch mit darüber, was vor Ort möglich bleibt."
+    : pick([
+        `Genau so wird ${idea.topic} greifbar: nicht als abstraktes Thema, sondern als echter Moment aus der Region.`,
+        `Das ist einer dieser Einblicke, bei denen man merkt, wie viel Arbeit hinter etwas steckt, das im Alltag selbstverständlich wirkt.`,
+        `Klingt technisch — wird aber ziemlich nahbar, sobald man den echten Ort und die Menschen dahinter sieht.`,
+      ], seed + 1);
+  const formatLine = {
+    Reel: `Im Video starten wir mit dem Satz: „${cleanQuote}“ — danach geht es direkt in die Szene: ${example.scene}.`,
+    Carousel: `Slide für Slide geht es vom Satz „${cleanQuote}“ zur echten Szene: ${example.scene}.`,
+    Story: `Erst lassen wir die Community schätzen, dann zeigen wir die echte Szene: ${example.scene}.`,
+    Post: `Das Bild zeigt ${example.visuals}. Der Satz dazu: „${cleanQuote}“`,
+    "YouTube Long": `Im Video nehmen wir uns Zeit für den Ort, die Menschen und die Frage hinter: ${example.scene}.`,
+  }[idea.format] || `Der Beitrag zeigt: ${example.scene}.`;
+  const proofLine = tone === "sachlich"
+    ? `Konkret belegt wird das mit: ${example.proof}.`
+    : pick([
+        `Der Aha-Moment kommt über ${example.proof}.`,
+        `Statt großer Behauptung gibt es einen echten Beleg: ${example.proof}.`,
+        `Und genau dort wird es konkret: ${example.proof}.`,
+      ], seed + 4);
+  const payoff = idea.topic === "Preiswahrnehmung"
+    ? pick([
+        "So wird aus „teurer oder günstiger?“ die bessere Frage: Was bleibt hier in Chemnitz und der Region wirklich zurück?",
+        "Das ist keine Preis-Ausrede. Das ist der Teil, den Vergleichsportale meistens nicht zeigen.",
+        "Wer nur auf den Preis schaut, sieht oft nicht den Service, die Nähe und die Verantwortung dahinter.",
+      ], seed + 7)
+    : pick([
+        "Genau solche Einblicke machen Versorgung sichtbar.",
+        "Kleines Detail, große Wirkung für den Alltag.",
+        "Man muss nicht alles täglich sehen — aber manchmal hilft ein Blick dahinter enorm.",
+      ], seed + 7);
+  const cta = captionCta(idea, tone, seed + 10);
+
+  if (idea.format === "Story") {
+    return `${cleanQuote}
+
+Was glaubst du: Was passiert als Nächstes?
+
+Auflösung: ${example.proof}.
+
+${cta}
+
+${idea.hashtags.slice(0, 3).join(" ")}`;
+  }
+
+  if (idea.format === "Carousel") {
+    return `${cleanQuote}
+
+${formatLine}
+
+${topicLine}
+
+${proofLine}
+
+${payoff}
+
+Speichern, wenn du solche Einblicke später nochmal brauchst.
+
+${hashtags}`;
+  }
+
+  return `${cleanQuote}
+
+${formatLine}
+
+${topicLine}
+
+${proofLine}
+
+${payoff}
+
+${cta}
 
 ${hashtags}`;
 }
@@ -2502,20 +2734,27 @@ function captionCta(idea, tone, seed) {
 }
 
 function createYoutubeLongDescription(idea, tone = "nahbar") {
+  const example = idea.concreteExample;
   const intro = tone === "sachlich"
     ? "In diesem Video ordnen wir das Thema ausführlich, verständlich und mit Blick auf die Region ein."
     : tone === "aktivierend"
       ? "Nimm dir ein paar Minuten: Dieses Thema wirkt alltäglich, hat aber mehr Tiefe, als man auf den ersten Blick sieht."
       : "Manche Energiethemen versteht man erst richtig, wenn man sich Zeit nimmt und hinter die Kulissen schaut.";
+  const concreteIntro = example
+    ? `Ausgangspunkt ist ein konkreter Fall: ${example.label}. Wir zeigen ${example.scene} und belegen die Einordnung mit ${example.proof}.`
+    : "";
+  const quote = example?.quote || idea.hook;
   return `${intro}
 
-${idea.hook.replace(/^„|“$/g, "")}
+${quote.replace(/^„|“$/g, "")}
+
+${concreteIntro}
 
 Inhalt:
 00:00 Einstieg und zentrale Frage
-00:30 Warum das Thema relevant ist
-02:00 Blick hinter die Kulissen
-05:00 Fachliche Einordnung und Belege
+00:30 Konkreter Ort: ${example?.label || idea.subtheme}
+02:00 Blick hinter die Kulissen: ${example?.scene || idea.visualApproach}
+05:00 Fachliche Einordnung und Beleg: ${example?.proof || idea.proof}
 08:00 Kritische Fragen, Grenzen und Missverständnisse
 11:00 Fazit und nächste Schritte
 
@@ -2647,12 +2886,13 @@ function getBriefingShotlist(idea) {
 function getBriefingImages(idea) {
   const playbook = getBriefingPlaybook(idea);
   return [
+    idea.concreteExample ? `Konkretes Hauptmotiv: ${idea.concreteExample.visuals}` : "",
     `Hauptmotiv: ${idea.visualApproach}`,
     `Menschenmotiv: ${idea.protagonist}`,
     `Belegmotiv: ${idea.proof}`,
     `Drehort-/Kontextmotiv: ${playbook.locations[0]}`,
     "Sicherheits-/Arbeitsdetail, falls sichtbar und freigegeben",
-  ];
+  ].filter(Boolean);
 }
 
 function createBriefingText(idea) {
@@ -2666,6 +2906,9 @@ function createBriefingText(idea) {
     `Thema: ${idea.topic} · Fokus: ${idea.subtheme}`,
     `Ziel des Posts: ${getBriefingGoal(idea)}`,
     `Kernaussage: ${getCoreMessage(idea)}`,
+    idea.concreteExample ? `Konkretes Praxisbeispiel: ${idea.concreteExample.label} – ${idea.concreteExample.scene}` : "",
+    idea.suggestedOTone ? `Vorgeschlagener O-Ton: ${idea.suggestedOTone}` : "",
+    idea.concretePostPlan ? `Post-Ablauf: ${idea.concretePostPlan}` : "",
     `Zielgruppe/Perspektive: ${idea.protagonist}`,
     idea.originalPlan ? `Ausgangsplan: ${idea.originalPlan}` : "",
     "",
@@ -3628,7 +3871,8 @@ function exportIdeas() {
     "Content-Säule", "Strategie-Notiz", "Mechanik", "Format", "Plattform", "Titel",
     "Hook", "Kernaussage", "CTA", "Qualität Strategie", "Qualität Visual",
     "Qualität Interaktion", "Aufwand", "Freigabe-Ampel", "Interne Prüfung",
-    "Prüfpunkte", "Benötigter Beleg", "Bildidee / Shot-Hinweis", "Hashtags",
+    "Prüfpunkte", "Praxisbeispiel", "O-Ton", "Post-Ablauf", "Benötigter Beleg",
+    "Bildidee / Shot-Hinweis", "Fertige Caption", "Hashtags",
   ];
   const rows = exportData.map((idea, index) => {
     const quality = idea.qualityProfile || buildQualityProfile(idea, settings);
@@ -3663,8 +3907,12 @@ function exportIdeas() {
       `${approval.label} – ${approval.text}`,
       idea.criticalReview?.label || "Standardprüfung",
       (idea.criticalReview?.checks || []).join(" | "),
+      idea.concreteExample ? `${idea.concreteExample.label}: ${idea.concreteExample.scene}` : "",
+      idea.suggestedOTone || "",
+      idea.concretePostPlan || "",
       idea.proof,
       idea.visualApproach,
+      createCaption(idea, idea.preferredTone || "nahbar"),
       idea.hashtags.join(" "),
     ];
   });
