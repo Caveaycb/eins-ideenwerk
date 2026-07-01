@@ -635,25 +635,28 @@ select:focus {
 
 .format-options {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
 }
 
 .format-option {
-  padding: 10px 5px;
+  min-width: 0;
+  padding: 8px 3px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 9px;
   background: white;
   color: #68736f;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 10px;
+  line-height: 1.1;
+  white-space: normal;
   transition: 0.16s ease;
 }
 
 .format-option span {
   display: block;
-  margin-bottom: 3px;
-  font-size: 14px;
+  margin-bottom: 2px;
+  font-size: 12px;
 }
 
 .format-option.active {
