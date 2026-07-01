@@ -2435,83 +2435,70 @@ ${hashtags}`;
 function createConcreteUtilityCaption(idea, tone = "nahbar") {
   const seed = hash(`${idea.id}-${idea.title}-${tone}-${studioVariant}`);
   const example = idea.concreteExample;
-  const hashtags = idea.hashtags.join(" ");
   const cleanQuote = (idea.suggestedOTone || example.quote || idea.hook).replace(/^„|“$/g, "");
-  const topicLine = idea.topic === "Preiswahrnehmung"
-    ? "Denn ein Preis ist nicht nur eine Zahl. Er entscheidet auch mit darüber, was vor Ort möglich bleibt."
-    : pick([
-        `Genau so wird ${idea.topic} greifbar: nicht als abstraktes Thema, sondern als echter Moment aus der Region.`,
-        `Das ist einer dieser Einblicke, bei denen man merkt, wie viel Arbeit hinter etwas steckt, das im Alltag selbstverständlich wirkt.`,
-        `Klingt technisch — wird aber ziemlich nahbar, sobald man den echten Ort und die Menschen dahinter sieht.`,
-      ], seed + 1);
-  const formatLine = {
-    Reel: `Im Video starten wir mit dem Satz: „${cleanQuote}“ — danach geht es direkt in die Szene: ${example.scene}.`,
-    Carousel: `Slide für Slide geht es vom Satz „${cleanQuote}“ zur echten Szene: ${example.scene}.`,
-    Story: `Erst lassen wir die Community schätzen, dann zeigen wir die echte Szene: ${example.scene}.`,
-    Post: `Das Bild zeigt ${example.visuals}. Der Satz dazu: „${cleanQuote}“`,
-    "YouTube Long": `Im Video nehmen wir uns Zeit für den Ort, die Menschen und die Frage hinter: ${example.scene}.`,
-  }[idea.format] || `Der Beitrag zeigt: ${example.scene}.`;
-  const proofLine = tone === "sachlich"
-    ? `Konkret belegt wird das mit: ${example.proof}.`
-    : pick([
-        `Der Aha-Moment kommt über ${example.proof}.`,
-        `Statt großer Behauptung gibt es einen echten Beleg: ${example.proof}.`,
-        `Und genau dort wird es konkret: ${example.proof}.`,
-      ], seed + 4);
-  const payoff = idea.topic === "Preiswahrnehmung"
+  const hashtags = idea.hashtags.slice(0, 3).join(" ");
+  const shortScene = simplifyCaptionScene(example.label || idea.subtheme);
+  const opener = idea.topic === "Preiswahrnehmung"
     ? pick([
-        "So wird aus „teurer oder günstiger?“ die bessere Frage: Was bleibt hier in Chemnitz und der Region wirklich zurück?",
-        "Das ist keine Preis-Ausrede. Das ist der Teil, den Vergleichsportale meistens nicht zeigen.",
-        "Wer nur auf den Preis schaut, sieht oft nicht den Service, die Nähe und die Verantwortung dahinter.",
-      ], seed + 7)
+        "Der Preisvergleich zeigt Zahlen. Aber nicht, was vor Ort bleibt.",
+        "Billiger ist schnell gesagt. Wert zeigt sich vor Ort.",
+        "Ein Preis ist mehr als eine Zahl auf dem Vergleichsportal.",
+      ], seed)
     : pick([
-        "Genau solche Einblicke machen Versorgung sichtbar.",
-        "Kleines Detail, große Wirkung für den Alltag.",
-        "Man muss nicht alles täglich sehen — aber manchmal hilft ein Blick dahinter enorm.",
-      ], seed + 7);
-  const cta = captionCta(idea, tone, seed + 10);
+        cleanQuote,
+        `${shortScene}: ein Blick hinter das, was im Alltag selbstverständlich wirkt.`,
+        `Man sieht oft nur das Ergebnis. Wir zeigen den Moment dahinter.`,
+      ], seed);
+  const middle = idea.topic === "Preiswahrnehmung"
+    ? pick([
+        `Service, Sponsoring, Infrastruktur, Nähe: Genau darüber wollen wir sprechen.`,
+        `Denn regionaler Wert entsteht nicht im Vergleichsportal, sondern hier vor Ort.`,
+        `Nicht als Ausrede. Sondern als ehrlicher Blick auf das, was ein regionaler Versorger mit möglich macht.`,
+      ], seed + 3)
+    : pick([
+        `${shortScene} zeigt, wie viel Arbeit hinter guter Versorgung steckt.`,
+        `Ein kleines Detail — aber ein ziemlich guter Grund, genauer hinzuschauen.`,
+        `Nah dran, kurz erklärt und mit echtem Beispiel aus der Region.`,
+      ], seed + 3);
+  const cta = idea.topic === "Preiswahrnehmung"
+    ? pick([
+        "Was zählt für dich neben dem Preis?",
+        "Was sollte ein Vergleichsportal zusätzlich zeigen?",
+        "Wo siehst du regionalen Mehrwert am deutlichsten?",
+      ], seed + 6)
+    : pick([
+        "Welche Frage sollen wir dazu als Nächstes beantworten?",
+        "Wovon sollen wir mehr echte Einblicke zeigen?",
+        "Hättest du das gewusst?",
+      ], seed + 6);
 
   if (idea.format === "Story") {
-    return `${cleanQuote}
-
-Was glaubst du: Was passiert als Nächstes?
-
-Auflösung: ${example.proof}.
-
-${cta}
-
-${idea.hashtags.slice(0, 3).join(" ")}`;
-  }
-
-  if (idea.format === "Carousel") {
-    return `${cleanQuote}
-
-${formatLine}
-
-${topicLine}
-
-${proofLine}
-
-${payoff}
-
-Speichern, wenn du solche Einblicke später nochmal brauchst.
-
-${hashtags}`;
-  }
-
-  return `${cleanQuote}
-
-${formatLine}
-
-${topicLine}
-
-${proofLine}
-
-${payoff}
+    return `${opener}
 
 ${cta}
 
 ${hashtags}`;
+  }
+
+  const saveLine = idea.format === "Carousel" ? "\n\nSpeichern, wenn du es später nochmal brauchst." : "";
+  const body = tone === "sachlich"
+    ? `${opener}\n\n${middle}\n\n${cta}${saveLine}\n\n${hashtags}`
+    : `${opener}\n\n${middle}\n\n${cta}${saveLine}\n\n${hashtags}`;
+  return limitCaptionLength(body, 420);
+}
+
+function simplifyCaptionScene(value = "") {
+  return String(value)
+    .replace(/^(Was der|Was die|Was im|Eine|Ein|Neue|Drei|7-Tage-)/i, (match) => match.trim())
+    .trim();
+}
+
+function limitCaptionLength(caption, maxLength = 420) {
+  if (caption.length <= maxLength) return caption;
+  const parts = caption.split("\n\n");
+  const hashtags = parts.at(-1) || "";
+  const shortened = [parts[0], parts[1], hashtags].filter(Boolean).join("\n\n");
+  return shortened.length <= maxLength ? shortened : `${shortened.slice(0, maxLength - 1).trim()}…`;
 }
 
 function naturalCaptionParts(idea, tone, seed) {
