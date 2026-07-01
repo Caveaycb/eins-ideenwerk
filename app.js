@@ -1152,6 +1152,173 @@ function ideaSummaryBullets(idea) {
   ].filter(([, value]) => value);
 }
 
+const concreteStatementBank = {
+  Strom: [
+    "Zwischen 17 und 20 Uhr sieht die Leitstelle besonders deutlich, wann die Region nach Hause kommt.",
+    "Versorgungssicherheit entsteht nicht erst bei einer Störung, sondern durch tägliche Schalt- und Kontrollarbeit.",
+    "Ein Umspannwerk wirkt ruhig — arbeitet aber als Knotenpunkt für tausende Alltagsmomente.",
+  ],
+  Gas: [
+    "Gas riecht nicht von allein. Der Geruchsstoff ist ein bewusstes Warnsignal.",
+    "Bei Gasgeruch zählt: Fenster auf, keine Schalter betätigen, Gebäude verlassen, Störnummer wählen.",
+    "Sichere Wärme beginnt lange vor dem ersten Frost mit Prüfungen im Netz und an Anlagen.",
+  ],
+  Elektromobilität: [
+    "Die angezeigte Ladeleistung ist eine Momentaufnahme und verändert sich während des Ladevorgangs.",
+    "Alltagstauglichkeit entscheidet sich nicht im Prospekt, sondern auf echten Strecken mit echten Stopps.",
+    "Laden ist am entspanntesten, wenn Stecker, Leistung und Abrechnung verständlich sind.",
+  ],
+  Abwasser: [
+    "Feuchttücher, Medikamente und Essensreste verschwinden nicht — sie landen im System.",
+    "Die Kläranlage schützt Gewässer nicht durch Magie, sondern durch Technik, Biologie und Kontrolle.",
+    "Was im Abfluss landet, kann später im Rechen, Labor oder Klärbecken wieder auftauchen.",
+  ],
+  Photovoltaik: [
+    "Ob ein Dach gut für PV ist, entscheidet sich an Fläche, Verschattung, Statik und Zählerschrank.",
+    "Der spannendste PV-Moment ist oft nicht mittags, sondern abends beim Eigenverbrauch.",
+    "Ein Modul sieht simpel aus — die Planung dahinter entscheidet über den Nutzen.",
+  ],
+  Windkraft: [
+    "Über Windkraft sollte man nicht nur reden, sondern messen: Geräusch, Ertrag und Standortbedingungen.",
+    "Von unten sieht man ein Windrad. Von innen sieht man Wartung, Sicherheit und Handwerk.",
+    "Ein Rotorblatt wirkt erst wirklich groß, wenn ein Mensch danebensteht.",
+  ],
+  Trinkwasser: [
+    "Trinkwasser ist ein Lebensmittel — und wird genau deshalb regelmäßig kontrolliert.",
+    "Der Weg vom Wasserwerk bis zum Glas ist länger, als man am Wasserhahn vermutet.",
+    "Gute Wasserqualität entsteht durch Schutz, Aufbereitung, Laborwerte und ein funktionierendes Netz.",
+  ],
+  Fernwärme: [
+    "Fernwärme sieht man oft erst, wenn gebaut wird — der Nutzen liegt später unter der Straße.",
+    "In der Hausstation wird aus Netztemperatur eine warme Wohnung.",
+    "Baustellen sind lästig, können aber ein sichtbarer Schritt der Wärmewende sein.",
+  ],
+  "Netze & Infrastruktur": [
+    "Unter einer Straße liegen oft Strom, Wasser, Wärme, Daten und Verantwortung gleichzeitig.",
+    "Gute Infrastruktur fällt im Alltag kaum auf — bis sie fehlt oder erneuert werden muss.",
+    "Koordinierte Baustellen sparen spätere Eingriffe, auch wenn sie im Moment nerven.",
+  ],
+  Energiesparen: [
+    "Energiesparen beginnt nicht mit Verzicht, sondern mit dem Blick auf die größten Verbraucher.",
+    "Kleine Routinen bringen am meisten, wenn sie dauerhaft in den Alltag passen.",
+    "Ein Verbrauchscheck zeigt oft mehr als zehn gut gemeinte Spartipps.",
+  ],
+  Nachhaltigkeit: [
+    "Nachhaltigkeit ist glaubwürdig, wenn sie an konkreten Entscheidungen sichtbar wird.",
+    "Nicht jeder nachhaltige Schritt ist groß — aber er muss überprüfbar sein.",
+    "Ressourcen sparen beginnt oft in Werkstatt, Planung und Materialeinsatz.",
+  ],
+  "Region & Engagement": [
+    "Regionaler Mehrwert sieht man nicht nur auf Rechnungen, sondern auch auf Sportplätzen, Bühnen und in Projekten.",
+    "Sponsoring ist dann stark, wenn es Menschen vor Ort wirklich etwas ermöglicht.",
+    "Engagement wirkt am besten, wenn nicht das Logo, sondern die Menschen im Mittelpunkt stehen.",
+  ],
+  "Berufe & Ausbildung": [
+    "Ausbildung in der Energiebranche heißt: früh Verantwortung sehen, verstehen und Schritt für Schritt übernehmen.",
+    "Viele Energieberufe kennt man kaum — aber ihre Arbeit merkt die Region jeden Tag.",
+    "Ein guter Handgriff entsteht aus Anleitung, Sicherheit und Praxis.",
+  ],
+  "Service & Sicherheit": [
+    "Im Störfall zählt nicht Hektik, sondern die richtige Reihenfolge.",
+    "Kundennummer, Adresse und aktueller Zählerstand machen viele Anliegen schneller klärbar.",
+    "Guter Service beginnt oft mit drei Informationen, die direkt griffbereit sind.",
+  ],
+  Wärmepumpen: [
+    "Ob eine Wärmepumpe passt, entscheidet sich im Gebäude — nicht in einer pauschalen Antwort.",
+    "Vorlauftemperatur, Dämmung und Heizkörper sind wichtiger als ein schneller Ja-Nein-Check.",
+    "Eine ehrliche Wärmepumpenberatung beginnt mit den Bedingungen vor Ort.",
+  ],
+  Batteriespeicher: [
+    "Ein Speicher macht Solarstrom nicht größer, aber besser nutzbar im Tagesverlauf.",
+    "Eigenverbrauch wird spannend, wenn der Strom vom Mittag abends gebraucht wird.",
+    "Die passende Speichergröße hängt vom Verbrauch ab, nicht vom Bauchgefühl.",
+  ],
+  "Baustellen & Projekte": [
+    "Ein gutes Baustellenupdate sagt klar: Was ist fertig, was nervt noch, was kommt als Nächstes?",
+    "Transparenz heißt auch, Einschränkungen nicht schönzureden.",
+    "Projektkommunikation hilft, wenn sie konkrete Etappen statt allgemeiner Versprechen zeigt.",
+  ],
+  "Zähler & Messwesen": [
+    "Ein richtiger Zählerstand kann Rückfragen, Schätzungen und Missverständnisse vermeiden.",
+    "Die kleine Zahl am Zähler wird auf der Rechnung ziemlich wichtig.",
+    "Wer den Zähler versteht, versteht den eigenen Verbrauch besser.",
+  ],
+  "Energiepreise & Markt": [
+    "Ein Energiepreis besteht aus mehr als Beschaffung: Netz, Abgaben und Steuern gehören dazu.",
+    "Sinkende Börsenpreise landen nicht automatisch sofort auf jeder Rechnung.",
+    "Preislogik wird verständlicher, wenn man die Bestandteile einzeln zeigt.",
+  ],
+  Preiswahrnehmung: [
+    "Vergleichsportale zeigen Preise, aber nicht Service, Sponsoring und Verantwortung vor Ort.",
+    "Billiger ist schnell gesagt. Wert zeigt sich dort, wo die Region konkret profitiert.",
+    "Ein fairer Preis ist auch die Frage, was hier in Chemnitz und Südsachsen möglich bleibt.",
+  ],
+  "Kommunale Wärmeplanung": [
+    "Wärmeplanung entscheidet sich Straße für Straße, nicht mit einer Lösung für alle.",
+    "Gebäude, Netze und Daten bestimmen, welche Wärmeoption vor Ort sinnvoll ist.",
+    "Gute Wärmeplanung erklärt Unterschiede, statt einfache Antworten zu versprechen.",
+  ],
+  Kundenservice: [
+    "Kundennummer, Adresse und aktueller Zählerstand machen die Klärung deutlich schneller.",
+    "Je konkreter die Frage vorbereitet ist, desto schneller kann der Service helfen.",
+    "Guter Kundenservice ist nicht nur freundlich — er macht komplexe Dinge einfacher.",
+  ],
+  Digitalisierung: [
+    "Digitalisierung ist dann sinnvoll, wenn sie Probleme früher sichtbar macht.",
+    "Ein Sensor ist kein Selbstzweck — er hilft, wenn daraus schnelleres Handeln wird.",
+    "Smart wird es erst, wenn es im Alltag Zeit spart oder Versorgung stabiler macht.",
+  ],
+  Netzleitstelle: [
+    "Die Stadt schläft, aber die Leitstelle beobachtet weiter.",
+    "Viele Störungen werden erst beherrschbar, weil Abläufe vorher geübt wurden.",
+    "Versorgungssicherheit ist Teamarbeit aus Daten, Erfahrung und klaren Entscheidungen.",
+  ],
+  Straßenbeleuchtung: [
+    "Eine dunkle Ecke wird schneller hell, wenn sie konkret gemeldet wird.",
+    "Von der Meldung bis zur Reparatur steckt mehr Koordination dahinter, als man sieht.",
+    "Straßenbeleuchtung ist Sicherheit, Orientierung und kommunaler Service zugleich.",
+  ],
+  Ladeinfrastruktur: [
+    "Eine Ladesäule ist nicht einfach ein Parkplatz mit Stecker.",
+    "Vor der ersten Testladung kommen Fundament, Netzanschluss, Prüfung und Freischaltung.",
+    "Gute Ladeinfrastruktur entsteht durch Planung, Stromnetz und verlässlichen Betrieb.",
+  ],
+  "Kraft-Wärme-Kopplung": [
+    "Kraft-Wärme-Kopplung nutzt Energie doppelt: Strom entsteht, Wärme arbeitet mit.",
+    "Effizienz wird greifbar, wenn man Strom und Wärme am selben Ort betrachtet.",
+    "Eine KWK-Anlage erklärt Energienutzung besser als viele abstrakte Grafiken.",
+  ],
+  "Starkregen & Hochwasser": [
+    "Ein freier Straßeneinlauf kann bei Starkregen entscheidend sein.",
+    "Gullys sind keine Mülleimer — Laub und Abfall können Wasserwege blockieren.",
+    "Vorsorge wirkt am besten, bevor der Regen da ist.",
+  ],
+  Versorgungssicherheit: [
+    "Versorgungssicherheit beginnt, bevor jemand eine Störung bemerkt.",
+    "Material, Übungen und Bereitschaft sind unsichtbar — bis sie gebraucht werden.",
+    "Robuste Versorgung entsteht durch Vorbereitung, nicht durch Zufall.",
+  ],
+  "Entstörung & Bereitschaft": [
+    "Bereitschaft heißt: Auch nach Feierabend kann Verantwortung beginnen.",
+    "Eine gut gepackte Einsatztasche spart im Ernstfall wertvolle Zeit.",
+    "Störungen brauchen Ruhe, klare Abläufe und Menschen, die losfahren.",
+  ],
+  "Rechnung verstehen": [
+    "Der Abschlag ist nicht die Jahresrechnung — genau da entstehen oft Missverständnisse.",
+    "Wer Arbeitspreis, Grundpreis und Verbrauch trennt, versteht die Rechnung schneller.",
+    "Eine gute Rechnungserklärung nimmt Angst aus Zahlen.",
+  ],
+};
+
+function concretePostStatements(idea) {
+  const fallback = [
+    `${idea.subtheme} wird verständlicher, wenn man es an einem echten Beispiel zeigt.`,
+    `Der wichtigste Punkt: ${idea.proof}.`,
+    `Die Community soll am Ende wissen, warum ${idea.topic} im Alltag relevant ist.`,
+  ];
+  return (concreteStatementBank[idea.topic] || fallback).slice(0, 3);
+}
+
 const topicSubthemes = {
   Strom: ["Netzfrequenz", "Umspannwerke", "Strommix", "Spitzenlast", "Hausanschluss", "Netzausbau", "Stromausfall", "Erneuerbare Einspeisung"],
   Gas: ["Gasnetzprüfung", "Hausanschluss", "Speicherung", "Geruchsstoff", "Versorgung im Winter", "Heizverhalten", "Sicherheitskontrolle"],
@@ -2078,6 +2245,7 @@ function renderIdeas() {
       const approval = idea.approval || approvalInfo(idea.criticalReview);
       const pillar = idea.pillarInfo || contentPillarInfo(idea.pillar);
       const summaryBullets = ideaSummaryBullets(idea);
+      const readyStatements = concretePostStatements(idea);
       return `
         <article class="idea-card" style="animation-delay:${index * 60}ms">
           <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
@@ -2113,7 +2281,10 @@ function renderIdeas() {
             <span>Direkt nutzbares Praxisbeispiel</span>
             <strong>${escapeHtml(idea.concreteExample?.label || idea.subtheme)}</strong>
             <p>${escapeHtml(idea.concreteExample?.scene || idea.concept)}</p>
-            <small>O-Ton: ${escapeHtml(idea.suggestedOTone || idea.hook)} · Ablauf: ${escapeHtml(idea.concretePostPlan || idea.strength)}</small>
+            <ul>
+              ${readyStatements.map((statement) => `<li>${escapeHtml(statement)}</li>`).join("")}
+            </ul>
+            <small>O-Ton: ${escapeHtml(idea.suggestedOTone || idea.hook)}</small>
           </div>
           <div class="strategy-panel">
             <div class="pillar-note">
@@ -2355,6 +2526,8 @@ Aufhänger: ${idea.occasion}
 Perspektive: ${idea.protagonist}
 Schauplatz: ${idea.setting}
 Praxisbeispiel: ${idea.concreteExample ? `${idea.concreteExample.label} – ${idea.concreteExample.scene}` : "—"}
+Konkrete Aussagen:
+${concretePostStatements(idea).map((statement) => `- ${statement}`).join("\n")}
 O-Ton: ${idea.suggestedOTone || "—"}
 Post-Ablauf: ${idea.concretePostPlan || "—"}
 Beleg: ${idea.proof}
@@ -3877,7 +4050,7 @@ function exportIdeas() {
     "Content-Säule", "Strategie-Notiz", "Mechanik", "Format", "Plattform", "Titel",
     "Hook", "Kernaussage", "CTA", "Qualität Strategie", "Qualität Visual",
     "Qualität Interaktion", "Aufwand", "Freigabe-Ampel", "Interne Prüfung",
-    "Prüfpunkte", "Praxisbeispiel", "O-Ton", "Post-Ablauf", "Benötigter Beleg",
+    "Prüfpunkte", "Praxisbeispiel", "Konkrete Aussagen", "O-Ton", "Post-Ablauf", "Benötigter Beleg",
     "Bildidee / Shot-Hinweis", "Fertige Caption", "Hashtags",
   ];
   const rows = exportData.map((idea, index) => {
@@ -3914,6 +4087,7 @@ function exportIdeas() {
       idea.criticalReview?.label || "Standardprüfung",
       (idea.criticalReview?.checks || []).join(" | "),
       idea.concreteExample ? `${idea.concreteExample.label}: ${idea.concreteExample.scene}` : "",
+      concretePostStatements(idea).join(" | "),
       idea.suggestedOTone || "",
       idea.concretePostPlan || "",
       idea.proof,
