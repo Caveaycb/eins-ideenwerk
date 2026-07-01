@@ -1141,6 +1141,17 @@ function formatConcretePostPlan(ideaDraft, example) {
   return `Post-Aufbau: starkes Hauptbild „${example.visuals}“, Einstieg mit O-Ton, kurzer Kontext, konkreter Beleg, klare Frage am Ende.`;
 }
 
+function ideaSummaryBullets(idea) {
+  const example = idea.concreteExample || {};
+  return [
+    ["Kernaussage", idea.topicStatement || clearTopicStatement(idea)],
+    ["Praxisbeispiel", example.label ? `${example.label}: ${example.scene}` : idea.subtheme],
+    ["Beleg", idea.proof],
+    ["O-Ton", idea.suggestedOTone || idea.hook],
+    ["Ablauf", idea.concretePostPlan || idea.strength],
+  ].filter(([, value]) => value);
+}
+
 const topicSubthemes = {
   Strom: ["Netzfrequenz", "Umspannwerke", "Strommix", "Spitzenlast", "Hausanschluss", "Netzausbau", "Stromausfall", "Erneuerbare Einspeisung"],
   Gas: ["Gasnetzprüfung", "Hausanschluss", "Speicherung", "Geruchsstoff", "Versorgung im Winter", "Heizverhalten", "Sicherheitskontrolle"],
@@ -2066,6 +2077,7 @@ function renderIdeas() {
       const quality = idea.qualityProfile || buildQualityProfile(idea);
       const approval = idea.approval || approvalInfo(idea.criticalReview);
       const pillar = idea.pillarInfo || contentPillarInfo(idea.pillar);
+      const summaryBullets = ideaSummaryBullets(idea);
       return `
         <article class="idea-card" style="animation-delay:${index * 60}ms">
           <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
@@ -2089,7 +2101,14 @@ function renderIdeas() {
           <h3>${escapeHtml(idea.title)}</h3>
           <p class="topic-statement">${escapeHtml(idea.topicStatement || clearTopicStatement(idea))}</p>
           <p class="hook">${escapeHtml(idea.hook)}</p>
-          <p class="concept">${escapeHtml(idea.concept)}</p>
+          <div class="concept-brief" aria-label="Strukturierte Idee">
+            ${summaryBullets.map(([label, value]) => `
+              <div>
+                <span>${escapeHtml(label)}</span>
+                <p>${escapeHtml(value)}</p>
+              </div>
+            `).join("")}
+          </div>
           <div class="ready-post-box">
             <span>Direkt nutzbares Praxisbeispiel</span>
             <strong>${escapeHtml(idea.concreteExample?.label || idea.subtheme)}</strong>

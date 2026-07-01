@@ -1192,6 +1192,49 @@ input[type="range"]::-webkit-slider-thumb {
   line-height: 1.65;
 }
 
+.concept-brief {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.concept-brief div {
+  position: relative;
+  padding: 10px 12px 10px 34px;
+  border: 1px solid rgba(0, 144, 215, 0.12);
+  border-radius: 13px;
+  background: rgba(248, 250, 248, 0.85);
+}
+
+.concept-brief div::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--teal), var(--green));
+  box-shadow: 0 0 0 5px rgba(0, 144, 215, 0.08);
+}
+
+.concept-brief span {
+  display: block;
+  margin-bottom: 3px;
+  color: #8d9692;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.concept-brief p {
+  margin: 0;
+  color: #56615d;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
 .ready-post-box {
   position: relative;
   display: grid;
