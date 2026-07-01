@@ -715,8 +715,78 @@ templates.push(...expertMechanicRows.map(([format, mechanic, title, hook, concep
   hook,
   concept,
   cta,
+  novelty: 6,
   strength: `${mechanic} gibt dem Beitrag eine eigene Dramaturgie und verhindert austauschbare Standardposts.`,
 })));
+
+const formatDramaturgy = {
+  Reel: "als schnell geschnittenes Video mit starkem Einstieg, echter Szene, kurzer Fachauflösung und klarer Schlussfrage",
+  Carousel: "als speicherbarer Swipe mit klarer Folienlogik, visueller Spannung, Beleg und Merksatz",
+  Story: "als interaktive Story mit Abstimmung, Schätzfrage, Auflösung und Rückfrage an die Community",
+  Post: "als dokumentarischer Einzelpost mit starkem Bild, präziser Caption, O-Ton und konkretem Beleg",
+  "YouTube Long": "als längeres Video mit Kapiteln, Vor-Ort-Szenen, O-Tönen, kritischen Fragen und sauberem Fazit",
+};
+
+const creativeExpansionLenses = [
+  ["Unpopuläre Frage", "{topic}: Die unbequeme Frage, die man trotzdem stellen muss", "„Die ehrliche Antwort ist nicht bequem.“", "Ein Zielkonflikt zu „{angle}“ wird offen benannt: Was nervt, was nötig ist, was belegt werden kann und was noch nicht entschieden ist.", "Welche unbequeme Frage sollen wir als Nächstes aufmachen?", 9, ["surprising", "editorial", "campaign"]],
+  ["Was-wäre-wenn", "Was wäre, wenn {topic} morgen anders laufen müsste?", "„Ein Gedankenexperiment mit ziemlich realem Kern.“", "Ein realistisches Zukunftsszenario zu „{angle}“ wird durchgespielt: Auslöser, Folgen im Alltag, fachliche Einordnung und robuste Lösung.", "Welches Szenario sollen wir einmal durchspielen?", 8, ["surprising", "education"]],
+  ["Kommentar sezieren", "{topic}: Wir zerlegen einen Kommentar fair", "„Der Kommentar ist hart – aber der Punkt ist wichtig.“", "Ein kritischer Kommentar zu „{angle}“ wird Satz für Satz ernst genommen, geprüft und in verständliche Fakten übersetzt.", "Welchen Kommentar sollen wir fachlich einordnen?", 8, ["community", "service"]],
+  ["Field Notes", "{topic}: Notizen vom Einsatzort", "„Was vor Ort auffällt, steht in keiner Pressemitteilung.“", "Ein echter Ortstermin zu „{angle}“ wird wie ein Notizbuch erzählt: Beobachtung, Detail, O-Ton, Learning.", "Sollen wir mehr Field Notes aus dem Alltag zeigen?", 7, ["editorial"]],
+  ["Mini-Krimi", "{topic}: Die Spur führt zu einem kleinen Detail", "„Am Anfang sah alles normal aus.“", "Ein Problem oder Missverständnis zu „{angle}“ wird als sachlicher Mini-Krimi erzählt: Spur, Verdacht, Prüfung, Auflösung.", "Welches Rätsel aus der Versorgung sollen wir lösen?", 9, ["surprising", "community"]],
+  ["Budget vs. Wert", "{topic}: Was kostet es – und was bringt es wirklich?", "„Preis ist die eine Seite. Wert die andere.“", "Kosten, Nutzen und regionale Wirkung zu „{angle}“ werden klar gegeneinander gestellt, ohne defensiv zu wirken.", "Was gehört für dich zum echten Wert dazu?", 8, ["campaign", "service"]],
+  ["No-Bullshit-Erklärung", "{topic} ohne Ausreden erklärt", "„Kurz, klar, ohne Marketing-Sprache.“", "Ein Thema zu „{angle}“ wird maximal ehrlich erklärt: Was stimmt, was nervt, was kompliziert ist und was praktisch hilft.", "War das klar genug oder sollen wir tiefer gehen?", 8, ["editorial", "service"]],
+  ["Drei falsche Annahmen", "{topic}: 3 Annahmen, die in die Irre führen", "„Klingt logisch – führt aber oft vorbei.“", "Drei verbreitete Annahmen zu „{angle}“ werden mit Beispiel, Gegenbeleg und besserer Frage aufgelöst.", "Welche Annahme begegnet dir oft?", 7, ["service", "education"]],
+  ["Eine Minute Rolle tauschen", "{topic}: Tausch mal kurz die Perspektive", "„Wenn du auf der anderen Seite stehen würdest …“", "Ein Perspektivwechsel zu „{angle}“ zeigt Kundschaft, Fachteam, Kommune und Region mit jeweils anderer Priorität.", "Welche Perspektive fehlt noch?", 8, ["editorial", "campaign"]],
+  ["Unsichtbare Entscheidung", "{topic}: Die Entscheidung, die niemand sieht", "„Bevor etwas passiert, wurde schon viel entschieden.“", "Eine Planungs- oder Sicherheitsentscheidung zu „{angle}“ wird sichtbar gemacht: Kriterien, Abwägung, Verantwortung.", "Welche Entscheidung sollen wir sichtbar machen?", 7, ["editorial", "service"]],
+  ["Realitätscheck", "{topic}: Der Realitätscheck vor Ort", "„Wir schauen nicht auf die Theorie, sondern auf den Ort.“", "Eine typische Behauptung zu „{angle}“ wird an einem realen Ort überprüft und mit Fachstimme eingeordnet.", "Welche Behauptung sollen wir vor Ort testen?", 8, ["surprising", "community"]],
+  ["Mythos mit Grauzone", "{topic}: Nicht Mythos, nicht Fakt – sondern komplizierter", "„Die Wahrheit passt nicht in Ja oder Nein.“", "Eine Aussage zu „{angle}“ wird differenziert erklärt: wann sie stimmt, wann nicht und worauf es wirklich ankommt.", "Welche Grauzone sollen wir erklären?", 9, ["editorial", "service"]],
+  ["Fünf-Sekunden-Erkenntnis", "{topic}: Der Moment, in dem es klick macht", "„Wenn du das siehst, verstehst du das ganze Thema.“", "Ein einzelner visueller Moment zu „{angle}“ wird genutzt, um das größere System dahinter zu erklären.", "Welcher Moment hat bei dir Klick gemacht?", 7, ["surprising"]],
+  ["Service-Detektiv", "{topic}: Wir finden den Fehler im Alltag", "„Das Problem sitzt oft an einer ganz anderen Stelle.“", "Ein typischer Servicefall zu „{angle}“ wird anonymisiert vom Symptom bis zur Lösung nacherzählt.", "Welchen Servicefall sollen wir erklären?", 7, ["service"]],
+  ["Chef:innenfrage", "{topic}: Die Frage, die Entscheider:innen stellen sollten", "„Nicht: Was kostet es? Sondern: Was passiert danach?“", "Ein Thema zu „{angle}“ wird als Entscheidungsfrage für Kommune, Unternehmen oder Haushalt formuliert.", "Welche Entscheidung steht bei dir gerade an?", 7, ["campaign", "service"]],
+  ["Kettenreaktion", "{topic}: Wenn ein kleines Detail alles beeinflusst", "„Ein Teil bewegt sich – und plötzlich hängt viel mehr dran.“", "Eine Ursache-Wirkungs-Kette zu „{angle}“ wird vom kleinen Auslöser bis zur regionalen Wirkung erzählt.", "Welche Kettenreaktion sollen wir zeigen?", 8, ["education", "surprising"]],
+  ["Gegenintuition", "{topic}: Warum das Gegenteil manchmal richtig ist", "„Dein Bauchgefühl sagt A. Die Technik sagt B.“", "Eine kontraintuitive Fachlogik zu „{angle}“ wird über Alltag, Messwert und einfache Analogie erklärt.", "Welche Gegenintuition sollen wir prüfen?", 9, ["surprising", "education"]],
+  ["Handgriff des Tages", "{topic}: Ein Handgriff, den kaum jemand kennt", "„Sieht klein aus, ist aber entscheidend.“", "Ein echter Arbeitsschritt zu „{angle}“ wird visuell stark und fachlich knapp erklärt.", "Welchen Handgriff sollen wir als Nächstes zeigen?", 6, ["editorial"]],
+  ["Fehlerfreundlich", "{topic}: Der Fehler ist verständlich – aber vermeidbar", "„Kein Vorwurf. Nur besser wissen.“", "Ein typischer Irrtum zu „{angle}“ wird ohne Belehrung erklärt und in eine einfache Handlung übersetzt.", "Soll daraus eine kleine Fehler-Serie werden?", 6, ["service"]],
+  ["Stadt unter der Stadt", "{topic}: Was unter Chemnitz arbeitet", "„Über dir Alltag. Unter dir Infrastruktur.“", "Ein unterirdischer oder unsichtbarer Infrastruktur-Aspekt zu „{angle}“ wird regional und bildstark sichtbar gemacht.", "Welchen Ort unter der Stadt sollen wir erklären?", 8, ["editorial", "campaign"]],
+  ["Beweisstück", "{topic}: Dieses Beweisstück erzählt mehr als eine Grafik", "„Ein Foto reicht, wenn man weiß, worauf man achten muss.“", "Ein reales Objekt, Dokument oder Messwert zu „{angle}“ wird als Beweisstück inszeniert und erklärt.", "Welches Beweisstück sollen wir zeigen?", 8, ["editorial", "service"]],
+  ["Vorurteil-Test", "{topic}: Dieses Vorurteil hält sich hartnäckig", "„Wir prüfen es, ohne jemanden bloßzustellen.“", "Ein verbreitetes Vorurteil zu „{angle}“ wird fair getestet, eingeordnet und mit sichtbarem Beleg korrigiert.", "Welches Vorurteil sollen wir prüfen?", 8, ["community", "surprising"]],
+  ["Zwei Wahrheiten", "{topic}: Zwei Dinge können gleichzeitig wahr sein", "„Ja, und trotzdem …“", "Ein scheinbarer Widerspruch zu „{angle}“ wird als Doppelwahrheit erklärt und dadurch weniger polarisiert.", "Welche Doppelwahrheit sollen wir als Nächstes erklären?", 9, ["editorial"]],
+  ["Mini-Audit", "{topic}: Wir machen den 60-Sekunden-Check", "„Ein schneller Check zeigt oft mehr als lange Theorie.“", "Ein Objekt, Ort oder Prozess zu „{angle}“ wird anhand weniger Prüfpunkte eingeordnet.", "Sollen wir daraus eine Check-Serie machen?", 7, ["service"]],
+  ["Daten mit Gefühl", "{topic}: Die Zahl und der Mensch dahinter", "„Diese Zahl betrifft echte Menschen.“", "Eine Kennzahl zu „{angle}“ wird mit einer menschlichen Situation und einem konkreten Nutzen verbunden.", "Welche Zahl sollen wir menschlicher erklären?", 7, ["campaign", "editorial"]],
+  ["Vor-Ort-Versprechen", "{topic}: Wir zeigen es am echten Ort", "„Nicht Studio. Nicht Stock. Vor Ort.“", "Das Thema „{angle}“ wird bewusst an einem realen Ort erzählt, inklusive Geräusch, Material, Person und Umgebung.", "Welchen Ort sollen wir besuchen?", 7, ["editorial", "community"]],
+  ["Satz, der hängen bleibt", "{topic}: Ein Satz, den man sich merken kann", "„Wenn du nur einen Satz mitnimmst …“", "Ein komplexes Thema zu „{angle}“ wird auf einen starken Merksatz verdichtet und danach belegt.", "Welcher Satz soll in Teil zwei fallen?", 6, ["service", "campaign"]],
+  ["Besser gefragt", "{topic}: Die bessere Frage wäre …", "„Die häufige Frage ist verständlich. Aber diese Frage hilft mehr.“", "Eine Standardfrage zu „{angle}“ wird in eine bessere Entscheidungsfrage verwandelt und praktisch beantwortet.", "Welche Frage sollen wir besser stellen?", 8, ["service", "editorial"]],
+  ["Einsatzbriefing", "{topic}: Du bekommst das Briefing vor dem Einsatz", "„Das würdest du wissen müssen, bevor es losgeht.“", "Das Publikum wird wie ein Teammitglied gebrieft: Lage, Ziel, Risiko, Handgriff, Ergebnis zu „{angle}“.", "Würdest du bei diesem Einsatz mitgehen?", 9, ["surprising", "editorial"]],
+  ["Fachwort-Gericht", "{topic}: Dieses Fachwort muss sich erklären", "„Angeklagt wegen Unverständlichkeit.“", "Ein Fachbegriff zu „{angle}“ wird spielerisch vor Gericht gestellt und dann einfach übersetzt.", "Welches Fachwort soll als Nächstes vor Gericht?", 9, ["surprising", "community"]],
+  ["Morgenroutine", "{topic}: Was passiert, bevor die Stadt wach ist", "„Während viele noch schlafen, läuft das hier schon.“", "Ein früher Arbeitsmoment zu „{angle}“ zeigt Versorgung als Tagesstart, mit Atmosphäre und Fachdetail.", "Mehr Morgenmomente oder lieber Nachtschicht?", 7, ["editorial"]],
+  ["Nachtmodus", "{topic}: Was nachts weiterläuft", "„Die Stadt schläft. Das System nicht.“", "Ein Nacht- oder Bereitschaftsblick zu „{angle}“ zeigt Kontrolle, Sicherheit und stille Arbeit.", "Welche Nachtschicht sollen wir zeigen?", 8, ["editorial", "campaign"]],
+  ["Entscheidung unter Druck", "{topic}: 30 Sekunden für die richtige Entscheidung", "„Was würdest du tun?“", "Eine sichere, nicht dramatisierende Entscheidungssituation zu „{angle}“ wird gestellt und fachlich aufgelöst.", "Hättest du genauso entschieden?", 8, ["community", "surprising"]],
+  ["Mehrwert-Landkarte", "{topic}: Wo der Nutzen überall ankommt", "„Der Effekt endet nicht an der Rechnung.“", "Der Nutzen zu „{angle}“ wird als Kette aus Haushalt, Stadt, Verein, Projekt, Service und Infrastruktur sichtbar gemacht.", "Wo sollte der Nutzen noch sichtbarer werden?", 8, ["campaign"]],
+  ["Kleines Teil, große Wirkung", "{topic}: Das kleine Teil mit großer Verantwortung", "„Ohne dieses Detail würde viel mehr auffallen.“", "Ein kleines Bauteil, Messgerät oder Prozessdetail zu „{angle}“ wird als Schlüssel zur Versorgung erklärt.", "Welches Detail sollen wir als Nächstes groß machen?", 7, ["education", "editorial"]],
+  ["Gute Frage, kurze Antwort", "{topic}: 1 Frage, 1 ehrliche Antwort", "„Kurz gefragt, ehrlich beantwortet.“", "Eine spitze Frage zu „{angle}“ wird ohne Umweg beantwortet und mit einem Beleg abgesichert.", "Welche Frage nehmen wir morgen?", 6, ["service", "community"]],
+  ["Der Vergleich hinkt", "{topic}: Warum dieser Vergleich nicht reicht", "„Klingt ähnlich, ist aber nicht dasselbe.“", "Ein populärer Vergleich zu „{angle}“ wird erklärt, korrigiert und durch einen besseren Vergleich ersetzt.", "Welcher Vergleich begegnet dir oft?", 8, ["education"]],
+  ["Lernkurve", "{topic}: Was wir heute anders machen würden", "„Erfahrung ist manchmal der ehrlichste Content.“", "Ein Learning zu „{angle}“ wird offen erzählt: frühere Annahme, heutiges Wissen, bessere Praxis.", "Welche Lernkurve sollen wir teilen?", 8, ["editorial", "campaign"]],
+  ["Einwand vorweg", "{topic}: Der Einwand ist berechtigt", "„Bevor du es in die Kommentare schreibst: Ja, der Punkt zählt.“", "Ein erwartbarer Einwand zu „{angle}“ wird vorweggenommen, anerkannt und sachlich beantwortet.", "Welchen Einwand sollten wir nicht ignorieren?", 8, ["editorial", "community"]],
+  ["Chemnitz-Beleg", "{topic}: Der Beleg liegt direkt hier", "„Nicht abstrakt. Hier vor Ort.“", "Eine regionale Beobachtung, Zahl oder Szene zu „{angle}“ belegt das Thema konkret in Chemnitz oder Südsachsen.", "Welchen lokalen Beleg sollen wir suchen?", 7, ["campaign", "editorial"]],
+];
+
+const creativeExpansionFormats = ["Reel", "Carousel", "Story", "Post", "YouTube Long"];
+const creativeExpansionTemplates = creativeExpansionLenses.flatMap(
+  ([mechanic, title, hook, concept, cta, novelty, modes]) =>
+    creativeExpansionFormats.map((format) => ({
+      format,
+      mechanic,
+      title,
+      hook,
+      concept: `${concept} Ausgespielt ${formatDramaturgy[format]}.`,
+      cta,
+      novelty,
+      modes,
+      strength: `${mechanic} bringt eine eigenständige Social-Mechanik in den Beitrag und macht aus dem Thema eine konkrete Dramaturgie statt eine allgemeine Erklärung.`,
+    })),
+);
+
+templates.push(...creativeExpansionTemplates);
 
 const youtubeLongTemplates = [
   ["Deep Dive Doku", "{topic}: Die ganze Geschichte hinter {angle}", "„In diesem Video gehen wir einmal wirklich in die Tiefe.“", "12–18 Minuten Longform-Doku mit Kapitelstruktur: Problemaufriss, Ortstermin, Fachinterview, Daten-/Belegteil, kritische Fragen, Ausblick und klares Fazit.", "Abonniere den Kanal, wenn du mehr Einblicke hinter die Energieversorgung sehen willst."],
@@ -748,6 +818,13 @@ const modeMechanics = {
   service: ["FAQ", "Serviceablauf", "Entscheidungsbaum", "Rechenbeispiel", "Sicherheitsszenario", "Fehleranalyse", "Glossar", "Vergleich", "Mini-Tutorial", "Before the Call", "Swipe-Checkliste", "Kostenklarheit", "Ampel-Guide", "Wenn-Dann-Karten", "Servicekarte", "Regulatorik verständlich", "Entscheider:innen-Guide", "Erklärfilm mit Kapiteln", "Service-Sprechstunde"],
   community: ["Community-Faktencheck", "Kommentar-Reaktion", "Sprechstunde", "Quiz", "Schätzspiel", "Community-Regie", "Challenge", "Street-Test", "Comment Rescue", "Community-Auswertung", "This or That", "Fragensticker Spezial", "Team Takeover", "Schnellumfrage", "Kommentar als Aufhänger", "Du bist Einsatzleitung", "Expert:innen-Talk", "Service-Sprechstunde"],
 };
+
+creativeExpansionLenses.forEach(([mechanic, , , , , , modes = []]) => {
+  modes.forEach((mode) => {
+    if (!modeMechanics[mode] || modeMechanics[mode].includes(mechanic)) return;
+    modeMechanics[mode].push(mechanic);
+  });
+});
 
 const universalAngles = [
   "ein konkreter Alltagsmoment, den fast alle kennen",
@@ -1100,8 +1177,8 @@ function buildQualityProfile(idea, settings = getSettings()) {
 
   return {
     strategy: clampMetric(58 + regionalBoost + (settings.goal === "Image & Marke" ? 8 : 0) + (idea.topic === "Preiswahrnehmung" ? 9 : 0) + (idea.score || 72) / 8),
-    visual: clampMetric(54 + visualBoost + formatBoost + (settings.virality || 6)),
-    interaction: clampMetric(48 + interactionBoost + (settings.emotion || 5) + (settings.virality || 6)),
+    visual: clampMetric(54 + visualBoost + formatBoost + (settings.virality || 6) + Math.max(0, (settings.originality || 6) - 6)),
+    interaction: clampMetric(48 + interactionBoost + (settings.emotion || 5) + (settings.virality || 6) + Math.max(0, (settings.originality || 6) - 7)),
     effort: clampMetric(effortBase + (idea.protagonist?.length > 70 ? 7 : 0) + (risk >= 64 ? 8 : 0)),
     risk: clampMetric(risk),
   };
@@ -1246,6 +1323,7 @@ function getSettings() {
     regionality: Number(document.querySelector("#regionality").value),
     expertise: Number(document.querySelector("#expertise").value),
     emotion: Number(document.querySelector("#emotion").value),
+    originality: Number(document.querySelector("#originality").value),
     count: Number(document.querySelector("#ideaCount").value),
     seriesLength: Number(document.querySelector("#seriesLength")?.value || 5),
     campaign: getCampaignSettings(),
@@ -1437,7 +1515,7 @@ function getCampaignSettings() {
 
 function buildIdea(topic, index, settings) {
   const seed = hash(
-    `${topic.name}-${index}-${generationRound}-${generationSalt}-${settings.platform}-${settings.goal}-${settings.virality}`,
+    `${topic.name}-${index}-${generationRound}-${generationSalt}-${settings.platform}-${settings.goal}-${settings.virality}-${settings.originality}`,
   );
   const preferredTemplates = templates.filter((template) =>
     settings.formats.includes(template.format),
@@ -1449,15 +1527,22 @@ function buildIdea(topic, index, settings) {
   const modePool = modeMechanics[settings.ideaMode]
     ? preferredTemplates.filter((template) => modeMechanics[settings.ideaMode].includes(template.mechanic))
     : preferredTemplates;
-  const templatePool = preferredTopicTemplates.length
+  const baseTemplatePool = preferredTopicTemplates.length
     ? preferredTopicTemplates
     : modePool.length
     ? modePool
     : preferredTemplates.length
       ? preferredTemplates
       : templates;
+  const originalityPool =
+    settings.originality >= 8
+      ? baseTemplatePool.filter((template) => (template.novelty || 5) >= 7)
+      : settings.originality <= 3
+        ? baseTemplatePool.filter((template) => (template.novelty || 5) <= 6)
+        : baseTemplatePool;
+  const templatePool = originalityPool.length ? originalityPool : baseTemplatePool;
   let templateIndex =
-    (generationRound * 13 + generationSalt + index * 7 + hash(`${topic.name}-${settings.goal}`)) %
+    (generationRound * 13 + generationSalt + index * 7 + hash(`${topic.name}-${settings.goal}-${settings.originality}`)) %
     templatePool.length;
   let template = templatePool[templateIndex];
   for (let attempt = 0; attempt < templatePool.length; attempt += 1) {
@@ -1549,11 +1634,18 @@ function buildIdea(topic, index, settings) {
       : settings.virality <= 3
         ? " Setze auf ruhige, seriöse Vermittlung und eine eindeutige Kernaussage."
         : "";
+  const originalityCue =
+    settings.originality >= 8
+      ? " Nutze bewusst eine ungewöhnliche Erzählform, einen starken Perspektivwechsel oder einen mutigen Einwand, damit der Post nicht wie ein Standard-Erklärformat wirkt."
+      : settings.originality <= 3
+        ? " Bleibe bei einer bewährten, klaren Struktur, damit der Beitrag sicher, verständlich und leicht freigabefähig bleibt."
+        : "";
 
   const score = Math.min(
     98,
     62 +
       settings.virality * 2 +
+      Math.round((settings.originality || 6) * 1.1) +
       Math.round((settings.regionality + settings.emotion) / 2) +
       (template.format === "Reel" ? 4 : 0) +
       (template.format === "YouTube Long" && settings.goal !== "Reichweite" ? 3 : 0) +
@@ -1601,7 +1693,7 @@ function buildIdea(topic, index, settings) {
     platform: settings.platform,
     title,
     hook: topicHook,
-    concept: `${topicStatement} ${concept}${depthSentence}${regionalCue}${expertiseCue}${emotionCue}${viralCue}`,
+    concept: `${topicStatement} ${concept}${depthSentence}${regionalCue}${expertiseCue}${emotionCue}${viralCue}${originalityCue}`,
     cta: template.cta,
     strength: `${template.strength} Der Beitrag geht nicht allgemein über ${topic.name}, sondern spitzt auf „${subtheme}“ und den Konflikt „${topicTension}“ zu. ${goalTweaks[settings.goal]} ${audienceTweaks[settings.audience]}`,
     criticalReview,
@@ -3646,7 +3738,7 @@ document.querySelectorAll("#campaignTheme, #campaignDuration, #campaignFrequency
 
 updateCampaignUi();
 
-["virality", "regionality", "expertise", "emotion"].forEach((id) => {
+["virality", "regionality", "expertise", "emotion", "originality"].forEach((id) => {
   const slider = document.querySelector(`#${id}`);
   const output = document.querySelector(`#${id}Value`);
   slider.addEventListener("input", () => {
