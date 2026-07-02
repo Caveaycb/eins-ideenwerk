@@ -2558,7 +2558,7 @@ function createFinishedSocialCaption(idea, tone = "nahbar") {
   if (idea.concreteExample) return createConcreteUtilityCaption(idea, tone);
   const seed = hash(`${idea.id}-${idea.title}-${tone}-${studioVariant}`);
   const caption = naturalCaptionParts(idea, tone, seed);
-  const hashtags = idea.hashtags.join(" ");
+  const hashtags = seoHashtags(idea).join(" ");
 
   if (idea.format === "Story") {
     return `${caption.opening}
@@ -2567,7 +2567,7 @@ ${caption.body}
 
 ${caption.cta}
 
-${idea.hashtags.slice(0, 3).join(" ")}`;
+${seoHashtags(idea, 3).join(" ")}`;
   }
 
   if (idea.format === "Carousel") {
@@ -2608,30 +2608,36 @@ ${hashtags}`;
 function createConcreteUtilityCaption(idea, tone = "nahbar") {
   const seed = hash(`${idea.id}-${idea.title}-${tone}-${studioVariant}`);
   const example = idea.concreteExample;
-  const cleanQuote = (idea.suggestedOTone || example.quote || idea.hook).replace(/^„|“$/g, "");
-  const hashtags = idea.hashtags.slice(0, 3).join(" ");
+  const seoTerm = seoCaptionPhrase(idea);
+  const concreteLines = concretePostStatements(idea);
+  const hashtags = seoHashtags(idea, idea.format === "Story" ? 3 : 5).join(" ");
   const shortScene = simplifyCaptionScene(example.label || idea.subtheme);
+  const concreteFact = pick([
+    concreteLines[0],
+    concreteLines[1],
+    concreteLines[2],
+  ].filter(Boolean), seed + 2);
   const opener = idea.topic === "Preiswahrnehmung"
     ? pick([
-        "Der Preisvergleich zeigt Zahlen. Aber nicht, was vor Ort bleibt.",
-        "Billiger ist schnell gesagt. Wert zeigt sich vor Ort.",
-        "Ein Preis ist mehr als eine Zahl auf dem Vergleichsportal.",
+        `${seoTerm}: Ein Vergleichsportal zeigt Zahlen — aber nicht, was vor Ort bleibt.`,
+        `${seoTerm}: Billiger ist schnell gesagt. Wert zeigt sich im Alltag vor Ort.`,
+        `${seoTerm}: Der Preis ist wichtig. Aber er ist nicht die ganze Geschichte.`,
       ], seed)
     : pick([
-        cleanQuote,
-        `${shortScene}: ein Blick hinter das, was im Alltag selbstverständlich wirkt.`,
-        `Man sieht oft nur das Ergebnis. Wir zeigen den Moment dahinter.`,
+        `${seoTerm}: ${shortScene} zeigt, was hinter guter Versorgung wirklich steckt.`,
+        `${seoTerm}: ein echter Blick auf ein Detail, das im Alltag oft unsichtbar bleibt.`,
+        `${seoTerm}: Man sieht oft nur das Ergebnis. Wir zeigen den Moment dahinter.`,
       ], seed);
   const middle = idea.topic === "Preiswahrnehmung"
     ? pick([
-        `Service, Sponsoring, Infrastruktur, Nähe: Genau darüber wollen wir sprechen.`,
-        `Denn regionaler Wert entsteht nicht im Vergleichsportal, sondern hier vor Ort.`,
-        `Nicht als Ausrede. Sondern als ehrlicher Blick auf das, was ein regionaler Versorger mit möglich macht.`,
+        `Service, Sponsoring, Infrastruktur und Nähe gehören zur ehrlichen Preisfrage dazu.`,
+        `Regionaler Mehrwert entsteht nicht im Vergleichsportal, sondern dort, wo Service, Projekte und Verantwortung sichtbar werden.`,
+        `Nicht als Ausrede für Preise — sondern als klarer Blick auf das, was ein regionaler Versorger mit möglich macht.`,
       ], seed + 3)
     : pick([
-        `${shortScene} zeigt, wie viel Arbeit hinter guter Versorgung steckt.`,
-        `Ein kleines Detail — aber ein ziemlich guter Grund, genauer hinzuschauen.`,
-        `Nah dran, kurz erklärt und mit echtem Beispiel aus der Region.`,
+        concreteFact,
+        `${shortScene} macht sichtbar, wie viel Arbeit hinter zuverlässiger Versorgung steckt.`,
+        `Ein konkretes Detail aus der Region — und ein guter Grund, genauer hinzuschauen.`,
       ], seed + 3);
   const cta = idea.topic === "Preiswahrnehmung"
     ? pick([
@@ -2648,6 +2654,8 @@ function createConcreteUtilityCaption(idea, tone = "nahbar") {
   if (idea.format === "Story") {
     return `${opener}
 
+${middle}
+
 ${cta}
 
 ${hashtags}`;
@@ -2655,15 +2663,83 @@ ${hashtags}`;
 
   const saveLine = idea.format === "Carousel" ? "\n\nSpeichern, wenn du es später nochmal brauchst." : "";
   const body = tone === "sachlich"
-    ? `${opener}\n\n${middle}\n\n${cta}${saveLine}\n\n${hashtags}`
+    ? `${opener}\n\n${concreteFact}\n\n${middle}\n\n${cta}${saveLine}\n\n${hashtags}`
     : `${opener}\n\n${middle}\n\n${cta}${saveLine}\n\n${hashtags}`;
-  return limitCaptionLength(body, 420);
+  return limitCaptionLength(body, 500);
 }
 
 function simplifyCaptionScene(value = "") {
   return String(value)
     .replace(/^(Was der|Was die|Was im|Eine|Ein|Neue|Drei|7-Tage-)/i, (match) => match.trim())
     .trim();
+}
+
+const seoCaptionPhrases = {
+  Strom: "Stromnetz in Chemnitz",
+  Gas: "Gasversorgung in Südsachsen",
+  Elektromobilität: "Elektromobilität und Laden in Chemnitz",
+  Abwasser: "Abwasser und Kläranlage in der Region",
+  Photovoltaik: "Photovoltaik auf dem Dach",
+  Windkraft: "Windkraft in Sachsen",
+  Trinkwasser: "Trinkwasserqualität in Chemnitz",
+  Fernwärme: "Fernwärme in Chemnitz",
+  "Netze & Infrastruktur": "Energie-Infrastruktur in Chemnitz",
+  Energiesparen: "Energiesparen im Alltag",
+  Nachhaltigkeit: "Nachhaltigkeit beim Energieversorger",
+  "Region & Engagement": "regionaler Mehrwert in Chemnitz",
+  "Berufe & Ausbildung": "Ausbildung beim Energieversorger",
+  "Service & Sicherheit": "Störung und Sicherheit beim Energieversorger",
+  Wärmepumpen: "Wärmepumpe im Altbau",
+  Batteriespeicher: "Batteriespeicher und Solarstrom",
+  "Baustellen & Projekte": "Baustellenupdate in Chemnitz",
+  "Zähler & Messwesen": "Zählerstand und Verbrauch verstehen",
+  "Energiepreise & Markt": "Energiepreise einfach erklärt",
+  Preiswahrnehmung: "Energiepreis und regionaler Mehrwert",
+  "Kommunale Wärmeplanung": "kommunale Wärmeplanung in Chemnitz",
+  Kundenservice: "Kundenservice beim Energieversorger",
+  Digitalisierung: "Digitalisierung im Energienetz",
+  Netzleitstelle: "Netzleitstelle und Versorgungssicherheit",
+  Straßenbeleuchtung: "Straßenbeleuchtung melden",
+  Ladeinfrastruktur: "Ladeinfrastruktur in Chemnitz",
+  "Kraft-Wärme-Kopplung": "Kraft-Wärme-Kopplung einfach erklärt",
+  "Starkregen & Hochwasser": "Starkregen Vorsorge",
+  Versorgungssicherheit: "Versorgungssicherheit in der Region",
+  "Entstörung & Bereitschaft": "Entstörung und Bereitschaftsdienst",
+  "Rechnung verstehen": "Energierechnung verstehen",
+};
+
+function seoCaptionPhrase(idea) {
+  return seoCaptionPhrases[idea.topic] || `${idea.topic} in Chemnitz und Südsachsen`;
+}
+
+function seoHashtags(idea, max = 5) {
+  const base = [
+    "#EnergieIdeenwerk",
+    hashtagFromText(idea.topic),
+    idea.topic === "Preiswahrnehmung" ? "#RegionalerMehrwert" : "#EnergieWissen",
+    "#Chemnitz",
+    "#Südsachsen",
+  ];
+  const extra = (idea.hashtags || []).filter(Boolean);
+  return uniqueArray([...base, ...extra]).slice(0, max);
+}
+
+function hashtagFromText(value = "") {
+  const normalized = String(value)
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/Ä/g, "Ae")
+    .replace(/Ö/g, "Oe")
+    .replace(/Ü/g, "Ue")
+    .replace(/ß/g, "ss")
+    .replace(/&/g, "")
+    .replace(/[^a-zA-Z0-9]/g, "");
+  return `#${normalized || "Energie"}`;
+}
+
+function uniqueArray(values) {
+  return [...new Set(values)];
 }
 
 function limitCaptionLength(caption, maxLength = 420) {
@@ -2678,6 +2754,7 @@ function naturalCaptionParts(idea, tone, seed) {
   const proof = humanizeProofForCaption(idea.proof);
   const topic = idea.topic;
   const subtheme = idea.subtheme;
+  const seoTerm = seoCaptionPhrase(idea);
   const seriesNumber = extractSeriesNumber(idea.title);
   const seriesIntro = idea.pillar === "Serie"
     ? `Teil ${seriesNumber || ""} unserer Reihe: `.replace("Teil  unserer", "Teil unserer")
@@ -2691,9 +2768,9 @@ function naturalCaptionParts(idea, tone, seed) {
         `${seriesIntro}Manchmal steht auf dem Papier nur ein Preis. Vor Ort steckt viel mehr dahinter.`,
       ], seed),
       body: pick([
-        `Bei ${subtheme} geht es genau darum: Service, Nähe, Sponsoring, Infrastruktur und Verantwortung für Chemnitz nicht als nette Extras zu sehen, sondern als Teil des Werts.`,
-        `Wir finden: Wer Preise vergleicht, sollte auch vergleichen, was vor Ort zurückkommt. Erreichbarkeit. Unterstützung. Verlässlichkeit. Engagement.`,
-        `Ein Tarif ist schnell verglichen. Schwieriger ist die Frage, wer hier bleibt, wenn es Fragen gibt, Projekte Unterstützung brauchen oder Infrastruktur funktionieren muss.`,
+        `${seoTerm} heißt: Service, Nähe, Sponsoring, Infrastruktur und Verantwortung für Chemnitz nicht als nette Extras zu sehen, sondern als Teil des Werts.`,
+        `Wer Preise vergleicht, sollte auch vergleichen, was vor Ort zurückkommt: Erreichbarkeit, Unterstützung, Verlässlichkeit und Engagement.`,
+        `Ein Tarif ist schnell verglichen. Die wichtigere Frage: Wer bleibt hier erreichbar, wenn Fragen entstehen, Projekte Unterstützung brauchen oder Infrastruktur funktionieren muss?`,
       ], seed + 3),
       payoff: pick([
         `Deshalb zählen für uns konkrete Beweise mehr als große Worte — zum Beispiel mit ${proof}.`,
@@ -2712,7 +2789,7 @@ function naturalCaptionParts(idea, tone, seed) {
   if (tone === "sachlich") {
     return {
       opening: cleanCaptionHook(idea),
-      body: `${subtheme} ist kein Randdetail, sondern ein guter Einstieg, um ${topic} verständlich einzuordnen.`,
+      body: `${seoTerm}: ${subtheme} ist kein Randdetail, sondern ein guter Einstieg, um ${topic} verständlich einzuordnen.`,
       payoff: `Wichtig bleibt: konkrete Aussagen vor Veröffentlichung fachlich prüfen. Als Beleg einplanen: ${proof}.`,
       cta: idea.cta,
       saveLine: "Speichern, wenn du die Einordnung später nochmal brauchst.",
@@ -2727,9 +2804,9 @@ function naturalCaptionParts(idea, tone, seed) {
         `${seriesIntro}Das wirkt erstmal unscheinbar. Genau deshalb lohnt sich der Blick dahinter.`,
       ], seed),
       body: pick([
-        `Hier steckt mehr drin, als man auf den ersten Blick sieht: ein echter Arbeitsschritt, eine Entscheidung und ein Detail, das im Alltag oft untergeht.`,
-        `Bei ${topic} geht es selten nur um Technik. Es geht darum, dass am Ende etwas zuverlässig funktioniert, ohne dass man ständig darüber nachdenken muss.`,
-        `${subtheme} klingt vielleicht trocken. Wird aber ziemlich spannend, sobald man sieht, wer daran arbeitet und warum es vor Ort zählt.`,
+        `${seoTerm}: Hier steckt mehr drin, als man auf den ersten Blick sieht — ein echter Arbeitsschritt, eine Entscheidung und ein Detail, das im Alltag oft untergeht.`,
+        `Bei ${seoTerm} geht es selten nur um Technik. Es geht darum, dass am Ende etwas zuverlässig funktioniert, ohne dass man ständig darüber nachdenken muss.`,
+        `${subtheme} klingt vielleicht trocken. Wird aber ziemlich spannend, sobald man sieht, wer daran arbeitet und warum ${seoTerm} vor Ort zählt.`,
       ], seed + 5),
       payoff: pick([
         `Der Moment, der hängen bleibt, wird mit ${proof} greifbar.`,
@@ -2748,9 +2825,9 @@ function naturalCaptionParts(idea, tone, seed) {
       `${seriesIntro}${topic} klingt groß. Der spannendste Teil beginnt aber oft bei einem kleinen Detail.`,
     ], seed),
     body: pick([
-      `Bei ${subtheme} sieht man ziemlich gut, wie viel Arbeit hinter etwas steckt, das im Alltag selbstverständlich wirken soll.`,
-      `Es geht nicht nur um Technik. Es geht um Menschen, Entscheidungen und diese vielen unsichtbaren Handgriffe, die am Ende Versorgung möglich machen.`,
-      `Wir nehmen euch mit zu einem Moment, den man sonst eher selten sieht — und der zeigt, was hinter ${subtheme} wirklich steckt.`,
+      `Bei ${seoTerm} sieht man ziemlich gut, wie viel Arbeit hinter etwas steckt, das im Alltag selbstverständlich wirken soll.`,
+      `Es geht nicht nur um Technik. Es geht um Menschen, Entscheidungen und die unsichtbaren Handgriffe, die ${seoTerm} im Alltag möglich machen.`,
+      `Wir nehmen euch mit zu einem Moment, den man sonst selten sieht — und der zeigt, was hinter ${subtheme} wirklich steckt.`,
     ], seed + 4),
     payoff: pick([
       `Das wird greifbar mit ${proof}.`,
@@ -2914,11 +2991,13 @@ function captionCta(idea, tone, seed) {
 
 function createYoutubeLongDescription(idea, tone = "nahbar") {
   const example = idea.concreteExample;
+  const seoTerm = seoCaptionPhrase(idea);
+  const hashtags = seoHashtags(idea, 6).join(" ");
   const intro = tone === "sachlich"
-    ? "In diesem Video ordnen wir das Thema ausführlich, verständlich und mit Blick auf die Region ein."
+    ? `In diesem Video ordnen wir ${seoTerm} ausführlich, verständlich und mit Blick auf die Region ein.`
     : tone === "aktivierend"
-      ? "Nimm dir ein paar Minuten: Dieses Thema wirkt alltäglich, hat aber mehr Tiefe, als man auf den ersten Blick sieht."
-      : "Manche Energiethemen versteht man erst richtig, wenn man sich Zeit nimmt und hinter die Kulissen schaut.";
+      ? `Nimm dir ein paar Minuten: ${seoTerm} wirkt alltäglich, hat aber mehr Tiefe, als man auf den ersten Blick sieht.`
+      : `Manche Energiethemen versteht man erst richtig, wenn man sich Zeit nimmt. In diesem Video geht es um ${seoTerm} und den Blick hinter die Kulissen.`;
   const concreteIntro = example
     ? `Ausgangspunkt ist ein konkreter Fall: ${example.label}. Wir zeigen ${example.scene} und belegen die Einordnung mit ${example.proof}.`
     : "";
@@ -2940,12 +3019,15 @@ Inhalt:
 Worum es geht:
 ${idea.concept}
 
+SEO-Fokus:
+${seoTerm}, ${idea.topic}, ${idea.subtheme}, Chemnitz, Südsachsen
+
 Interne Prüfung vor Veröffentlichung:
 ${(idea.criticalReview?.checks || ["Fakten, Zahlen und konkrete Aussagen vor Veröffentlichung prüfen."]).map((check) => `- ${check}`).join("\n")}
 
 ${idea.cta}
 
-${idea.hashtags.join(" ")}`;
+${hashtags}`;
 }
 
 let activeBriefingIdea = null;
