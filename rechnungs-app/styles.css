@@ -164,18 +164,57 @@ address { font-style: normal; line-height: 1.55; }
 .print-totals { width: 82mm; margin-left: auto; margin-top: 10mm; }
 .print-note { margin-top: 14mm; line-height: 1.55; }
 .print-action { position: fixed; right: 20px; bottom: 20px; background: var(--brand); color: #fff; border-color: var(--brand); }
+.export-area { display: none; }
+.export-area.active {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    overflow: auto;
+    background: #dfe5eb;
+    padding: 24px;
+}
+.export-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 21;
+    width: min(210mm, calc(100vw - 48px));
+    margin: 0 auto 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+}
+.export-toolbar p { margin-bottom: 0; color: var(--muted); }
 
 @media (max-width: 850px) {
     .topbar, .section-title { align-items: stretch; flex-direction: column; }
     .metrics, .form-grid, .grid-form, .invoice-bottom { grid-template-columns: 1fr; }
     .item-row { grid-template-columns: 1fr 1fr; }
     .item-row label:first-child { grid-column: 1 / -1; }
+    .export-area { padding: 12px; }
+    .export-toolbar { width: 100%; align-items: stretch; flex-direction: column; }
+    .print-page { width: auto; min-height: 0; padding: 24px; }
 }
 
 @media print {
     body { background: #fff; }
-    body > :not(.print-page) { display: none !important; }
-    .print-page { display: block !important; width: auto; min-height: 0; margin: 0; padding: 0; }
-    .print-action { display: none; }
+    body.print-mode > :not(#export-area) { display: none !important; }
+    body.print-mode #export-area {
+        display: block !important;
+        position: static;
+        inset: auto;
+        overflow: visible;
+        padding: 0;
+        background: #fff;
+    }
+    body.print-mode .export-toolbar { display: none !important; }
+    body.print-mode .print-page { display: block !important; width: auto; min-height: 0; margin: 0; padding: 0; }
+    .print-action { display: none !important; }
     @page { size: A4; margin: 18mm; }
 }

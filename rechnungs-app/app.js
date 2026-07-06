@@ -329,7 +329,7 @@ function saveInvoice(finalize = false) {
     $("#next-number").textContent = nextNumber();
     $("#invoice-hint").textContent = finalize ? `Finalisiert: ${invoice.number}` : "Entwurf gespeichert";
     toast(finalize ? `Rechnung ${invoice.number} finalisiert.` : "Entwurf gespeichert.");
-    if (finalize) openPrint(invoice.id);
+    if (finalize) showExport(invoice.id);
 }
 
 function renderInvoices() {
@@ -345,7 +345,7 @@ function renderInvoices() {
     $("#invoice-list").innerHTML = state.invoices.map((invoice) => {
         const customer = state.customers.find((item) => item.id === invoice.customerId);
         const action = invoice.status === "final"
-            ? `<button data-print="${invoice.id}">PDF</button>`
+            ? `<button data-export="${invoice.id}">Exportieren</button>`
             : `<button data-load="${invoice.id}">Bearbeiten</button>`;
         return `<tr>
             <td>${escapeHtml(invoice.number || "Entwurf")}</td>
@@ -373,8 +373,7 @@ function loadInvoice(id) {
     showView("invoice");
 }
 
-function openPrint(id) {
-    const invoice = state.invoices.find((item) => item.id === id);
+function invoiceMarkup(invoice) {
     const customer = state.customers.find((item) => item.id === invoice.customerId);
     const s = state.settings;
     const rows = invoice.items.map((item) => {
@@ -390,8 +389,7 @@ function openPrint(id) {
         </tr>`;
     }).join("");
     const taxId = s.vatId || s.taxNumber;
-    const html = `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Rechnung ${escapeHtml(invoice.number)}</title><link rel="stylesheet" href="./styles.css"></head>
-    <body><main class="print-page">
+    return `<main class="print-page">
         <section class="print-head">
             <div>
                 <p>${escapeHtml(s.companyName)} · ${escapeHtml(s.street)} · ${escapeHtml(s.postal)} ${escapeHtml(s.city)}</p>
@@ -413,10 +411,67 @@ function openPrint(id) {
             <div class="grand"><span>Brutto</span><strong>${money(invoice.totals.gross)}</strong></div>
         </aside>
         <section class="print-note"><p>${escapeHtml(invoice.notes)}</p><p>Bitte überweisen Sie den Rechnungsbetrag bis zum ${escapeHtml(invoice.dueDate)}.</p><p><strong>${escapeHtml(s.bankName)}</strong><br>IBAN: ${escapeHtml(s.iban)}<br>BIC: ${escapeHtml(s.bic)}</p><p>Steuerangabe: ${escapeHtml(taxId)}</p></section>
-    </main><button class="print-action" onclick="window.print()">Als PDF speichern</button></body></html>`;
-    const win = window.open("", "_blank");
-    win.document.write(html);
-    win.document.close();
+    </main>`;
+}
+
+function invoiceDocument(invoice) {
+    return `<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rechnung ${escapeHtml(invoice.number)}</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="print-mode">
+    <section id="export-area" class="export-area active">
+        ${invoiceMarkup(invoice)}
+    </section>
+</body>
+</html>`;
+}
+
+function invoiceFileName(invoice, extension) {
+    const number = (invoice.number || "rechnung").replace(/[^a-z0-9-_]+/gi, "-");
+    return `${number}.${extension}`;
+}
+
+function showExport(id) {
+    const invoice = state.invoices.find((item) => item.id === id);
+    if (!invoice) return;
+    const exportArea = $("#export-area");
+    exportArea.innerHTML = `<div class="export-toolbar">
+        <p><strong>${escapeHtml(invoice.number)}</strong> ist bereit zum Export.</p>
+        <div class="actions">
+            <button data-close-export>Zurück</button>
+            <button data-download-html="${invoice.id}">Rechnung herunterladen</button>
+            <button class="primary" data-print-current>Als PDF speichern</button>
+        </div>
+    </div>${invoiceMarkup(invoice)}`;
+    exportArea.classList.add("active");
+    exportArea.setAttribute("aria-hidden", "false");
+    document.body.classList.add("print-mode");
+}
+
+function closeExport() {
+    $("#export-area").classList.remove("active");
+    $("#export-area").setAttribute("aria-hidden", "true");
+    document.body.classList.remove("print-mode");
+}
+
+function downloadInvoiceHtml(id) {
+    const invoice = state.invoices.find((item) => item.id === id);
+    if (!invoice) return;
+    const blob = new Blob([invoiceDocument(invoice)], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = invoiceFileName(invoice, "html");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    toast("HTML-Datei exportiert.");
 }
 
 document.addEventListener("click", (event) => {
@@ -442,7 +497,10 @@ document.addEventListener("click", (event) => {
     }
     if (event.target.id === "clear-customer") clearCustomerForm();
     if (event.target.dataset.load) loadInvoice(event.target.dataset.load);
-    if (event.target.dataset.print) openPrint(event.target.dataset.print);
+    if (event.target.dataset.export) showExport(event.target.dataset.export);
+    if (event.target.dataset.closeExport !== undefined) closeExport();
+    if (event.target.dataset.printCurrent !== undefined) window.print();
+    if (event.target.dataset.downloadHtml) downloadInvoiceHtml(event.target.dataset.downloadHtml);
     if (event.target.id === "reset-demo") {
         localStorage.removeItem(KEY);
         location.reload();
