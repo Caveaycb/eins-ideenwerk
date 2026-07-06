@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rechnungs-App Demo</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <span class="badge">GitHub-Pages-Demo</span>
+            <h1>Rechnungs-App</h1>
+        </div>
+        <nav>
+            <button class="tab active" data-view="overview">Übersicht</button>
+            <button class="tab" data-view="invoice">Rechnung</button>
+            <button class="tab" data-view="customers">Kunden</button>
+            <button class="tab" data-view="settings">Stammdaten</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="overview" class="view active">
+            <div class="section-title">
+                <div>
+                    <h2>Übersicht</h2>
+                    <p>Diese Demo speichert Daten lokal im Browser. Für echte Rechnungen später Backend/Archiv nutzen.</p>
+                </div>
+                <button class="primary" id="start-invoice">Neue Rechnung</button>
+            </div>
+            <div class="metrics">
+                <article><span>Nächste Nummer</span><strong id="next-number">RE-2026-0001</strong></article>
+                <article><span>Kunden</span><strong id="customer-count">0</strong></article>
+                <article><span>Finalisiert brutto</span><strong id="final-total">0,00 EUR</strong></article>
+            </div>
+            <div class="panel table-panel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nummer</th>
+                            <th>Kunde</th>
+                            <th>Datum</th>
+                            <th>Status</th>
+                            <th class="num">Brutto</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoice-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="invoice" class="view">
+            <div class="section-title">
+                <div>
+                    <h2>Rechnung</h2>
+                    <p id="invoice-hint">Entwurf ohne Rechnungsnummer</p>
+                </div>
+                <div class="actions">
+                    <button id="save-draft">Entwurf speichern</button>
+                    <button class="primary" id="finalize">Finalisieren & PDF</button>
+                </div>
+            </div>
+            <div class="form-grid">
+                <label>Kunde <select id="invoice-customer"></select></label>
+                <label>Rechnungsdatum <input id="issue-date" type="date"></label>
+                <label>Leistungsdatum <input id="service-date" type="date"></label>
+                <label>Zahlungsziel Tage <input id="payment-days" type="number" min="0" value="14"></label>
+            </div>
+            <div class="section-row">
+                <h3>Positionen</h3>
+                <button id="add-item">Position hinzufügen</button>
+            </div>
+            <div id="items" class="items"></div>
+            <div class="invoice-bottom">
+                <label>Notiz <textarea id="notes" rows="5">Vielen Dank für den Auftrag.</textarea></label>
+                <aside class="totals">
+                    <div><span>Netto</span><strong id="sum-net">0,00 EUR</strong></div>
+                    <div><span>MwSt.</span><strong id="sum-tax">0,00 EUR</strong></div>
+                    <div class="grand"><span>Brutto</span><strong id="sum-gross">0,00 EUR</strong></div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="customers" class="view">
+            <div class="section-title">
+                <div>
+                    <h2>Kunden</h2>
+                    <p>Lege Testkunden an und verwende sie in Rechnungen.</p>
+                </div>
+            </div>
+            <form id="customer-form" class="panel grid-form">
+                <input type="hidden" id="customer-id">
+                <label>Kundennummer <input id="customer-number"></label>
+                <label>Firma <input id="customer-company"></label>
+                <label>Name <input id="customer-name"></label>
+                <label>Straße <input id="customer-street"></label>
+                <label>PLZ <input id="customer-postal"></label>
+                <label>Ort <input id="customer-city"></label>
+                <label>Land <input id="customer-country" value="Deutschland"></label>
+                <label>E-Mail <input id="customer-email" type="email"></label>
+                <label>USt-ID <input id="customer-vat"></label>
+                <div class="wide actions">
+                    <button class="primary" type="submit">Kunde speichern</button>
+                    <button type="button" id="clear-customer">Leeren</button>
+                </div>
+            </form>
+            <div id="customer-list" class="cards"></div>
+        </section>
+
+        <section id="settings" class="view">
+            <div class="section-title">
+                <div>
+                    <h2>Stammdaten</h2>
+                    <p>Diese Angaben erscheinen in der PDF-Druckansicht.</p>
+                </div>
+            </div>
+            <form id="settings-form" class="panel grid-form">
+                <label>Firma <input id="company-name"></label>
+                <label>Inhaber/Geschäftsführung <input id="owner-name"></label>
+                <label>Straße <input id="company-street"></label>
+                <label>PLZ <input id="company-postal"></label>
+                <label>Ort <input id="company-city"></label>
+                <label>Land <input id="company-country" value="Deutschland"></label>
+                <label>E-Mail <input id="company-email" type="email"></label>
+                <label>Telefon <input id="company-phone"></label>
+                <label>Steuernummer <input id="tax-number"></label>
+                <label>USt-ID <input id="vat-id"></label>
+                <label>IBAN <input id="iban"></label>
+                <label>BIC <input id="bic"></label>
+                <label>Bank <input id="bank-name"></label>
+                <label>Zahlungsziel Tage <input id="default-payment-days" type="number" min="0" value="14"></label>
+                <label>Nummernpräfix <input id="invoice-prefix" value="RE-{year}-"></label>
+                <label>Nummernstellen <input id="invoice-padding" type="number" min="1" max="8" value="4"></label>
+                <div class="wide actions">
+                    <button class="primary" type="submit">Stammdaten speichern</button>
+                    <button type="button" id="reset-demo">Demo zurücksetzen</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="toast"></div>
+    <script src="./app.js"></script>
+</body>
+</html>
