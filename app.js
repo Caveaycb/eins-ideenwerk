@@ -1143,13 +1143,16 @@ function formatConcretePostPlan(ideaDraft, example) {
 
 function ideaSummaryBullets(idea) {
   const example = idea.concreteExample || {};
+  const oTone = idea.suggestedOTone || idea.hook;
+  const hookText = idea.hook || "";
   return [
     ["Kernaussage", idea.topicStatement || clearTopicStatement(idea)],
     ["Konkretes Beispiel", example.label ? `${example.label}: ${example.scene}` : idea.subtheme],
     ["Benötigter Beleg", idea.proof],
-    ["O-Ton", idea.suggestedOTone || idea.hook],
     ["Posting-Ablauf", idea.concretePostPlan || idea.strength],
-  ].filter(([, value]) => value);
+    ["Call to Action", idea.cta],
+    oTone && oTone !== hookText ? ["O-Ton", oTone] : null,
+  ].filter(Boolean).filter(([, value]) => value);
 }
 
 const concreteStatementBank = {
@@ -2246,16 +2249,15 @@ function renderIdeas() {
       const pillar = idea.pillarInfo || contentPillarInfo(idea.pillar);
       const summaryBullets = ideaSummaryBullets(idea);
       const concreteStatements = concretePostStatements(idea);
+      const compactTags = [idea.topic, idea.format, idea.mechanic, idea.platform];
       return `
         <article class="idea-card" style="animation-delay:${index * 60}ms">
           <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
           <div class="card-meta">
             <div class="meta-tags">
-              <span class="meta-tag primary">${escapeHtml(idea.topic)}</span>
-              <span class="meta-tag">${escapeHtml(idea.format)}</span>
-              <span class="meta-tag">${escapeHtml(idea.mechanic)}</span>
-              <span class="meta-tag">${escapeHtml(idea.pillar)}</span>
-              <span class="meta-tag">${escapeHtml(idea.platform)}</span>
+              ${compactTags.map((tag, tagIndex) => `
+                <span class="meta-tag ${tagIndex === 0 ? "primary" : ""}">${escapeHtml(tag)}</span>
+              `).join("")}
             </div>
             <div class="score-group">
               <span class="approval-chip ${approval.level}"><i></i>${approval.label} · ${approval.text}</span>
@@ -2286,40 +2288,13 @@ function renderIdeas() {
               </ul>
             </div>
           </div>
-          <div class="strategy-panel">
-            <div class="pillar-note">
-              <span>Content-Säule</span>
-              <strong>${escapeHtml(pillar.label)}</strong>
-              <small>${escapeHtml(pillar.description)}</small>
-            </div>
-            <div class="why-note">
-              <span>Warum diese Idee?</span>
-              <p>${escapeHtml(idea.whyThisIdea || generateAgencyRationale(idea))}</p>
-            </div>
+          <div class="compact-card-footer" aria-label="Kompakte Einordnung">
+            <span><b>${escapeHtml(pillar.label)}</b> Content-Säule</span>
+            <span><b>${quality.strategy}</b> Strategie</span>
+            <span><b>${quality.visual}</b> Visual</span>
+            <span><b>${quality.interaction}</b> Interaktion</span>
+            <span><b>${escapeHtml(effortLabel(quality.effort))}</b> Aufwand</span>
           </div>
-          <div class="quality-grid" aria-label="Qualitätsbewertung">
-            <span><b>${quality.strategy}</b><small>Strategie</small></span>
-            <span><b>${quality.visual}</b><small>Visual</small></span>
-            <span><b>${quality.interaction}</b><small>Interaktion</small></span>
-            <span><b>${effortLabel(quality.effort)}</b><small>Aufwand</small></span>
-          </div>
-          <div class="idea-brief">
-            <div><span>Fokus</span><strong>${escapeHtml(idea.subtheme)}</strong></div>
-            <div><span>Aufhänger</span><strong>${escapeHtml(idea.occasion)}</strong></div>
-            <div><span>Perspektive</span><strong>${escapeHtml(idea.protagonist)}</strong></div>
-            <div><span>Bildidee</span><strong>${escapeHtml(idea.visualApproach)}</strong></div>
-          </div>
-          <div class="idea-details">
-            <div>
-              <span class="detail-label">Call to Action</span>
-              <p>${escapeHtml(idea.cta)}</p>
-            </div>
-            <div>
-              <span class="detail-label">Produktionslogik</span>
-              <p>${escapeHtml(idea.strength)}</p>
-            </div>
-          </div>
-          <p class="hashtags">${idea.hashtags.map(escapeHtml).join(" ")}</p>
           <div class="card-actions">
             <button class="card-action create-post-action" data-index="${index}" type="button">✦ Fertigen Post erstellen</button>
             <button class="card-action briefing-action" data-index="${index}" type="button">▤ Briefing erstellen</button>
