@@ -2250,73 +2250,97 @@ function renderIdeas() {
       const summaryBullets = ideaSummaryBullets(idea);
       const concreteStatements = concretePostStatements(idea);
       const compactTags = [idea.topic, idea.format, idea.mechanic, idea.platform];
+      const dropdownId = `idea-card-details-${index}`;
       return `
-        <article class="idea-card" style="animation-delay:${index * 60}ms">
-          <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
-          <div class="card-meta">
-            <div class="meta-tags">
-              ${compactTags.map((tag, tagIndex) => `
-                <span class="meta-tag ${tagIndex === 0 ? "primary" : ""}">${escapeHtml(tag)}</span>
-              `).join("")}
+        <article class="idea-card idea-card-collapsed" style="animation-delay:${index * 60}ms">
+          <div
+            class="idea-card-preview"
+            role="button"
+            tabindex="0"
+            aria-expanded="false"
+            aria-controls="${dropdownId}"
+            data-index="${index}"
+          >
+            <div class="idea-preview-topline">
+              <span class="meta-tag primary">${escapeHtml(idea.topic)}</span>
+              <span class="idea-expand-hint">Details anzeigen</span>
             </div>
-            <div class="score-group">
-              <span class="approval-chip ${approval.level}"><i></i>${approval.label} · ${approval.text}</span>
-              <span class="score">${idea.score}% Potenzial</span>
+            <div class="idea-media">
+              <img src="${previewMedia}" alt="${escapeHtml(idea.topic)} – vorgeschlagenes Fotomotiv" loading="lazy" />
             </div>
+            <h3>${escapeHtml(idea.title)}</h3>
           </div>
-          <div class="idea-media">
-            <img src="${previewMedia}" alt="${escapeHtml(idea.topic)} – vorgeschlagenes Fotomotiv" loading="lazy" />
-            <span>${escapeHtml(idea.visualApproach)}</span>
-          </div>
-          <h3>${escapeHtml(idea.title)}</h3>
-          <p class="hook">${escapeHtml(idea.hook)}</p>
-          <div class="concept-brief" aria-label="Strukturierte Idee">
-            <div class="concept-brief-heading">
-              <strong>Postidee auf einen Blick</strong>
-              <small>Was gedreht, gesagt und belegt werden soll.</small>
-            </div>
-            ${summaryBullets.map(([label, value]) => `
-              <div>
-                <span>${escapeHtml(label)}</span>
-                <p>${escapeHtml(value)}</p>
-              </div>
-            `).join("")}
-            <div class="concrete-statements">
-              <span>Konkrete Aussagen für den Post</span>
-              <ul>
-                ${concreteStatements.map((statement) => `<li>${escapeHtml(statement)}</li>`).join("")}
-              </ul>
-            </div>
-          </div>
-          <div class="compact-card-footer" aria-label="Kompakte Einordnung">
-            <span><b>${escapeHtml(pillar.label)}</b> Content-Säule</span>
-            <span><b>${quality.strategy}</b> Strategie</span>
-            <span><b>${quality.visual}</b> Visual</span>
-            <span><b>${quality.interaction}</b> Interaktion</span>
-            <span><b>${escapeHtml(effortLabel(quality.effort))}</b> Aufwand</span>
-          </div>
-          <div class="card-actions">
-            <button class="card-action create-post-action" data-index="${index}" type="button">✦ Fertigen Post erstellen</button>
-            <button class="card-action briefing-action" data-index="${index}" type="button">▤ Briefing erstellen</button>
-            <div class="series-control">
-              <label for="seriesLength-${index}">Serie</label>
-              <select id="seriesLength-${index}" class="series-length-select" data-index="${index}">
-                ${[3, 4, 5, 6, 7, 8, 9, 10].map((count) => `
-                  <option value="${count}" ${count === 5 ? "selected" : ""}>${count} Teile</option>
+          <div class="idea-card-dropdown" id="${dropdownId}" hidden>
+            <div class="card-meta">
+              <div class="meta-tags">
+                ${compactTags.slice(1).map((tag) => `
+                  <span class="meta-tag">${escapeHtml(tag)}</span>
                 `).join("")}
-              </select>
-              <button class="card-action series-action" data-index="${index}" type="button">▥ Serie daraus machen</button>
+              </div>
+              <div class="score-group">
+                <span class="approval-chip ${approval.level}"><i></i>${approval.label} · ${approval.text}</span>
+                <span class="score">${idea.score}% Potenzial</span>
+              </div>
             </div>
-            <button class="card-action copy-action" data-index="${index}" type="button">□ Idee kopieren</button>
-            <button class="card-action favorite-action ${isFavorite ? "active" : ""}" data-index="${index}" type="button">
-              ${isFavorite ? "♥ Gespeichert" : "♡ Favorisieren"}
-            </button>
+            <p class="visual-idea">${escapeHtml(idea.visualApproach)}</p>
+            <p class="hook">${escapeHtml(idea.hook)}</p>
+            <div class="concept-brief" aria-label="Strukturierte Idee">
+              <div class="concept-brief-heading">
+                <strong>Postidee auf einen Blick</strong>
+                <small>Was gedreht, gesagt und belegt werden soll.</small>
+              </div>
+              ${summaryBullets.map(([label, value]) => `
+                <div>
+                  <span>${escapeHtml(label)}</span>
+                  <p>${escapeHtml(value)}</p>
+                </div>
+              `).join("")}
+              <div class="concrete-statements">
+                <span>Konkrete Aussagen für den Post</span>
+                <ul>
+                  ${concreteStatements.map((statement) => `<li>${escapeHtml(statement)}</li>`).join("")}
+                </ul>
+              </div>
+            </div>
+            <div class="compact-card-footer" aria-label="Kompakte Einordnung">
+              <span><b>${escapeHtml(pillar.label)}</b> Content-Säule</span>
+              <span><b>${quality.strategy}</b> Strategie</span>
+              <span><b>${quality.visual}</b> Visual</span>
+              <span><b>${quality.interaction}</b> Interaktion</span>
+              <span><b>${escapeHtml(effortLabel(quality.effort))}</b> Aufwand</span>
+            </div>
+            <div class="card-actions">
+              <button class="card-action create-post-action" data-index="${index}" type="button">✦ Fertigen Post erstellen</button>
+              <button class="card-action briefing-action" data-index="${index}" type="button">▤ Briefing erstellen</button>
+              <div class="series-control">
+                <label for="seriesLength-${index}">Serie</label>
+                <select id="seriesLength-${index}" class="series-length-select" data-index="${index}">
+                  ${[3, 4, 5, 6, 7, 8, 9, 10].map((count) => `
+                    <option value="${count}" ${count === 5 ? "selected" : ""}>${count} Teile</option>
+                  `).join("")}
+                </select>
+                <button class="card-action series-action" data-index="${index}" type="button">▥ Serie daraus machen</button>
+              </div>
+              <button class="card-action copy-action" data-index="${index}" type="button">□ Idee kopieren</button>
+              <button class="card-action favorite-action ${isFavorite ? "active" : ""}" data-index="${index}" type="button">
+                ${isFavorite ? "♥ Gespeichert" : "♡ Favorisieren"}
+              </button>
+            </div>
           </div>
         </article>
       `;
     })
     .join("");
 
+  document.querySelectorAll(".idea-card-preview").forEach((preview) => {
+    const toggle = () => toggleIdeaCard(preview);
+    preview.addEventListener("click", toggle);
+    preview.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      toggle();
+    });
+  });
   document.querySelectorAll(".copy-action").forEach((button) => {
     button.addEventListener("click", () => copyIdea(currentIdeas[Number(button.dataset.index)]));
   });
@@ -2342,6 +2366,19 @@ function renderIdeas() {
       toggleFavorite(currentIdeas[Number(button.dataset.index)]),
     );
   });
+}
+
+function toggleIdeaCard(preview) {
+  const card = preview.closest(".idea-card");
+  const dropdown = document.querySelector(`#${preview.getAttribute("aria-controls")}`);
+  if (!card || !dropdown) return;
+  const isExpanded = preview.getAttribute("aria-expanded") === "true";
+  preview.setAttribute("aria-expanded", String(!isExpanded));
+  dropdown.hidden = isExpanded;
+  card.classList.toggle("idea-card-expanded", !isExpanded);
+  card.classList.toggle("idea-card-collapsed", isExpanded);
+  const hint = preview.querySelector(".idea-expand-hint");
+  if (hint) hint.textContent = isExpanded ? "Details anzeigen" : "Details ausblenden";
 }
 
 function createSeriesFromIdea(baseIdea, requestedLength) {
