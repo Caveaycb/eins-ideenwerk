@@ -1133,34 +1133,6 @@ input[type="range"]::-webkit-slider-thumb {
   letter-spacing: -0.025em;
 }
 
-.topic-statement {
-  position: relative;
-  margin: 0 0 13px;
-  padding: 11px 13px 12px;
-  border: 1px solid rgba(0, 144, 212, 0.16);
-  border-left: 3px solid var(--teal);
-  border-radius: 12px;
-  background: rgba(0, 144, 212, 0.055);
-}
-
-.topic-statement span {
-  display: block;
-  margin-bottom: 4px;
-  color: #50727d;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
-
-.topic-statement p {
-  margin: 0;
-  color: #007bb5;
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.55;
-}
-
 .idea-media {
   position: relative;
   height: 190px;

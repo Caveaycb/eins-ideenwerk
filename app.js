@@ -2267,10 +2267,6 @@ function renderIdeas() {
             <span>${escapeHtml(idea.visualApproach)}</span>
           </div>
           <h3>${escapeHtml(idea.title)}</h3>
-          <div class="topic-statement" aria-label="Kurzüberblick der Postidee">
-            <span>Kurzüberblick der Postidee</span>
-            <p>${escapeHtml(idea.topicStatement || clearTopicStatement(idea))}</p>
-          </div>
           <p class="hook">${escapeHtml(idea.hook)}</p>
           <div class="concept-brief" aria-label="Strukturierte Idee">
             <div class="concept-brief-heading">
