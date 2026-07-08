@@ -36,6 +36,11 @@ body.studio-scroll-locked {
   overflow: hidden;
 }
 
+html.studio-scroll-locked {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 button,
 select,
 input {
@@ -1989,8 +1994,9 @@ dialog::backdrop {
   border-radius: 12px;
   background: white;
   box-shadow: 0 24px 60px rgba(18, 32, 29, 0.24);
-  cursor: move;
-  touch-action: none;
+  cursor: default;
+  touch-action: pan-y;
+  user-select: none;
 }
 
 .video-indicator {
@@ -2143,6 +2149,21 @@ dialog::backdrop {
   border-radius: 14px;
   background: #fafaf8;
   box-shadow: 0 7px 22px rgba(0, 0, 0, 0.035);
+}
+
+.studio-simple-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.compact-editor-heading {
+  position: static;
+  z-index: auto;
+  margin: 0;
+  padding: 0 0 14px;
+  border-bottom: 1px solid #eceeeb;
+  background: transparent;
+  backdrop-filter: none;
 }
 
 .media-browser {
@@ -2728,32 +2749,59 @@ dialog::backdrop {
   }
 
   .post-studio-dialog {
-    width: calc(100% - 16px);
-    height: calc(100dvh - 16px);
-    max-height: calc(100dvh - 16px);
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    max-width: 100%;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    overscroll-behavior: contain;
   }
 
-  .studio-header,
+  .studio-header {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .studio-status {
+    display: none;
+  }
+
   .visual-workbench,
   .caption-workbench {
-    padding: 18px;
+    padding: 16px;
   }
 
   .studio-layout {
     max-height: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .canvas-stage {
-    min-height: 400px;
-    padding: 10px;
+    min-height: 0;
+    padding: 8px;
+    border-radius: 16px;
   }
 
   #postCanvas {
-    max-height: 480px;
+    max-height: min(52dvh, 430px);
+    touch-action: pan-y;
   }
 
   .studio-settings,
   .studio-actions {
     grid-template-columns: 1fr;
+  }
+
+  .media-thumbnails {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #captionText {
+    min-height: 180px;
   }
 }

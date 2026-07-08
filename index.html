@@ -435,7 +435,7 @@
           <h2>Post gestalten</h2>
         </div>
         <div class="studio-status">
-          <span><i></i> Änderungen werden live übernommen</span>
+          <span><i></i> Mobil optimierte Vorschau</span>
         </div>
         <button class="icon-button" id="closePostStudio" type="button" aria-label="Studio schließen">×</button>
       </div>
@@ -448,7 +448,6 @@
               <span id="studioSlideLabel">Motiv 1 von 1</span>
             </div>
             <div class="visual-toolbar-actions">
-              <span class="tool-hint">↖ Element wählen · ziehen zum Verschieben</span>
               <button id="regenerateVisual" class="small-studio-button" type="button">↻ Neue Variante</button>
             </div>
           </div>
@@ -460,7 +459,6 @@
               <span></span> Video-Vorschau
             </div>
           </div>
-          <p class="canvas-help">Element im Motiv anklicken und mit der Maus verschieben.</p>
           <div class="slide-strip" id="slideStrip"></div>
           <p class="studio-note" id="studioNote">
             Das Motiv wird lokal erstellt und kann direkt als PNG heruntergeladen werden.
@@ -468,96 +466,13 @@
         </section>
 
         <section class="caption-workbench">
-          <div class="editor-heading">
-            <div>
-              <span class="step">AUSGEWÄHLTE EBENE</span>
-              <h3 id="selectedLayerName">Titel</h3>
-            </div>
-            <div class="history-actions">
-              <button id="undoDesign" type="button" title="Rückgängig">↶</button>
-              <button id="redoDesign" type="button" title="Wiederholen">↷</button>
-              <button id="resetDesign" type="button" title="Design zurücksetzen">Reset</button>
-            </div>
-          </div>
-
-          <div class="layer-list" id="layerList">
-            <button type="button" data-layer="image">▧ Foto</button>
-            <button type="button" data-layer="logo">Logo</button>
-            <button type="button" data-layer="kicker">Thema</button>
-            <button type="button" data-layer="title" class="active">Titel</button>
-            <button type="button" data-layer="body">Unterzeile</button>
-            <button type="button" data-layer="footer">Fußzeile</button>
-          </div>
-
-          <div class="element-controls" id="textElementControls">
-            <div class="edit-callout"><strong>Live-Editor</strong> – jede Änderung erscheint sofort links im Motiv.</div>
-            <label for="elementText">Textinhalt</label>
-            <textarea id="elementText" rows="3"></textarea>
-            <label class="color-label" for="elementColor">Textfarbe</label>
-            <div class="color-control">
-              <input id="elementColor" type="color" value="#ffffff" />
-              <div class="color-swatches" id="colorSwatches" aria-label="Markenfarben">
-                <button type="button" data-color="#ffffff" style="--swatch:#ffffff" aria-label="Weiß"></button>
-                <button type="button" data-color="#101010" style="--swatch:#101010" aria-label="Schwarz"></button>
-                <button type="button" data-color="#e95e0f" style="--swatch:#e95e0f" aria-label="Orange"></button>
-                <button type="button" data-color="#be3b4a" style="--swatch:#be3b4a" aria-label="Rot"></button>
-                <button type="button" data-color="#0090d4" style="--swatch:#0090d4" aria-label="Blau"></button>
-                <button type="button" data-color="#fde9db" style="--swatch:#fde9db" aria-label="Creme"></button>
-              </div>
-              <span id="elementColorHex">#FFFFFF</span>
-            </div>
-            <div class="background-color-control" id="backgroundColorControl" hidden>
-              <label for="elementBackground">Flächenfarbe</label>
-              <div class="compact-color-control">
-                <input id="elementBackground" type="color" value="#0090d4" />
-                <span id="elementBackgroundHex">#0090D4</span>
-              </div>
-            </div>
-            <div class="control-grid">
-              <div class="wide-control">
-                <label for="elementFont">Schriftart</label>
-                <select id="elementFont">
-                  <option value="Urbanist">Urbanist · Energie-Ideenwerk-Stil</option>
-                  <option value="Arial">Arial · Neutral</option>
-                  <option value="Georgia">Georgia · Editorial</option>
-                  <option value="Impact">Impact · Plakativ</option>
-                  <option value="Courier New">Courier New · Technisch</option>
-                  <option value="Trebuchet MS">Trebuchet · Modern</option>
-                </select>
-              </div>
+          <div class="studio-simple-panel">
+            <div class="editor-heading compact-editor-heading">
               <div>
-                <label for="elementAlign">Ausrichtung</label>
-                <select id="elementAlign">
-                  <option value="left">Links</option>
-                  <option value="center">Mittig</option>
-                  <option value="right">Rechts</option>
-                </select>
-              </div>
-              <div>
-                <label for="elementWeight">Schriftstärke</label>
-                <select id="elementWeight">
-                  <option value="500">Normal</option>
-                  <option value="700">Fett</option>
-                  <option value="900">Extra fett</option>
-                </select>
-              </div>
-              <div class="wide-control">
-                <div class="control-label"><label for="elementSize">Größe</label><output id="elementSizeValue">70</output></div>
-                <input id="elementSize" type="range" min="16" max="130" value="70" />
-              </div>
-              <div class="wide-control">
-                <div class="control-label"><label for="elementOpacity">Deckkraft</label><output id="elementOpacityValue">100%</output></div>
-                <input id="elementOpacity" type="range" min="0" max="100" value="100" />
-              </div>
-              <div class="wide-control">
-                <div class="control-label"><label for="elementSpacing">Zeichenabstand</label><output id="elementSpacingValue">0</output></div>
-                <input id="elementSpacing" type="range" min="-3" max="12" value="0" />
+                <span class="step">MOTIV & CAPTION</span>
+                <h3>Fertigen Post prüfen</h3>
               </div>
             </div>
-            <button class="visibility-button" id="toggleLayerVisibility" type="button">◉ Ebene ausblenden</button>
-          </div>
-
-          <div class="element-controls image-controls" id="imageElementControls" hidden>
             <div class="media-browser">
               <div class="media-browser-heading">
                 <div>
@@ -571,18 +486,6 @@
               </div>
               <div class="media-thumbnails" id="mediaThumbnails"></div>
             </div>
-            <div class="control-grid">
-              <div class="wide-control">
-                <div class="control-label"><label for="imageZoom">Bild-Zoom</label><output id="imageZoomValue">100%</output></div>
-                <input id="imageZoom" type="range" min="100" max="190" value="100" />
-              </div>
-              <div class="wide-control">
-                <div class="control-label"><label for="imageBrightness">Helligkeit</label><output id="imageBrightnessValue">100%</output></div>
-                <input id="imageBrightness" type="range" min="55" max="145" value="100" />
-              </div>
-            </div>
-            <label class="upload-image-button" for="customImageInput">＋ Eigenes Foto einsetzen</label>
-            <input id="customImageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
             <div class="ai-image-generator">
               <div class="ai-image-heading">
                 <div>

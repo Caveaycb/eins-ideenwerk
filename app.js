@@ -1542,7 +1542,7 @@ let activeStudioSlide = 0;
 let studioVariant = 0;
 let studioAnimationId = null;
 let studioAnimationStarted = 0;
-let selectedStudioLayer = "title";
+let selectedStudioLayer = null;
 let studioDesigns = new Map();
 let studioDesignInitials = new Map();
 let studioUndoStack = [];
@@ -3547,16 +3547,11 @@ function restoreCurrentDesign(snapshot) {
 }
 
 function pushStudioHistory() {
-  if (!activeStudioIdea) return;
-  studioUndoStack.push(cloneCurrentDesign());
-  if (studioUndoStack.length > 40) studioUndoStack.shift();
-  studioRedoStack = [];
-  updateHistoryButtons();
+  return;
 }
 
 function updateHistoryButtons() {
-  document.querySelector("#undoDesign").disabled = studioUndoStack.length === 0;
-  document.querySelector("#redoDesign").disabled = studioRedoStack.length === 0;
+  return;
 }
 
 function layerLabel(layer) {
@@ -3571,55 +3566,13 @@ function layerLabel(layer) {
 }
 
 function selectStudioLayer(layer) {
-  stopStudioAnimation();
-  selectedStudioLayer = layer;
-  document.querySelector("#selectedLayerName").textContent = layerLabel(layer);
-  document.querySelectorAll("#layerList button").forEach((button) => {
-    button.classList.toggle("active", button.dataset.layer === layer);
-  });
+  selectedStudioLayer = null;
   syncEditorControls();
-  drawStudioSlide(document.querySelector("#postCanvas"), activeStudioIdea, activeStudioSlide);
 }
 
 function syncEditorControls() {
   if (!activeStudioIdea) return;
-  const design = getStudioDesign();
-  const imageMode = selectedStudioLayer === "image";
-  document.querySelector("#textElementControls").hidden = imageMode;
-  document.querySelector("#imageElementControls").hidden = !imageMode;
-  if (imageMode) {
-    document.querySelector("#imageZoom").value = Math.round(design.image.zoom * 100);
-    document.querySelector("#imageZoomValue").textContent = `${Math.round(design.image.zoom * 100)}%`;
-    document.querySelector("#imageBrightness").value = Math.round(design.image.brightness * 100);
-    document.querySelector("#imageBrightnessValue").textContent = `${Math.round(design.image.brightness * 100)}%`;
-    renderMediaBrowser();
-  } else {
-    const layer = design[selectedStudioLayer];
-    if (!layer) return;
-    document.querySelector("#elementText").value = layer.text;
-    document.querySelector("#elementColor").value = layer.color;
-    document.querySelector("#elementColorHex").textContent = layer.color.toUpperCase();
-    document.querySelectorAll("#colorSwatches button").forEach((button) => {
-      button.classList.toggle("active", button.dataset.color.toLowerCase() === layer.color.toLowerCase());
-    });
-    document.querySelector("#elementAlign").value = layer.align;
-    document.querySelector("#elementFont").value = layer.font || "Urbanist";
-    document.querySelector("#elementWeight").value = String(layer.weight || 700);
-    document.querySelector("#elementSize").value = layer.size;
-    document.querySelector("#elementSizeValue").textContent = layer.size;
-    document.querySelector("#elementOpacity").value = Math.round(layer.opacity * 100);
-    document.querySelector("#elementOpacityValue").textContent = `${Math.round(layer.opacity * 100)}%`;
-    document.querySelector("#elementSpacing").value = layer.spacing || 0;
-    document.querySelector("#elementSpacingValue").textContent = layer.spacing || 0;
-    const hasBackground = selectedStudioLayer === "kicker";
-    document.querySelector("#backgroundColorControl").hidden = !hasBackground;
-    if (hasBackground) {
-      document.querySelector("#elementBackground").value = layer.background;
-      document.querySelector("#elementBackgroundHex").textContent = layer.background.toUpperCase();
-    }
-    document.querySelector("#toggleLayerVisibility").textContent =
-      layer.visible ? "◉ Ebene ausblenden" : "○ Ebene einblenden";
-  }
+  renderMediaBrowser();
   updateHistoryButtons();
 }
 
@@ -3659,7 +3612,6 @@ function renderMediaBrowser() {
 
 function chooseMedia(index) {
   if (!activeStudioIdea) return;
-  pushStudioHistory();
   const design = getStudioDesign();
   design.image.mediaIndex = index;
   design.image.customSrc = null;
@@ -3667,7 +3619,7 @@ function chooseMedia(index) {
   design.image.offsetY = 0;
   design.image.zoom = 1;
   renderStudioVisual(false);
-  selectStudioLayer("image");
+  syncEditorControls();
 }
 
 function stepMedia(direction) {
@@ -3812,7 +3764,7 @@ function drawStudioSlide(canvas, idea, slideIndex, progress = 1) {
     if (isMainCanvas) studioHitboxes.push({ layer: "footer", x: layer.x, y: layer.y - 62, width: layer.maxWidth, height: 75 });
   }
 
-  if (isMainCanvas && selectedStudioLayer !== "image") {
+  if (isMainCanvas && selectedStudioLayer) {
     const selectedBox = studioHitboxes.find((box) => box.layer === selectedStudioLayer);
     if (selectedBox) {
       ctx.save();
@@ -3848,7 +3800,7 @@ function renderSlideStrip() {
       stopStudioAnimation();
       studioUndoStack = [];
       studioRedoStack = [];
-      selectedStudioLayer = "title";
+      selectedStudioLayer = null;
       renderStudioVisual();
     });
     strip.appendChild(button);
@@ -3951,7 +3903,7 @@ function openPostStudio(idea) {
   caption.value = createCaption(idea, tone);
   studioUndoStack = [];
   studioRedoStack = [];
-  selectedStudioLayer = "title";
+  selectedStudioLayer = null;
   document.querySelector("#captionPlatform").textContent = `für ${idea.platform}`;
   updateCaptionLength();
   syncAiImagePrompt();
@@ -3965,12 +3917,14 @@ function lockStudioPageScroll() {
   if (document.body.classList.contains("studio-scroll-locked")) return;
   studioPageScrollY = window.scrollY || document.documentElement.scrollTop || 0;
   document.body.style.top = `-${studioPageScrollY}px`;
+  document.documentElement.classList.add("studio-scroll-locked");
   document.body.classList.add("studio-scroll-locked");
 }
 
 function unlockStudioPageScroll() {
   if (!document.body.classList.contains("studio-scroll-locked")) return;
   document.body.classList.remove("studio-scroll-locked");
+  document.documentElement.classList.remove("studio-scroll-locked");
   document.body.style.top = "";
   window.scrollTo(0, studioPageScrollY);
 }
@@ -4337,107 +4291,6 @@ document.querySelector("#copyCaptionButton").addEventListener("click", async () 
 });
 document.querySelector("#downloadAssetButton").addEventListener("click", downloadStudioAssets);
 
-document.querySelectorAll("#layerList button").forEach((button) => {
-  button.addEventListener("click", () => selectStudioLayer(button.dataset.layer));
-});
-
-document.querySelector("#undoDesign").addEventListener("click", () => {
-  if (!studioUndoStack.length) return;
-  studioRedoStack.push(cloneCurrentDesign());
-  restoreCurrentDesign(studioUndoStack.pop());
-});
-
-document.querySelector("#redoDesign").addEventListener("click", () => {
-  if (!studioRedoStack.length) return;
-  studioUndoStack.push(cloneCurrentDesign());
-  restoreCurrentDesign(studioRedoStack.pop());
-});
-
-document.querySelector("#resetDesign").addEventListener("click", () => {
-  if (!activeStudioIdea) return;
-  pushStudioHistory();
-  const key = designKey(activeStudioIdea, activeStudioSlide);
-  restoreCurrentDesign(studioDesignInitials.get(key));
-  showToast("Design wurde zurückgesetzt.");
-});
-
-function changeSelectedLayer(mutator) {
-  if (!activeStudioIdea) return;
-  pushStudioHistory();
-  updateSelectedLayer(mutator, true);
-}
-
-function updateSelectedLayer(mutator, refreshStrip = false) {
-  if (!activeStudioIdea) return;
-  const design = getStudioDesign();
-  mutator(selectedStudioLayer === "image" ? design.image : design[selectedStudioLayer]);
-  drawStudioSlide(document.querySelector("#postCanvas"), activeStudioIdea, activeStudioSlide);
-  if (refreshStrip) renderSlideStrip();
-  syncEditorControls();
-}
-
-document.querySelector("#elementText").addEventListener("focus", pushStudioHistory);
-document.querySelector("#elementText").addEventListener("input", (event) => {
-  updateSelectedLayer((layer) => { layer.text = event.target.value; });
-});
-document.querySelector("#elementText").addEventListener("blur", renderSlideStrip);
-document.querySelector("#elementColor").addEventListener("pointerdown", pushStudioHistory);
-document.querySelector("#elementColor").addEventListener("input", (event) => {
-  document.querySelector("#elementColorHex").textContent = event.target.value.toUpperCase();
-  updateSelectedLayer((layer) => { layer.color = event.target.value; });
-});
-document.querySelectorAll("#colorSwatches button").forEach((button) => {
-  button.addEventListener("click", () => {
-    const color = button.dataset.color;
-    changeSelectedLayer((layer) => { layer.color = color; });
-  });
-});
-document.querySelector("#elementAlign").addEventListener("change", (event) => {
-  changeSelectedLayer((layer) => { layer.align = event.target.value; });
-});
-document.querySelector("#elementFont").addEventListener("change", (event) => {
-  changeSelectedLayer((layer) => { layer.font = event.target.value; });
-});
-document.querySelector("#elementWeight").addEventListener("change", (event) => {
-  changeSelectedLayer((layer) => { layer.weight = Number(event.target.value); });
-});
-document.querySelector("#elementBackground").addEventListener("input", (event) => {
-  document.querySelector("#elementBackgroundHex").textContent = event.target.value.toUpperCase();
-  updateSelectedLayer((layer) => { layer.background = event.target.value; });
-});
-document.querySelector("#elementSize").addEventListener("pointerdown", pushStudioHistory);
-document.querySelector("#elementSize").addEventListener("input", (event) => {
-  document.querySelector("#elementSizeValue").textContent = event.target.value;
-  updateSelectedLayer((layer) => { layer.size = Number(event.target.value); });
-});
-document.querySelector("#elementSize").addEventListener("change", renderSlideStrip);
-document.querySelector("#elementOpacity").addEventListener("pointerdown", pushStudioHistory);
-document.querySelector("#elementOpacity").addEventListener("input", (event) => {
-  document.querySelector("#elementOpacityValue").textContent = `${event.target.value}%`;
-  updateSelectedLayer((layer) => { layer.opacity = Number(event.target.value) / 100; });
-});
-document.querySelector("#elementOpacity").addEventListener("change", renderSlideStrip);
-document.querySelector("#elementSpacing").addEventListener("pointerdown", pushStudioHistory);
-document.querySelector("#elementSpacing").addEventListener("input", (event) => {
-  document.querySelector("#elementSpacingValue").textContent = event.target.value;
-  updateSelectedLayer((layer) => { layer.spacing = Number(event.target.value); });
-});
-document.querySelector("#elementSpacing").addEventListener("change", renderSlideStrip);
-document.querySelector("#toggleLayerVisibility").addEventListener("click", () => {
-  changeSelectedLayer((layer) => { layer.visible = !layer.visible; });
-});
-document.querySelector("#imageZoom").addEventListener("pointerdown", pushStudioHistory);
-document.querySelector("#imageZoom").addEventListener("input", (event) => {
-  document.querySelector("#imageZoomValue").textContent = `${event.target.value}%`;
-  updateSelectedLayer((layer) => { layer.zoom = Number(event.target.value) / 100; });
-});
-document.querySelector("#imageZoom").addEventListener("change", renderSlideStrip);
-document.querySelector("#imageBrightness").addEventListener("pointerdown", pushStudioHistory);
-document.querySelector("#imageBrightness").addEventListener("input", (event) => {
-  document.querySelector("#imageBrightnessValue").textContent = `${event.target.value}%`;
-  updateSelectedLayer((layer) => { layer.brightness = Number(event.target.value) / 100; });
-});
-document.querySelector("#imageBrightness").addEventListener("change", renderSlideStrip);
 document.querySelector("#previousMedia").addEventListener("click", () => stepMedia(-1));
 document.querySelector("#nextMedia").addEventListener("click", () => stepMedia(1));
 document.querySelector("#canvasPreviousMedia").addEventListener("click", () => stepMedia(-1));
@@ -4462,103 +4315,6 @@ document.querySelector("#copyAiPrompt").addEventListener("click", async () => {
 document.querySelector("#openAiGenerator").addEventListener("click", () => {
   if (!activeStudioIdea) return;
   window.open(aiGeneratorUrl(), "_blank", "noopener,noreferrer");
-});
-
-document.querySelector("#customImageInput").addEventListener("change", (event) => {
-  const file = event.target.files?.[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    const image = new Image();
-    image.onload = () => {
-      pushStudioHistory();
-      loadedMedia.set(reader.result, image);
-      const design = getStudioDesign();
-      design.image.customSrc = reader.result;
-      design.image.zoom = 1;
-      design.image.offsetX = 0;
-      design.image.offsetY = 0;
-      renderStudioVisual(false);
-      renderMediaBrowser();
-      showToast("Eigenes Foto wurde eingesetzt.");
-    };
-    image.src = reader.result;
-  };
-  reader.readAsDataURL(file);
-  event.target.value = "";
-});
-
-function canvasPoint(event) {
-  const canvas = document.querySelector("#postCanvas");
-  const rect = canvas.getBoundingClientRect();
-  return {
-    x: (event.clientX - rect.left) * (canvas.width / rect.width),
-    y: (event.clientY - rect.top) * (canvas.height / rect.height),
-  };
-}
-
-const postCanvas = document.querySelector("#postCanvas");
-postCanvas.addEventListener("pointerdown", (event) => {
-  if (!activeStudioIdea) return;
-  stopStudioAnimation();
-  const point = canvasPoint(event);
-  const hit = [...studioHitboxes].reverse().find((box) =>
-    point.x >= box.x && point.x <= box.x + box.width &&
-    point.y >= box.y && point.y <= box.y + box.height,
-  );
-  const layerName = hit?.layer || "image";
-  selectStudioLayer(layerName);
-  pushStudioHistory();
-  const design = getStudioDesign();
-  const layer = layerName === "image" ? design.image : design[layerName];
-  studioDrag = {
-    layer: layerName,
-    startX: point.x,
-    startY: point.y,
-    originalX: layerName === "image" ? layer.offsetX : layer.x,
-    originalY: layerName === "image" ? layer.offsetY : layer.y,
-  };
-  postCanvas.setPointerCapture(event.pointerId);
-});
-
-postCanvas.addEventListener("pointermove", (event) => {
-  if (!studioDrag) return;
-  const point = canvasPoint(event);
-  const design = getStudioDesign();
-  const layer = studioDrag.layer === "image" ? design.image : design[studioDrag.layer];
-  const dx = point.x - studioDrag.startX;
-  const dy = point.y - studioDrag.startY;
-  if (studioDrag.layer === "image") {
-    layer.offsetX = studioDrag.originalX + dx;
-    layer.offsetY = studioDrag.originalY + dy;
-  } else {
-    layer.x = studioDrag.originalX + dx;
-    layer.y = studioDrag.originalY + dy;
-  }
-  drawStudioSlide(postCanvas, activeStudioIdea, activeStudioSlide);
-});
-
-function finishCanvasDrag() {
-  if (!studioDrag) return;
-  studioDrag = null;
-  renderSlideStrip();
-  syncEditorControls();
-}
-
-postCanvas.addEventListener("pointerup", finishCanvasDrag);
-postCanvas.addEventListener("pointercancel", finishCanvasDrag);
-postCanvas.addEventListener("dblclick", (event) => {
-  if (!activeStudioIdea) return;
-  const point = canvasPoint(event);
-  const hit = [...studioHitboxes].reverse().find((box) =>
-    point.x >= box.x && point.x <= box.x + box.width &&
-    point.y >= box.y && point.y <= box.y + box.height,
-  );
-  if (!hit || hit.layer === "image") return;
-  selectStudioLayer(hit.layer);
-  const textField = document.querySelector("#elementText");
-  textField.focus();
-  textField.select();
 });
 
 renderTopics();
