@@ -1145,10 +1145,10 @@ function ideaSummaryBullets(idea) {
   const example = idea.concreteExample || {};
   return [
     ["Kernaussage", idea.topicStatement || clearTopicStatement(idea)],
-    ["Praxisbeispiel", example.label ? `${example.label}: ${example.scene}` : idea.subtheme],
-    ["Beleg", idea.proof],
+    ["Konkretes Beispiel", example.label ? `${example.label}: ${example.scene}` : idea.subtheme],
+    ["Benötigter Beleg", idea.proof],
     ["O-Ton", idea.suggestedOTone || idea.hook],
-    ["Ablauf", idea.concretePostPlan || idea.strength],
+    ["Posting-Ablauf", idea.concretePostPlan || idea.strength],
   ].filter(([, value]) => value);
 }
 
@@ -2245,7 +2245,7 @@ function renderIdeas() {
       const approval = idea.approval || approvalInfo(idea.criticalReview);
       const pillar = idea.pillarInfo || contentPillarInfo(idea.pillar);
       const summaryBullets = ideaSummaryBullets(idea);
-      const readyStatements = concretePostStatements(idea);
+      const concreteStatements = concretePostStatements(idea);
       return `
         <article class="idea-card" style="animation-delay:${index * 60}ms">
           <span class="card-number">${String(index + 1).padStart(2, "0")}</span>
@@ -2273,21 +2273,22 @@ function renderIdeas() {
           </div>
           <p class="hook">${escapeHtml(idea.hook)}</p>
           <div class="concept-brief" aria-label="Strukturierte Idee">
+            <div class="concept-brief-heading">
+              <strong>Postidee auf einen Blick</strong>
+              <small>Was gedreht, gesagt und belegt werden soll.</small>
+            </div>
             ${summaryBullets.map(([label, value]) => `
               <div>
                 <span>${escapeHtml(label)}</span>
                 <p>${escapeHtml(value)}</p>
               </div>
             `).join("")}
-          </div>
-          <div class="ready-post-box">
-            <span>Direkt nutzbares Praxisbeispiel</span>
-            <strong>${escapeHtml(idea.concreteExample?.label || idea.subtheme)}</strong>
-            <p>${escapeHtml(idea.concreteExample?.scene || idea.concept)}</p>
-            <ul>
-              ${readyStatements.map((statement) => `<li>${escapeHtml(statement)}</li>`).join("")}
-            </ul>
-            <small>O-Ton: ${escapeHtml(idea.suggestedOTone || idea.hook)}</small>
+            <div class="concrete-statements">
+              <span>Konkrete Aussagen für den Post</span>
+              <ul>
+                ${concreteStatements.map((statement) => `<li>${escapeHtml(statement)}</li>`).join("")}
+              </ul>
+            </div>
           </div>
           <div class="strategy-panel">
             <div class="pillar-note">
